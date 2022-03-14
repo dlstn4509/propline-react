@@ -15,8 +15,13 @@ const HeaderWrap = styled.div`
 
 const HeadWrap = styled.div`
   display: flex;
+  width: 1000px;
   .right {
     display: flex;
+    margin-left: auto;
+  }
+  .left {
+    margin-right: auto;
   }
 `;
 
