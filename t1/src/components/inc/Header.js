@@ -1,36 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import styled from '../../style';
-
-const HeaderWrap = styled.div`
-  background-color: #f0f3f7;
-  width: 100vw;
-  height: 39px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 9px 0 10px 0;
-`;
-
-const HeadWrap = styled.div`
-  display: flex;
-  width: 1000px;
-  .right {
-    display: flex;
-    margin-left: auto;
-  }
-  .left {
-    margin-right: auto;
-  }
-`;
-
-const HeaderLink = styled.div`
-  margin-right: 1em;
-  color: #000000;
-  cursor: pointer;
-`.withComponent(Link);
+import { HeaderWrap, InnerWrap, FllWrap, FlrWrap, HeaderLink, Bookmark } from '../../style/main';
+import { bookmark } from '../../modules/bookmark';
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
@@ -41,18 +12,20 @@ const Header = () => {
     })();
   }, []);
   return (
-    <HeaderWrap>
-      <HeadWrap>
-        <div className="left">
-          <HeaderLink to="/main">즐겨찾기</HeaderLink>
-          <HeaderLink to="/about">이용안내</HeaderLink>
-        </div>
-        <div className="right">
-          {clientIp && <div>IP: {clientIp}</div>}
-          <div>로그아웃</div>
-        </div>
-      </HeadWrap>
-    </HeaderWrap>
+    <>
+      <HeaderWrap>
+        <InnerWrap>
+          <FllWrap>
+            <Bookmark onClick={bookmark}>즐겨찾기</Bookmark>
+            <HeaderLink to="/about">이용안내</HeaderLink>
+          </FllWrap>
+          <FlrWrap>
+            {clientIp && <span>IP: {clientIp}</span>}
+            <HeaderLink to="#">로그아웃</HeaderLink>
+          </FlrWrap>
+        </InnerWrap>
+      </HeaderWrap>
+    </>
   );
 };
 
