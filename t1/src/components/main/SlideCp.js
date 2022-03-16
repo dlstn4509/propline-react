@@ -10,11 +10,7 @@ const SlideCpWrapper = styled.div`
 `;
 
 const SlideCp = () => {
-  return (
-    <SlideCpWrapper>
-      <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="slide_img" className="mw-100" />
-    </SlideCpWrapper>
-  );
+  return <SlideCpWrapper></SlideCpWrapper>;
 };
 
 export default React.memo(SlideCp);

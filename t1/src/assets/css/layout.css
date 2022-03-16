@@ -1,0 +1,18 @@
+.cf:after{content:""; display:block; clear:both;}
+.fl_l{float:left;}
+.fl_r{float:right;}
+.inner{width:1000px; margin:0 auto;}
+
+/*상태 바*/
+.header-wrap{font-size:0; background-color:#f0f3f7; padding:9px 10px;}
+.header-wrap a{font-size:14px; color:#464d50; vertical-align:middle; margin-left:20px;}
+.header-wrap a:hover{text-decoration: underline; color: #888f91;}
+.header-wrap a:first-child{margin-left:0;}
+.header-wrap span{font-size:13px; font-weight:400; color:#888f91; vertical-align:middle;}
+
+/*메인 검색*/
+.main_srch_area{}
+.main_srch_area .logo_box{display:inline-block; width:130px;}
+
+
+

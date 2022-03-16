@@ -40,9 +40,7 @@ const Title = () => {
   return (
     <TitleWrapper>
       <TitleWrap>
-        <div className="img-wrap">
-          <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="top_logo" className="mw-100" />
-        </div>
+        <div className="img-wrap"></div>
         <div className="input-wrap">
           <input type="text" placeholder="예) 역삼동 636-6 or 매물번호 검색" />
         </div>

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from '../../style';
 
@@ -32,6 +33,13 @@ const HeaderLink = styled.div`
 `.withComponent(Link);
 
 const Header = () => {
+  const [clientIp, setClientIp] = useState('');
+  useEffect(() => {
+    (async () => {
+      const rs = await axios.get('https://api.ipify.org?format=json');
+      setClientIp(rs.data.ip);
+    })();
+  }, []);
   return (
     <HeaderWrap>
       <HeadWrap>
@@ -40,7 +48,7 @@ const Header = () => {
           <HeaderLink to="/about">이용안내</HeaderLink>
         </div>
         <div className="right">
-          <div>IP: 106.246.230.90</div>
+          {clientIp && <div>IP: {clientIp}</div>}
           <div>로그아웃</div>
         </div>
       </HeadWrap>

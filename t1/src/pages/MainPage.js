@@ -18,6 +18,7 @@ const MainWrap = styled.div`
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 `;
 
 const MainPage = () => {
@@ -30,7 +31,7 @@ const MainPage = () => {
             width: '220px',
             height: '800px',
             position: 'absolute',
-            right: '210px',
+            right: '-10px',
             border: '1px solid red',
           }}
         ></div>
