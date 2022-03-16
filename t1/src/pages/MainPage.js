@@ -11,6 +11,7 @@ const MainWrapper = styled.div`
   width: 100%;
   margin-top: 80px;
   margin-bottom: 500px;
+  border: 1px solid red;
 `;
 
 const MainWrap = styled.div`
