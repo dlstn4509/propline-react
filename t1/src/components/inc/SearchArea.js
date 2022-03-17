@@ -14,7 +14,9 @@ const SearchArea = () => {
           <FaSearch />
         </InputWrap>
         <IdWrap>
-          <Id to="#">dlstn7609님</Id>
+          <Id to="#" style={{ textDecoration: 'underline' }}>
+            dlstn7609님
+          </Id>
           <span>2059-03-04 만기</span>
           <PayBtn to="#">결제</PayBtn>
         </IdWrap>

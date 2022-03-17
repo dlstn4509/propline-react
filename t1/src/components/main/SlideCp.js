@@ -9,13 +9,32 @@ SwiperCore.use([Autoplay]);
 
 const SlideCpWrapper = styled.div`
   width: 780px;
-  height: 440px;
-  padding: 0 24px 60px 0;
-  border: 1px solid red;
-  margin-bottom: 50px;
+  display: table-cell;
+  padding: 0 24px 60px 0px;
+  .swiper-pointer-events {
+    width: 780px;
+  }
+  .swiper-pagination-bullet {
+    background-color: black;
+  }
+  .swiper-pagination-bullet-active {
+    opacity: 0.5;
+  }
+  .swiper-button-prev {
+    color: black;
+    opacity: 0.5;
+  }
+  .swiper-button-next {
+    color: black;
+    opacity: 0.5;
+  }
+  .swiper-button-disabled {
+    color: black;
+    opacity: 0.3;
+  }
 `;
 const SlideImgWrap = styled.div`
-  width: 754px;
+  width: 780px;
   height: 440px;
   img {
     width: 100%;
@@ -37,7 +56,7 @@ const SlideCp = () => {
         slidesPerView={1}
         navigation
         autoplay={{ delay: 2000, disableOnInteraction: false }}
-        pagination={{ clickable: true, color: 'black' }}
+        pagination={{ clickable: true, color: '#ffffff' }}
       >
         <SwiperSlide>
           <SlideImgWrap className="slideImg">

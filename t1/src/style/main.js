@@ -121,7 +121,6 @@ export const IdWrap = styled.div`
 export const Id = styled(Link)`
   vertical-align: middle;
   font-size: 13px;
-  text-decoration: underline;
 `;
 export const PayBtn = styled(Link)`
   vertical-align: middle;
@@ -187,7 +186,6 @@ export const Type02Link = styled(Link)`
   float: left;
   height: 70px;
   line-height: 70px;
-  color: #fff;
   font-size: 18px;
   margin-right: 27px;
   font-size: 15px;
@@ -232,4 +230,177 @@ export const SubNav = styled(Link)`
   line-height: 50px;
   display: inline-block;
   font-size: 14px;
+`;
+
+/*************************** Login, Logout *****************/
+export const MainLoginBox = styled.div`
+  border: 1px solid #dae1e7;
+  border-radius: 5px;
+  padding: 0 8px;
+  text-align: center;
+  a:second-child {
+    color: #ffffff;
+  }
+`;
+export const MainLoginTit = styled.div`
+  padding-top: 17px;
+  color: #464d50;
+  font-size: 13px;
+`;
+export const MainLoginBtn = styled(Link)`
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #3168ff;
+  padding: 8px 0 8px 0;
+  border-radius: 5px;
+  margin-top: 13px;
+`;
+export const MainJoinBtn = styled(Link)`
+  display: inline-block;
+  margin-top: 10px;
+  color: #464d50;
+  font-size: 13px;
+`;
+export const FindIdPwWrap = styled.div`
+  padding: 16px 0px 10px;
+`;
+export const FindIdPwLink = styled.div`
+  color: #888f91;
+  font-size: 13px;
+  display: inline-block;
+  padding: 0 6px;
+  position: relative;
+  :hover {
+    text-decoration: underline;
+  }
+  :after {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 70%;
+    background-color: #888f91;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+  :first-child::after {
+    display: none;
+  }
+`;
+export const AfterLoginTit = styled.div`
+  padding: 10px 0;
+  :after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+`;
+export const User = styled.span`
+  font-size: 13px;
+  color: #3168ff;
+  float: left;
+`;
+export const LogoutBtn = styled(Link)`
+  font-size: 13px;
+  float: right;
+`;
+export const UserInfoBox = styled.div`
+  padding: 5px 0 10px 10px;
+  background-color: #f0f3f7;
+  border-radius: 5px;
+`;
+export const List = styled.div`
+  font-size: 0;
+  margin-top: 5px;
+  text-align: left;
+  :first-child {
+    margin-top: 0;
+  }
+  .tit {
+    font-size: 13px;
+    color: #464d50;
+  }
+  .txt {
+    font-size: 13px;
+    color: #000000;
+    margin-left: 5px;
+  }
+`;
+export const AfterLoginBtnArea = styled.div`
+  font-size: 0;
+  margin-top: 10px;
+  a {
+    color: #ffffff;
+  }
+`;
+export const PayMentBtn = styled(Link)`
+  display: inline-block;
+  width: 49%;
+  background-color: #3168ff;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+`;
+export const ChargeBtn = styled(Link)`
+  display: inline-block;
+  width: 49%;
+  background-color: #888f91;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-left: 2%;
+`;
+export const AfterLoginOptionArea = styled.div`
+  font-size: 0;
+  padding: 10px 0;
+  > a {
+    width: 33.3%;
+    display: inline-block;
+    padding-top: 15px;
+  }
+`;
+export const MyCoBrokenBtn = styled(Link)`
+  font-size: 12px;
+  font-weight: 300;
+  color: #464d50;
+  line-height: 14px;
+  background-image: url(${process.env.REACT_APP_URL + 'img/sitemap.png'});
+  background-repeat: no-repeat;
+  background-position: center top;
+  :hover {
+    background-image: url(${process.env.REACT_APP_URL + 'img/sitemap02.png'});
+    color: #3168ff;
+  }
+`;
+export const MyInfoModifyBtn = styled(Link)`
+  font-size: 12px;
+  font-weight: 300;
+  color: #464d50;
+  line-height: 14px;
+  background-image: url(${process.env.REACT_APP_URL + 'img/Profile.png'});
+  background-repeat: no-repeat;
+  background-position: center top;
+  :hover {
+    background-image: url(${process.env.REACT_APP_URL + 'img/Profile02.png'});
+    color: #3168ff;
+  }
+`;
+export const ContractMgmBtn = styled(Link)`
+  font-size: 12px;
+  font-weight: 300;
+  color: #464d50;
+  line-height: 14px;
+  background-image: url(${process.env.REACT_APP_URL + 'img/file-alt.png'});
+  background-repeat: no-repeat;
+  background-position: center top;
+  :hover {
+    background-image: url(${process.env.REACT_APP_URL + 'img/file-alt02.png'});
+    color: #3168ff;
+  }
 `;
