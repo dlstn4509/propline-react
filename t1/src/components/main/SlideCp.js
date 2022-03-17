@@ -60,22 +60,17 @@ const SlideCp = () => {
       >
         <SwiperSlide>
           <SlideImgWrap className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="" className="slideImg mw-100" />
+            <img src={process.env.REACT_APP_URL + 'img/slide01.jpg'} alt="" className="slideImg mw-100" />
           </SlideImgWrap>
         </SwiperSlide>
         <SwiperSlide>
           <SlideImgWrap className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="" className="mw-100" />
+            <img src={process.env.REACT_APP_URL + 'img/slide02.jpg'} alt="" className="mw-100" />
           </SlideImgWrap>
         </SwiperSlide>
         <SwiperSlide>
           <SlideImgWrap className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="" className="mw-100" />
-          </SlideImgWrap>
-        </SwiperSlide>
-        <SwiperSlide>
-          <SlideImgWrap className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/top_logo.svg'} alt="" className="mw-100" />
+            <img src={process.env.REACT_APP_URL + 'img/slide03.jpg'} alt="" className="mw-100" />
           </SlideImgWrap>
         </SwiperSlide>
       </Swiper>

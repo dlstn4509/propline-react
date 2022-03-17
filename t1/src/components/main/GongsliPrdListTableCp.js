@@ -31,6 +31,10 @@ const Name = styled.span`
   font-size: 13px;
   color: #464d50;
   float: left;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 `;
 const MonthlyCharterBtnBox = styled.div`
   float: right;

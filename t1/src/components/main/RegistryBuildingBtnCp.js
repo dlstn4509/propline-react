@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '../../style';
-import { Link } from 'react-router-dom';
 
 const RegistryBuildingBtnWrap = styled.div`
   font-size: 0;

@@ -190,6 +190,21 @@ export const Type02Link = styled(Link)`
   margin-right: 27px;
   font-size: 15px;
   position: relative;
+  :hover {
+    font-weight: 600;
+    ::after {
+      content: '';
+      display: inline-block;
+      width: 90%;
+      height: 5px;
+      background-color: #fff;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+  }
 `;
 export const Menul = styled.li`
   float: right;
@@ -230,6 +245,18 @@ export const SubNav = styled(Link)`
   line-height: 50px;
   display: inline-block;
   font-size: 14px;
+  :hover {
+    font-weight: bold;
+  }
+  span {
+    color: #fff;
+    background-color: #f1174b;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0px 4px 0px 3px;
+    cursor: default;
+  }
 `;
 
 /*************************** Login, Logout *****************/
