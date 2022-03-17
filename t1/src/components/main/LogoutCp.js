@@ -1,4 +1,5 @@
 import React from 'react';
+import store from '../../store/store';
 import {
   MainLoginBox,
   AfterLoginTit,
@@ -16,11 +17,18 @@ import {
 } from '../../style/main';
 
 const LogoutCp = () => {
+  const { isAuth } = store();
   return (
     <MainLoginBox>
       <AfterLoginTit>
         <User>root</User>
-        <LogoutBtn to="/main" style={{ color: '#888f91' }}>
+        <LogoutBtn
+          to="/main"
+          style={{ color: '#888f91' }}
+          onClick={() => {
+            isAuth();
+          }}
+        >
           로그아웃
         </LogoutBtn>
       </AfterLoginTit>

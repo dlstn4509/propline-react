@@ -221,6 +221,21 @@ export const MenulLink = styled(Link)`
   background-image: url(${process.env.REACT_APP_URL + 'img/mamul_wr.png'});
   background-repeat: no-repeat;
   background-position: left center;
+  :hover {
+    font-weight: 600;
+    ::after {
+      content: '';
+      display: inline-block;
+      width: 90%;
+      height: 5px;
+      background-color: #fff;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+    }
+  }
 `;
 
 /******************************** SubNav ********************************/
@@ -246,7 +261,7 @@ export const SubNav = styled(Link)`
   display: inline-block;
   font-size: 14px;
   :hover {
-    font-weight: bold;
+    font-weight: 600;
   }
   span {
     color: #fff;

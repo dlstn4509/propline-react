@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '../style';
+import store from '../store/store';
 
 import SlideCp from '../components/main/SlideCp';
 import LoginCp from '../components/main/LoginCp';
@@ -10,10 +11,6 @@ import GongsliPrdListTableCp from '../components/main/GongsliPrdListTableCp';
 import NonePassBookTableCp from '../components/main/NonePassBookTableCp';
 import YouTubeBtnCp from '../components/main/YouTubeBtnCp';
 import RegistryBuildingBtnCp from '../components/main/RegistryBuildingBtnCp';
-// import RealTimeCp from '../components/main/RealTimeCp';
-// import FreeCp from '../components/main/FreeCp';
-// import NoticeCp from '../components/main/NoticeCp';
-// import Questions from '../components/main/Questions';
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -37,7 +34,7 @@ const RightCon = styled.div`
 `;
 
 const MainPage = () => {
-  const [isUser, setIsUser] = useState(true);
+  const { isUser } = store();
   return (
     <MainWrapper>
       <MainWrap>

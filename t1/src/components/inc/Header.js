@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import store from '../../store/store';
 import { HeaderWrap, InnerWrap, FllWrap, FlrWrap, HeaderLink, Bookmark } from '../../style/main';
 import { bookmark } from '../../modules/bookmark';
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
+  const { isUser, isAuth } = store();
   useEffect(() => {
     (async () => {
       const rs = await axios.get('https://api.ipify.org?format=json');
@@ -21,7 +23,14 @@ const Header = () => {
           </FllWrap>
           <FlrWrap>
             {clientIp && <span>IP: {clientIp}</span>}
-            <HeaderLink to="#">로그아웃</HeaderLink>
+            <HeaderLink
+              to="#"
+              onClick={() => {
+                isAuth();
+              }}
+            >
+              {!isUser ? '로그인' : '로그아웃'}
+            </HeaderLink>
           </FlrWrap>
         </InnerWrap>
       </HeaderWrap>
