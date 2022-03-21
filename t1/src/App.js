@@ -5,6 +5,7 @@ import Header from './components/inc/Header';
 import SearchArea from './components/inc/SearchArea';
 import Navbar from './components/inc/Navbar';
 import MainPage from './pages/MainPage';
+import Footer from './components/inc/Footer';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/" element={<Navigate to="/main" />} />
         <Route path="/main" element={<MainPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };

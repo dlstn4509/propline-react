@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '../style';
 import store from '../store/store';
 
-import SlideCp from '../components/main/SlideCp';
+import SlideCp from '@/components/main/SlideCp';
 import LoginCp from '../components/main/LoginCp';
 import LogoutCp from '../components/main/LogoutCp';
 import NaverMamulMgmBtnCp from '../components/main/NaverMamulMgmBtnCp';
