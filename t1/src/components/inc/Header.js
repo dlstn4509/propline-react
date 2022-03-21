@@ -23,12 +23,7 @@ const Header = () => {
           </FllWrap>
           <FlrWrap>
             {clientIp && <span>IP: {clientIp}</span>}
-            <HeaderLink
-              to="#"
-              onClick={() => {
-                isAuth();
-              }}
-            >
+            <HeaderLink to="#" onClick={isAuth}>
               {!isUser ? '로그인' : '로그아웃'}
             </HeaderLink>
           </FlrWrap>

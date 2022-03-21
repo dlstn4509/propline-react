@@ -22,13 +22,7 @@ const LogoutCp = () => {
     <MainLoginBox>
       <AfterLoginTit>
         <User>root</User>
-        <LogoutBtn
-          to="/main"
-          style={{ color: '#888f91' }}
-          onClick={() => {
-            isAuth();
-          }}
-        >
+        <LogoutBtn to="/main" style={{ color: '#888f91' }} onClick={isAuth}>
           로그아웃
         </LogoutBtn>
       </AfterLoginTit>
