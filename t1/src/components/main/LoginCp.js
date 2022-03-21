@@ -1,5 +1,5 @@
 import React from 'react';
-import store from '../../store/store';
+import store from '@/store/store';
 import {
   MainLoginBox,
   MainLoginTit,
@@ -7,7 +7,7 @@ import {
   MainJoinBtn,
   FindIdPwWrap,
   FindIdPwLink,
-} from '../../style/main';
+} from '@/style/main';
 
 const LoginCp = () => {
   const { isAuth } = store();

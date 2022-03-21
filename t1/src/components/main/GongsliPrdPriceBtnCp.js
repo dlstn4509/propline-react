@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../../style';
+import styled from '@/style';
 import { Link } from 'react-router-dom';
 
 const GongsliPrdPriceBtn = styled(Link)`

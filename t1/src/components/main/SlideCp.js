@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styled from '../../style';
+import styled from '@/style';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y, Autoplay } from 'swiper';
 import 'swiper/css';

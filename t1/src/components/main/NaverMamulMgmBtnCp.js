@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../../style';
+import styled from '@/style';
 
 const NaverMamulMgmBtn = styled.a`
   display: inline-block;

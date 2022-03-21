@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../../style';
+import styled from '@/style';
 
 import Gongsilmaemul from './subnav/Gongsilmaemul';
 import Gongdongjunggae from './subnav/Gongdongjunggae';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { MainSearchArea, InnerWrap, LogoBox, InputWrap, IdWrap, Id, PayBtn } from '../../style/main';
+import { MainSearchArea, InnerWrap, LogoBox, InputWrap, IdWrap, Id, PayBtn } from '@/style/main';
 
 const SearchArea = () => {
   return (

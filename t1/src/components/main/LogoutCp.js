@@ -1,5 +1,5 @@
 import React from 'react';
-import store from '../../store/store';
+import store from '@/store/store';
 import {
   MainLoginBox,
   AfterLoginTit,
@@ -14,7 +14,7 @@ import {
   MyCoBrokenBtn,
   MyInfoModifyBtn,
   ContractMgmBtn,
-} from '../../style/main';
+} from '@/style/main';
 
 const LogoutCp = () => {
   const { isAuth } = store();

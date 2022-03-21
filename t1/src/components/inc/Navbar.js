@@ -8,7 +8,7 @@ import {
   Type02Link,
   Menul,
   MenulLink,
-} from '../../style/main';
+} from '@/style/main';
 
 import Gongsilmaemul from './subnav/Gongsilmaemul';
 import Gongdongjunggae from './subnav/Gongdongjunggae';

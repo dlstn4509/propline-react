@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubNavWrapper, SubNavWrap, SubNav } from '../../../style/main';
+import { SubNavWrapper, SubNavWrap, SubNav } from '@/style/main';
 
 const MamulSelf = ({ mouseLeave }) => {
   return (

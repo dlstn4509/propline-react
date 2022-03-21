@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import store from '../../store/store';
-import { HeaderWrap, InnerWrap, FllWrap, FlrWrap, HeaderLink, Bookmark } from '../../style/main';
-import { bookmark } from '../../modules/bookmark';
+import store from '@/store/store';
+import { HeaderWrap, InnerWrap, FllWrap, FlrWrap, HeaderLink, Bookmark } from '@/style/main';
+import { bookmark } from '@/modules/bookmark';
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
