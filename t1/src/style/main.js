@@ -93,6 +93,7 @@ export const LogoBox = styled.div`
 export const InputWrap = styled.div`
   display: inline-block;
   vertical-align: middle;
+  position: relative;
   input {
     width: 312px;
     height: 40px;
@@ -101,6 +102,16 @@ export const InputWrap = styled.div`
     border-radius: 50px;
     color: #464d50;
     font-size: 13px;
+  }
+  .icon {
+    position: absolute;
+    vertical-align: middle;
+    align-items: center;
+    right: 15px;
+    top: 9px;
+    bottom: 0;
+    margin: auto 0;
+    cursor: pointer;
   }
 `;
 export const IdWrap = styled.div`
@@ -124,6 +135,7 @@ export const Id = styled(Link)`
 `;
 export const PayBtn = styled(Link)`
   vertical-align: middle;
+  margin-left: 8px;
   width: 50px;
   border-radius: 50px;
   display: inline-block;

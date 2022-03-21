@@ -11,7 +11,9 @@ const SearchArea = () => {
         </LogoBox>
         <InputWrap>
           <input type="text" placeholder="예) 역삼동 636-6 or 매물번호 검색" />
-          <FaSearch />
+          <span className="icon">
+            <FaSearch />
+          </span>
         </InputWrap>
         <IdWrap>
           <Id to="#" style={{ textDecoration: 'underline' }}>
