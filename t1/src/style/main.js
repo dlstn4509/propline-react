@@ -446,3 +446,95 @@ export const ContractMgmBtn = styled(Link)`
     color: #3168ff;
   }
 `;
+
+/*************************** mamul list *****************/
+export const TableWrap = styled.table`
+  width: 370px;
+`;
+export const TableTheadTr = styled.tr`
+  border-bottom: 1px solid #888f91;
+  th {
+    padding: 0 0 17px 0;
+  }
+`;
+export const TableListTitle = styled.th`
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+`;
+export const TableListTitlePlus = styled.th`
+  text-align: right;
+  font-size: 14px;
+  font-weight: 400;
+  color: #464d50;
+`;
+export const PlusSpan = styled(Link)`
+  display: inline-block;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
+`;
+export const TableTbodyTr = styled.tr`
+  width: 100%;
+  td {
+    padding: 12px 0;
+    font-size: 13px;
+    font-weight: 400;
+    color: #464d50;
+  }
+`;
+export const TableTbodyType = styled.td`
+  width: 60px;
+`;
+export const TableTbodyAddr = styled.td`
+  width: 180px;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
+  img {
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+`;
+export const TableTbodyPrice = styled.td`
+  width: 130px;
+  span {
+    font-size: 12px;
+    color: #ffffff;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #8abcff;
+    border-radius: 3px;
+    display: inline-block;
+  }
+`;
+export const NoticeTbodyTd = styled.td`
+  width: 100%;
+  color: #888f91;
+  a {
+    color: #888f91;
+  }
+`;
+export const NoticeTbodyLink = styled(Link)`
+  display: inline-block;
+  font-size: 14px;
+
+  span {
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    background-color: #ffba31;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+`;

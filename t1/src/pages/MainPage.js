@@ -3,6 +3,10 @@ import styled from '@/style';
 import store from '@/store/store';
 
 import SlideCp from '@/components/main/SlideCp';
+import RealTimeMamulCp from '@/components/main/RealTimeMamulCp';
+import FreeMamulCp from '@/components/main/FreeMamulCp';
+import NoticeCp from '@/components/main/NoticeCp';
+import QuestionsCp from '@/components/main/QuestionsCp';
 import LoginCp from '@/components/main/LoginCp';
 import LogoutCp from '@/components/main/LogoutCp';
 import NaverMamulMgmBtnCp from '@/components/main/NaverMamulMgmBtnCp';
@@ -28,6 +32,17 @@ const LeftCon = styled.div`
   display: table-cell;
   vertical-align: top;
 `;
+const ListWrapper = styled.div`
+  display: flex;
+  padding-right: 24px;
+  justify-content: space-between;
+`;
+const NoticeWrapper = styled.div`
+  display: flex;
+  padding-right: 24px;
+  justify-content: space-between;
+  margin: 60px 0;
+`;
 const RightCon = styled.div`
   width: 196px;
   display: table-cell;
@@ -40,6 +55,14 @@ const MainPage = () => {
       <MainWrap>
         <LeftCon>
           <SlideCp />
+          <ListWrapper>
+            <RealTimeMamulCp />
+            <FreeMamulCp />
+          </ListWrapper>
+          <NoticeWrapper>
+            <NoticeCp />
+            <QuestionsCp />
+          </NoticeWrapper>
         </LeftCon>
         <RightCon>
           {!isUser && <LoginCp />}
