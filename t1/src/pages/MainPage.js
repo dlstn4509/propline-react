@@ -49,9 +49,17 @@ const RightCon = styled.div`
 `;
 
 const MainPage = () => {
-  const { isUser } = store();
+  const { isUser, quickMenuTop, setQuickMenuTop } = store();
+  const onWheel = (e) => {
+    let y = e.deltaY;
+    if (y > 0 && quickMenuTop < 800) {
+      setQuickMenuTop(y);
+    } else if (y < 0 && quickMenuTop > 0) {
+      setQuickMenuTop(y);
+    }
+  };
   return (
-    <MainWrapper>
+    <MainWrapper onWheel={onWheel}>
       <MainWrap>
         <LeftCon>
           <SlideCp />

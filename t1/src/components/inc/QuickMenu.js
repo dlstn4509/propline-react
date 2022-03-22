@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from '@/style';
+import store from '@/store/store';
 import { Link } from 'react-router-dom';
 
 const QuickMenuContainer = styled.div`
@@ -98,6 +99,7 @@ const TopWrap = styled.div`
   justify-content: center;
   align-items: center;
   color: #888f91;
+  cursor: pointer;
   img {
     margin-right: 4px;
   }
@@ -109,9 +111,21 @@ const ImgWrap = styled(Link)`
 `;
 
 const QuickMenu = () => {
+  const { quickMenuTop, setQuickMenuTop } = store();
+  const topClick = () => {
+    window.scrollTo(0, 0);
+  };
+  const onWheel = (e) => {
+    let y = e.deltaY;
+    if (y > 0 && quickMenuTop < 800) {
+      setQuickMenuTop(y);
+    } else if (y < 0 && quickMenuTop > 0) {
+      setQuickMenuTop(y);
+    }
+  };
   return (
     <QuickMenuContainer>
-      <QuiclMenuWrapper>
+      <QuiclMenuWrapper style={{ top: quickMenuTop }} onWheel={onWheel}>
         <Title>빠른메뉴</Title>
         <QuickMenuWrap>
           <QuiceMenu01 to="/main">
@@ -131,7 +145,7 @@ const QuickMenu = () => {
             네이버 매물관리
           </QuiceMenu04>
         </QuickMenuWrap>
-        <TopWrap>
+        <TopWrap onClick={topClick}>
           <img src={process.env.REACT_APP_URL + 'img/top_btn112.png'} alt="" />
           TOP
         </TopWrap>
