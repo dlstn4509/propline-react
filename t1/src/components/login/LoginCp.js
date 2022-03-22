@@ -64,10 +64,11 @@ const BtnWrap = styled.button`
   margin-bottom: 25px;
 `;
 const SignUpWrap = styled.div`
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
   color: #464d50;
   text-align: center;
-  width: 100%;
-  font-weight: 500;
 `;
 
 const LoginCp = () => {
@@ -113,7 +114,9 @@ const LoginCp = () => {
           </ReMemberId>
         </FindIdPwWrap>
         <BtnWrap>공실클럽 로그인</BtnWrap>
-        <SignUpWrap>회원가입</SignUpWrap>
+        <SignUpWrap>
+          <Link to="/signup">회원가입</Link>
+        </SignUpWrap>
       </LoginForm>
     </LoginCpWrap>
   );

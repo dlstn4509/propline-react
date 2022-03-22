@@ -8,6 +8,7 @@ import Navbar from '@/components/inc/Navbar';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';
+import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/main" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/businesssignup" element={<BusinessSignUpPage />} />
       </Routes>
       <FooterText />
       <Footer />
