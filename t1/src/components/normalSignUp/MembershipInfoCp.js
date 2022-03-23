@@ -12,8 +12,9 @@ import {
 } from '@/style/businessSignUp';
 import { Link } from 'react-router-dom';
 
-import TelNumArrayCp from './TelNumArrayCp';
-import MailOptionCp from './MailOptionCp';
+import TelNumArrayCp from '../businessSignUp/TelNumArrayCp';
+import FaxNumArrayCp from '../businessSignUp/FaxNumArrayCp';
+import MailOptionCp from '../businessSignUp/MailOptionCp';
 
 const MembershipInfoCp = () => {
   const [isMarketing, setIsMarketing] = useState(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
@@ -98,15 +99,35 @@ const MembershipInfoCp = () => {
             </TdSecond>
           </Tr>
           <Tr>
-            <TdFirst>
-              일반전화 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
+            <TdFirst>일반전화</TdFirst>
+            <TdSecond>
               <FlexDiv>
                 <TelNumArrayCp />-
-                <Input type="text" width={'73px'} mr={'10px'} ml={'10px'} />-
-                <Input type="text" width={'73px'} ml={'10px'} />
+                <Input width={'73px'} mr={'10px'} ml={'10px'} type="text" />-
+                <Input width={'73px'} ml={'10px'} type="text" />
               </FlexDiv>
+            </TdSecond>
+            <TdFirst>팩스번호</TdFirst>
+            <TdSecond>
+              <FlexDiv>
+                <FaxNumArrayCp />-
+                <Input width={'73px'} mr={'10px'} ml={'10px'} type="text" />-
+                <Input width={'73px'} ml={'10px'} type="text" />
+              </FlexDiv>
+            </TdSecond>
+          </Tr>
+          <Tr>
+            <TdFirst>
+              주소 <RedStar>*</RedStar>
+            </TdFirst>
+            <TdSecond colSpan="3">
+              <FlexDiv style={{ marginBottom: '10px' }}>
+                <Input type="text" width={'73px'} mr={'20px'} placeholder="우편번호" />
+                <div className="btn">우편번호찾기</div>
+              </FlexDiv>
+              <Input type="text" width={'410px'} mb={'10px'} placeholder="지번주소" />
+              <Input type="text" width={'410px'} mb={'10px'} placeholder="도로명주소" />
+              <Input type="text" width={'410px'} placeholder="상세주소를 입력하세요(건물명, 동/호수 등)" />
             </TdSecond>
           </Tr>
           <Tr style={{ borderBottom: '1px solid #dae1e7' }}>

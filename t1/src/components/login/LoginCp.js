@@ -20,6 +20,7 @@ const TextWrap = styled.div`
 const LoginForm = styled.form`
   input {
     height: 50px;
+    width: 344px;
     font-size: 13px;
     color: #888f91;
     border: 1px solid #dae1e7;
@@ -54,13 +55,16 @@ const ReMemberId = styled.div`
   }
 `;
 const BtnWrap = styled.button`
-  width: 100%;
-  padding: 13px 0;
-  background-color: #3168ff;
-  color: #ffffff;
+  width: 344px;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
+  color: #ffffff;
   text-align: center;
+  text-decoration: none;
+  background-color: #3168ff;
+  padding: 13px 0 14px 0;
+  border-radius: 5px;
+  display: inline-block;
   margin-bottom: 25px;
 `;
 const SignUpWrap = styled.div`

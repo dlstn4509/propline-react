@@ -8,6 +8,7 @@ import styled, {
   Input,
   FlexDiv,
   RedStar,
+  Label,
 } from '@/style/businessSignUp';
 import { Link } from 'react-router-dom';
 
@@ -15,21 +16,6 @@ import TelNumArrayCp from './TelNumArrayCp';
 import FaxNumArrayCp from './FaxNumArrayCp';
 import FavoriteAreaCp from './FavoriteAreaCp';
 import MainIndustryCp from './MainIndustryCp';
-import AggrePrivacyCp from './AggrePrivacyCp';
-
-const Label = styled.label`
-  display: inline-block;
-  padding: 0.5em 0.75em;
-  color: #999;
-  font-size: inherit;
-  line-height: normal;
-  vertical-align: middle;
-  background-color: #fdfdfd;
-  cursor: pointer;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: 0.25em;
-`;
 
 const CompanyInfoCp = () => {
   const onChange = (e) => {
@@ -39,6 +25,12 @@ const CompanyInfoCp = () => {
     <>
       <SubTitle>업체정보</SubTitle>
       <TableWrap>
+        <colgroup>
+          <col style={{ width: '180px' }} />
+          <col style={{ width: '320px' }} />
+          <col style={{ width: '180px' }} />
+          <col style={{ width: '320px' }} />
+        </colgroup>
         <tbody>
           <Tr>
             <TdFirst>
@@ -183,7 +175,6 @@ const CompanyInfoCp = () => {
           </tr>
         </tbody>
       </TableWrap>
-      <AggrePrivacyCp />
     </>
   );
 };

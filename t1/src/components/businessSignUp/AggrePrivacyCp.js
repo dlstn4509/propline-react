@@ -9,7 +9,7 @@ const AggrePrivacyWrap = styled.div`
   margin-top: 60px;
   padding-bottom: 40px;
   border-bottom: 1px solid #464d50;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   img {
     cursor: pointer;
   }

@@ -2,12 +2,13 @@ import React from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
-import BusinessSignUpInfoCp from '@/components/businessSignUp/BusinessSignUpInfoCp';
-import MembershipInfoCp from '@/components/businessSignUp/MembershipInfoCp';
-import CompanyInfoCp from '@/components/businessSignUp/CompanyInfoCp';
+import NormalSignUpInfoCp from '@/components/normalSignUp/NormalSignUpInfoCp';
+import MemberTypeCp from '@/components/normalSignUp/MemberTypeCp';
+import MembershipInfoCp from '@/components/normalSignUp/MembershipInfoCp';
+import BillInfoCp from '@/components/normalSignUp/BillInfoCp';
 import AggrePrivacyCp from '../components/businessSignUp/AggrePrivacyCp';
 
-const BusinessSignUpPageWrapper = styled.div`
+const NormalSignUpPageWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -36,13 +37,14 @@ const BtnSubmit = styled.button`
   }
 `;
 
-const BusinessSignUpPage = () => {
+const NormalSignUpPage = () => {
   return (
-    <BusinessSignUpPageWrapper>
+    <NormalSignUpPageWrapper>
       <BusinessSignUpCpForm action="">
-        <BusinessSignUpInfoCp />
+        <NormalSignUpInfoCp />
+        <MemberTypeCp />
         <MembershipInfoCp />
-        <CompanyInfoCp />
+        <BillInfoCp />
         <AggrePrivacyCp />
         <BtnWrap>
           <BtnSubmit bgc={'#888f91'} type="button">
@@ -51,8 +53,8 @@ const BusinessSignUpPage = () => {
           <BtnSubmit bgc={'#3168ff'}>회원가입</BtnSubmit>
         </BtnWrap>
       </BusinessSignUpCpForm>
-    </BusinessSignUpPageWrapper>
+    </NormalSignUpPageWrapper>
   );
 };
 
-export default React.memo(BusinessSignUpPage);
+export default React.memo(NormalSignUpPage);

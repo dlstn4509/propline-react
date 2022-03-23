@@ -19,7 +19,6 @@ export const Tr = styled.tr`
 export const TdFirst = styled.td`
   background-color: #f9fbfc;
   padding: 20px 0 20px 15px;
-  width: 180px;
 `;
 export const RedStar = styled.span`
   color: red;
@@ -95,4 +94,17 @@ export const IsMarketingWrap = styled.div`
     margin-right: 10px;
     cursor: pointer;
   }
+`;
+export const Label = styled.label`
+  display: inline-block;
+  padding: 0.5em 0.75em;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: 0.25em;
 `;
