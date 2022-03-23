@@ -11,10 +11,11 @@ const MemberTypeWrap = styled.div`
 const MemberTypeCp = () => {
   const [img, setImg] = useState(process.env.REACT_APP_URL + 'img/member_type_13.png');
   const clickWrap = (e) => {
-    let clickCoordsX = e.clientX;
-    if (clickCoordsX < 545) {
+    let rect = e.target.getBoundingClientRect();
+    let clickCoordsX = e.clientX - rect.left;
+    if (clickCoordsX < 330) {
       setImg(process.env.REACT_APP_URL + 'img/member_type_13.png');
-    } else if (clickCoordsX >= 545 && clickCoordsX < 878) {
+    } else if (clickCoordsX >= 330 && clickCoordsX < 660) {
       setImg(process.env.REACT_APP_URL + 'img/member_type_12.png');
     } else {
       setImg(process.env.REACT_APP_URL + 'img/member_type_11.png');
