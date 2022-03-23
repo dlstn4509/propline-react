@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { SubTitle, TableWrap, Tr, TdFirst, TdSecond, IsMarketingWrap } from '@/style/businessSignUp';
+import {
+  SubTitle,
+  TableWrap,
+  Tr,
+  TdFirst,
+  TdSecond,
+  IsMarketingWrap,
+  Input,
+  FlexDiv,
+  RedStar,
+} from '@/style/businessSignUp';
 import { Link } from 'react-router-dom';
 
 import MailOptionCp from './MailOptionCp';
@@ -18,11 +28,11 @@ const MembershipInfoCp = () => {
         <tbody>
           <Tr>
             <TdFirst>
-              아이디(대표) <span>*</span>
+              아이디(대표) <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input className="input01" type="text" />
+              <FlexDiv>
+                <Input type="text" mr={'20px'} />
                 <div className="btn">아이디 중복체크</div>
                 <div>
                   <div>* 영문 소문자, 숫자 조합 6자 ~ 12자 (변경불가)</div>
@@ -30,16 +40,16 @@ const MembershipInfoCp = () => {
                     * 대표아이디에 순번이 붙은 직원아이디가 자동으로 생성됩니다. <span>?</span>
                   </div>
                 </div>
-              </div>
+              </FlexDiv>
             </TdSecond>
           </Tr>
           <Tr>
             <TdFirst>
-              비밀번호 <span>*</span>
+              비밀번호 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input className="input01" type="text" />
+              <FlexDiv>
+                <Input type="text" mr={'20px'} />
                 <div>
                   <div>
                     * 8~20자 영문 대소문자, 숫자, 특수문자 2가지 이상 조합 (~!@#$%^&*()_+ 특수문자만 사용
@@ -47,12 +57,12 @@ const MembershipInfoCp = () => {
                   </div>
                   <div>* 3개 이상 연속되는 동일한 문자/숫자 제외, 아이디와 동일한 비밀번호 제외</div>
                 </div>
-              </div>
+              </FlexDiv>
             </TdSecond>
           </Tr>
           <Tr>
             <TdFirst>
-              비밀번호 확인 <span>*</span>
+              비밀번호 확인 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
               <div className="btn btnBlue">휴대폰 번호인증</div>
@@ -60,13 +70,13 @@ const MembershipInfoCp = () => {
           </Tr>
           <Tr>
             <TdFirst>
-              이름 <span>*</span>
+              이름 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
               <img src={process.env.REACT_APP_URL + 'img/icon_bang.gif'} alt="" /> 본인인증필요
             </TdSecond>
             <TdFirst>
-              휴대폰 <span>*</span>
+              휴대폰 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
               <img src={process.env.REACT_APP_URL + 'img/icon_bang.gif'} alt="" /> 본인인증필요
@@ -74,26 +84,26 @@ const MembershipInfoCp = () => {
           </Tr>
           <Tr>
             <TdFirst>
-              일반전화 <span>*</span>
+              일반전화 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input className="input02" type="text" />-
-                <input className="input02" type="text" />-
-                <input className="input02" type="text" />
-              </div>
+              <FlexDiv>
+                <Input type="text" width={'73px'} mr={'10px'} />-
+                <Input type="text" width={'73px'} mr={'10px'} ml={'10px'} />-
+                <Input type="text" width={'73px'} ml={'10px'} />
+              </FlexDiv>
             </TdSecond>
           </Tr>
           <Tr style={{ borderBottom: '1px solid #dae1e7' }}>
             <TdFirst>
-              이메일 <span>*</span>
+              이메일 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <input className="input01" type="text" style={{ marginRight: '0' }} />@
-                <input className="input01" type="text" />
+              <FlexDiv>
+                <Input type="text" mr={'10px'} />@
+                <Input type="text" mr={'20px'} ml={'10px'} />
                 <MailOptionCp />
-              </div>
+              </FlexDiv>
             </TdSecond>
           </Tr>
         </tbody>

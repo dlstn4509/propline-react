@@ -20,30 +20,28 @@ export const TdFirst = styled.td`
   background-color: #f9fbfc;
   padding: 20px 0 20px 15px;
   width: 180px;
-  span {
-    color: red;
-    font-size: 14px;
+`;
+export const RedStar = styled.span`
+  color: red;
+  font-size: 14px;
+`;
+export const Input = styled.input`
+  width: ${(props) => (props.width ? props.width : '177px')};
+  color: ${(props) => props.color};
+  margin-right: ${(props) => (props.mr ? props.mr : 0)};
+  margin-left: ${(props) => (props.ml ? props.ml : 0)};
+  margin-bottom: ${(props) => (props.mb ? props.mb : 0)};
+  display: block;
+  :focus {
+    border: 2px solid #000000;
   }
+`;
+export const FlexDiv = styled.div`
+  display: flex;
+  align-items: center;
 `;
 export const TdSecond = styled.td`
   padding: 10px 0 10px 15px;
-  .input01 {
-    width: 177px;
-    margin-right: 20px;
-    :focus {
-      border: 2px solid #000000;
-    }
-  }
-  .input02 {
-    width: 73px;
-    margin: 0 5px;
-    :focus {
-      border: 2px solid #000000;
-    }
-    :first-child {
-      margin-left: 0;
-    }
-  }
   .btn {
     font-size: 13px;
     font-family: Noto Sans KR;
