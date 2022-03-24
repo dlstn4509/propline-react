@@ -16,11 +16,31 @@ import TelNumArrayCp from './TelNumArrayCp';
 import MailOptionCp from './MailOptionCp';
 
 const MembershipInfoCp = () => {
+  const [phone01, setPhone01] = useState('02');
+  const [mailOptionValue, setMailOptionValue] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [member_name, setMember_name] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [gender, setGender] = useState('');
+  const [mobile_company, setMobile_company] = useState('');
+  const [is_foreigner, setIs_foreigner] = useState('');
+  const [is_certified_mobile, setIs_certified_mobile] = useState('');
+  const [is_agree_receive, setIs_agree_receive] = useState(1);
+  const changePhone01 = (value) => {
+    setPhone01(value);
+  };
+  const changeMailOption = (value) => {
+    setMailOptionValue(value);
+  };
   const [isMarketing, setIsMarketing] = useState(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
   const isMarketingClick = () => {
-    isMarketing === 'https://t1.propline.co.kr/img/checkbox_01_on.png'
-      ? setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_off.png')
-      : setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_on.png');
+    if (isMarketing === 'https://t1.propline.co.kr/img/checkbox_01_on.png') {
+      setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_off.png');
+      setIs_agree_receive(0);
+    } else {
+      setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_on.png');
+      setIs_agree_receive(1);
+    }
   };
   return (
     <>
@@ -39,7 +59,7 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <Input type="text" mr={'20px'} />
+                <Input type="text" mr={'20px'} name="member_id" />
                 <div className="btn">아이디 중복체크</div>
                 <div>
                   <div>* 영문 소문자, 숫자 조합 6자 ~ 12자 (변경불가)</div>
@@ -56,7 +76,7 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <Input type="text" mr={'20px'} />
+                <Input type="password" mr={'20px'} name="member_pw" />
                 <div>
                   <div>
                     * 8~20자 영문 대소문자, 숫자, 특수문자 2가지 이상 조합 (~!@#$%^&*()_+ 특수문자만 사용
@@ -72,7 +92,7 @@ const MembershipInfoCp = () => {
               비밀번호 확인 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <Input type="text" />
+              <Input type="password" />
             </TdSecond>
           </Tr>
           <Tr>
@@ -81,6 +101,10 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <div className="btn btnBlue">휴대폰 번호인증</div>
+              <input type="hidden" name="birthday" value={birthday} />
+              <input type="hidden" name="is_foreigner" value={is_foreigner} />
+              <input type="hidden" name="gender" value={gender} />
+              <input type="hidden" name="is_certified_mobile" value={is_certified_mobile} />
             </TdSecond>
           </Tr>
           <Tr>
@@ -89,12 +113,15 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond>
               <img src={process.env.REACT_APP_URL + 'img/icon_bang.gif'} alt="" /> 본인인증필요
+              <input type="hidden" name="member_name" value={member_name} />
             </TdSecond>
             <TdFirst>
               휴대폰 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
               <img src={process.env.REACT_APP_URL + 'img/icon_bang.gif'} alt="" /> 본인인증필요
+              <input type="hidden" name="mobile" value={mobile} />
+              <input type="hidden" name="mobile_company" value={mobile_company} />
             </TdSecond>
           </Tr>
           <Tr>
@@ -103,9 +130,10 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <TelNumArrayCp />-
-                <Input type="text" width={'73px'} mr={'10px'} ml={'10px'} />-
-                <Input type="text" width={'73px'} ml={'10px'} />
+                <TelNumArrayCp changePhone01={changePhone01} />-
+                <input type="hidden" name="phone01" value={phone01} />
+                <Input type="text" width={'73px'} mr={'10px'} ml={'10px'} name="phone02" />-
+                <Input type="text" width={'73px'} ml={'10px'} name="phone03" />
               </FlexDiv>
             </TdSecond>
           </Tr>
@@ -115,9 +143,19 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <Input type="text" mr={'10px'} />@
-                <Input type="text" mr={'20px'} ml={'10px'} />
-                <MailOptionCp />
+                <Input type="text" mr={'10px'} name="email01" />@
+                {!mailOptionValue && <Input type="text" mr={'20px'} ml={'10px'} name="email02" />}
+                {mailOptionValue && (
+                  <Input
+                    type="text"
+                    mr={'20px'}
+                    ml={'10px'}
+                    name="email02"
+                    value={mailOptionValue}
+                    readOnly
+                  />
+                )}
+                <MailOptionCp changeMailOption={changeMailOption} />
               </FlexDiv>
             </TdSecond>
           </Tr>
@@ -126,6 +164,7 @@ const MembershipInfoCp = () => {
       <IsMarketingWrap>
         <img src={isMarketing} alt="" onClick={isMarketingClick} />
         <div>공실클럽의 마케팅 정보 및 이벤트 소식을 수신하겠습니다.</div>
+        <input type="hidden" name="is_agree_receive" value={is_agree_receive} />
       </IsMarketingWrap>
     </>
   );

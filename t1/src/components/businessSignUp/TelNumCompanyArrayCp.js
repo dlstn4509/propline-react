@@ -6,9 +6,9 @@ const SelectWrap = styled.select`
   margin-right: 10px;
 `;
 
-const TelNumArrayCp = ({ changePhone01 }) => {
+const TelNumCompanyArrayCp = ({ changeCompanyPhone01 }) => {
   const onChange = (e) => {
-    changePhone01(e.target.value);
+    changeCompanyPhone01(e.target.value);
   };
   return (
     <SelectWrap defaultValue="02" onChange={onChange}>
@@ -39,4 +39,4 @@ const TelNumArrayCp = ({ changePhone01 }) => {
   );
 };
 
-export default React.memo(TelNumArrayCp);
+export default React.memo(TelNumCompanyArrayCp);

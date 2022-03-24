@@ -6,9 +6,12 @@ const SelectWrap = styled.select`
   margin-right: 10px;
 `;
 
-const FaxNumArrayCp = () => {
+const FaxNumArrayCp = ({ changeFax01 }) => {
+  const onChange = (e) => {
+    changeFax01(e.target.value);
+  };
   return (
-    <SelectWrap defaultValue="02">
+    <SelectWrap defaultValue="02" onChange={onChange}>
       <option value="02">02</option>
       <option value="031">031</option>
       <option value="032">032</option>

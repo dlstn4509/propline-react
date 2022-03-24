@@ -39,7 +39,11 @@ const BtnSubmit = styled.button`
 const BusinessSignUpPage = () => {
   return (
     <BusinessSignUpPageWrapper>
-      <BusinessSignUpCpForm action="">
+      <BusinessSignUpCpForm
+        action={process.env.REACT_APP_URL_API + 'signup'}
+        method="post"
+        encType="multipart/form-data"
+      >
         <BusinessSignUpInfoCp />
         <MembershipInfoCp />
         <CompanyInfoCp />

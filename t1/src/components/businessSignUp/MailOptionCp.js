@@ -5,9 +5,13 @@ const SelectWrap = styled.select`
   width: 150px;
 `;
 
-const MailOptionCp = () => {
+const MailOptionCp = ({ changeMailOption }) => {
+  const onChange = (e) => {
+    console.log(e.target.value);
+    changeMailOption(e.target.value);
+  };
   return (
-    <SelectWrap name="" id="">
+    <SelectWrap onChange={onChange}>
       <option value="">-- 직접입력 --</option>
       <option value="hanmail.net">hanmail.net</option>
       <option value="naver.com">naver.com</option>
