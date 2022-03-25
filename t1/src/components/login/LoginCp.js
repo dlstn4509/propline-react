@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -79,17 +79,27 @@ const SignUpWrap = styled.div`
 `;
 
 const LoginCp = () => {
-  const { setIsUser, setLoginUser } = store();
   const navigate = useNavigate();
+  const { setIsUser, setLoginUser } = store();
   const [isCheckbox, setIsCheckbox] = useState(false);
+  const [loginIp, setLoginIp] = useState('');
+  useEffect(() => {
+    (async () => {
+      const rs = await axios.get('https://api.ipify.org?format=json');
+      setLoginIp(rs.data.ip);
+    })();
+  }, []);
   const checkboxClick = () => {
     setIsCheckbox(!isCheckbox);
   };
+
   const clickLogin = async (e) => {
     e.preventDefault();
     let id = document.querySelector('#member_id').value;
     let password = document.querySelector('#member_pw').value;
-    const { data } = await axios.get(process.env.REACT_APP_URL_API + `login?id=${id}&password=${password}`);
+    const { data } = await axios.get(
+      process.env.REACT_APP_URL_API + `login?id=${id}&password=${password}&loginIp=${loginIp}`
+    );
     if (data.success) {
       setIsUser();
       setLoginUser(data.user);
@@ -110,7 +120,7 @@ const LoginCp = () => {
       </TextWrap>
       <LoginForm>
         <input type="text" name="member_id" id="member_id" placeholder="ID" />
-        <input type="text" name="member_pw" id="member_pw" placeholder="비밀번호" />
+        <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호" />
         <FindIdPwWrap>
           <FindIdPw>
             <Link to="/main">ID/비밀번호 찾기</Link>

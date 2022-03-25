@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +37,24 @@ const BtnSubmit = styled.button`
 `;
 
 const BusinessSignUpPage = () => {
+  const [isCheck, setIsCheckId] = useState(false);
+  const checkAll = (bul) => {
+    setIsCheckId(bul);
+  };
+  const btSubmit = () => {
+    let redStar = document.querySelectorAll('.redStar');
+    for (let i = 0; i < redStar.length; i++) {
+      if (!isCheck) {
+        redStar[1].focus();
+        return false;
+      }
+      if (!redStar[i].value) {
+        redStar[i].focus();
+        return false;
+      }
+    }
+    console.log('다함');
+  };
   return (
     <BusinessSignUpPageWrapper>
       <BusinessSignUpCpForm
@@ -45,14 +63,16 @@ const BusinessSignUpPage = () => {
         encType="multipart/form-data"
       >
         <BusinessSignUpInfoCp />
-        <MembershipInfoCp />
+        <MembershipInfoCp checkAll={checkAll} />
         <CompanyInfoCp />
         <AggrePrivacyCp />
         <BtnWrap>
           <BtnSubmit bgc={'#888f91'} type="button">
             <Link to="/signup">이전페이지</Link>
           </BtnSubmit>
-          <BtnSubmit bgc={'#3168ff'}>회원가입</BtnSubmit>
+          <BtnSubmit type="button" onClick={btSubmit} bgc={'#3168ff'}>
+            회원가입
+          </BtnSubmit>
         </BtnWrap>
       </BusinessSignUpCpForm>
     </BusinessSignUpPageWrapper>

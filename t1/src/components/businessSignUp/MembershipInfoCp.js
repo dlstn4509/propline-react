@@ -16,7 +16,7 @@ import IdPwCheckCp from './IdPwCheckCp';
 import TelNumArrayCp from './TelNumArrayCp';
 import MailOptionCp from './MailOptionCp';
 
-const MembershipInfoCp = () => {
+const MembershipInfoCp = ({ checkAll }) => {
   const [phone01, setPhone01] = useState('02');
   const [mailOptionValue, setMailOptionValue] = useState('');
   const [birthday, setBirthday] = useState('');
@@ -43,6 +43,7 @@ const MembershipInfoCp = () => {
       setIs_agree_receive(1);
     }
   };
+
   return (
     <>
       <SubTitle>회원정보</SubTitle>
@@ -54,7 +55,7 @@ const MembershipInfoCp = () => {
           <col style={{ width: '320px' }} />
         </colgroup>
         <tbody>
-          <IdPwCheckCp />
+          <IdPwCheckCp checkAll={checkAll} />
           <Tr>
             <TdFirst>
               본인인증 <RedStar>*</RedStar>
@@ -92,8 +93,16 @@ const MembershipInfoCp = () => {
               <FlexDiv>
                 <TelNumArrayCp changePhone01={changePhone01} />-
                 <input type="hidden" name="phone01" value={phone01} />
-                <Input type="text" width={'73px'} mr={'10px'} ml={'10px'} name="phone02" />-
-                <Input type="text" width={'73px'} ml={'10px'} name="phone03" />
+                <Input
+                  type="text"
+                  width={'73px'}
+                  mr={'10px'}
+                  ml={'10px'}
+                  name="phone02"
+                  className="redStar"
+                />
+                -
+                <Input type="text" width={'73px'} ml={'10px'} name="phone03" className="redStar" />
               </FlexDiv>
             </TdSecond>
           </Tr>
@@ -103,8 +112,10 @@ const MembershipInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <Input type="text" mr={'10px'} name="email01" />@
-                {!mailOptionValue && <Input type="text" mr={'20px'} ml={'10px'} name="email02" />}
+                <Input type="text" mr={'10px'} name="email01" className="redStar" />@
+                {!mailOptionValue && (
+                  <Input type="text" mr={'20px'} ml={'10px'} name="email02" className="redStar" />
+                )}
                 {mailOptionValue && (
                   <Input
                     type="text"

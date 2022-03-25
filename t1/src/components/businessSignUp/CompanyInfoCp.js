@@ -129,14 +129,14 @@ const CompanyInfoCp = () => {
               업체명 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
-              <Input type="text" name="company_name" onChange={changeCompany_name} />
+              <Input type="text" name="company_name" className="redStar" onChange={changeCompany_name} />
               <input type="hidden" name="company_alias" value={company_alias} />
             </TdSecond>
             <TdFirst>
               대표자명 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
-              <Input type="text" name="president" />
+              <Input type="text" name="president" className="redStar" />
             </TdSecond>
           </Tr>
           <Tr>
@@ -145,9 +145,17 @@ const CompanyInfoCp = () => {
             </TdFirst>
             <TdSecond colSpan="3">
               <FlexDiv>
-                <Input width={'73px'} mr={'10px'} type="text" name="company_no01" />-
-                <Input width={'73px'} mr={'10px'} ml={'10px'} type="text" name="company_no02" />-
-                <Input width={'73px'} ml={'10px'} type="text" name="company_no03" />
+                <Input width={'73px'} mr={'10px'} type="text" name="company_no01" className="redStar" />-
+                <Input
+                  width={'73px'}
+                  mr={'10px'}
+                  ml={'10px'}
+                  type="text"
+                  name="company_no02"
+                  className="redStar"
+                />
+                -
+                <Input width={'73px'} ml={'10px'} type="text" name="company_no03" className="redStar" />
               </FlexDiv>
             </TdSecond>
           </Tr>
@@ -177,13 +185,13 @@ const CompanyInfoCp = () => {
               업태 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
-              <Input type="text" name="business_kind" />
+              <Input type="text" name="business_kind" className="redStar" />
             </TdSecond>
             <TdFirst>
               종목 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond>
-              <Input type="text" name="business_item" />
+              <Input type="text" name="business_item" className="redStar" />
             </TdSecond>
           </Tr>
           <Tr>
@@ -191,7 +199,7 @@ const CompanyInfoCp = () => {
               중개사무소등록번호 <RedStar>*</RedStar>
             </TdFirst>
             <TdSecond colSpan="3">
-              <Input type="text" name="registration_no" />
+              <Input type="text" name="registration_no" className="redStar" />
             </TdSecond>
           </Tr>
           <Tr>
@@ -229,6 +237,7 @@ const CompanyInfoCp = () => {
                   name="zonecode"
                   value={postCode}
                   readOnly
+                  className="redStar"
                 />
                 <div className="btn" onClick={findAddress}>
                   우편번호찾기
@@ -257,6 +266,7 @@ const CompanyInfoCp = () => {
                 placeholder="상세주소를 입력하세요(건물명, 동/호수 등)"
                 name="detail_address"
                 ref={detail_address}
+                className="redStar"
               />
               <input type="hidden" name="latitude" value={latitude} />
               <input type="hidden" name="longitude" value={longitude} />
@@ -281,8 +291,16 @@ const CompanyInfoCp = () => {
               <FlexDiv>
                 <TelNumCompanyArrayCp changeCompanyPhone01={changeCompanyPhone01} />-
                 <input type="hidden" name="companyPhone01" value={companyPhone01} />
-                <Input width={'73px'} mr={'10px'} ml={'10px'} type="text" name="companyPhone02" />-
-                <Input width={'73px'} ml={'10px'} type="text" name="companyPhone03" />
+                <Input
+                  width={'73px'}
+                  mr={'10px'}
+                  ml={'10px'}
+                  type="text"
+                  name="companyPhone02"
+                  className="redStar"
+                />
+                -
+                <Input width={'73px'} ml={'10px'} type="text" name="companyPhone03" className="redStar" />
               </FlexDiv>
             </TdSecond>
             <TdFirst>팩스번호</TdFirst>

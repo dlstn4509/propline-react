@@ -17,19 +17,24 @@ import {
 } from '@/style/main';
 
 const LogoutCp = () => {
-  const { isAuth, loginUser } = store();
+  const { setIsUser, loginUser } = store();
+  const clickLogOut = () => {
+    if (window.confirm('정말 로그아웃 하시겠습니까?')) {
+      setIsUser();
+    }
+  };
   return (
     <MainLoginBox>
       <AfterLoginTit>
         <User>root</User>
-        <LogoutBtn to="/main" style={{ color: '#888f91' }} onClick={isAuth}>
+        <LogoutBtn to="/main" style={{ color: '#888f91' }} onClick={clickLogOut}>
           로그아웃
         </LogoutBtn>
       </AfterLoginTit>
       <UserInfoBox>
         <List>
           <span className="tit">업체명</span>
-          <span className="txt">김홍근</span>
+          <span className="txt">{loginUser.company_name}</span>
         </List>
         <List>
           <span className="tit">만기</span>

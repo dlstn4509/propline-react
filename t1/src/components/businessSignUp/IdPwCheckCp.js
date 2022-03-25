@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import styled, { Tr, TdFirst, TdSecond, Input, FlexDiv, RedStar } from '@/style/businessSignUp';
 import { Link } from 'react-router-dom';
@@ -16,11 +16,11 @@ const PasswordCheckTxt = styled.div`
   color: red;
 `;
 
-const IdPwCheckCp = () => {
+const IdPwCheckCp = ({ checkAll }) => {
   const [regColor, setRegColor] = useState('#888f91');
   const [regSameColor, setRegSameColor] = useState('#888f91');
-  const [isQuestionMark, setIsQuestionMark] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
+  const [isQuestionMark, setIsQuestionMark] = useState(false);
   const idDuplication = useCallback(async () => {
     let id = document.querySelector('#member_id').value;
     const { data } = await axios.get(process.env.REACT_APP_URL_API + `signup/idduplication?id=${id}`);
@@ -41,7 +41,6 @@ const IdPwCheckCp = () => {
     let password = e.target.value;
     let reg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,20}$/;
     let regSame = /(\w)\1\1/;
-    console.log(password);
     if (!reg.test(password)) {
       setRegColor('red');
     } else if (regSame.test(password)) {
@@ -54,11 +53,20 @@ const IdPwCheckCp = () => {
   const passwordCheckKeyUp = (e) => {
     let password = document.querySelector('#member_pw').value;
     let checkPassword = e.target.value;
-    console.log(checkPassword);
     if (password === checkPassword) {
       setPasswordCheck(false);
     } else {
       setPasswordCheck(true);
+    }
+  };
+  useEffect(() => {
+    check();
+  }, [passwordKeyUp, passwordCheckKeyUp]);
+  const check = () => {
+    if (regColor === '#888f91' && regSameColor === '#888f91' && !passwordCheck) {
+      checkAll(true);
+    } else {
+      checkAll(false);
     }
   };
   return (
@@ -69,7 +77,7 @@ const IdPwCheckCp = () => {
         </TdFirst>
         <TdSecond colSpan="3">
           <FlexDiv>
-            <Input type="text" mr={'20px'} name="member_id" id="member_id" />
+            <Input type="text" mr={'20px'} name="member_id" id="member_id" className="redStar" />
             <div className="btn" onClick={idDuplication}>
               아이디 중복체크
             </div>
@@ -92,7 +100,14 @@ const IdPwCheckCp = () => {
         </TdFirst>
         <TdSecond colSpan="3">
           <FlexDiv>
-            <Input type="password" mr={'20px'} name="member_pw" id="member_pw" onKeyUp={passwordKeyUp} />
+            <Input
+              type="password"
+              mr={'20px'}
+              name="member_pw"
+              id="member_pw"
+              onKeyUp={passwordKeyUp}
+              className="redStar"
+            />
             <div>
               <Reg color={regColor}>
                 * 8~20자 영문 대소문자, 숫자, 특수문자 2가지 이상 조합 (~!@#$%^&*()_+ 특수문자만 사용 가능)
@@ -110,7 +125,7 @@ const IdPwCheckCp = () => {
         </TdFirst>
         <TdSecond colSpan="3">
           <FlexDiv>
-            <Input type="password" onKeyUp={passwordCheckKeyUp} />
+            <Input type="password" onKeyUp={passwordCheckKeyUp} className="redStar" />
             {passwordCheck && <PasswordCheckTxt>비밀번호 확인바람.</PasswordCheckTxt>}
           </FlexDiv>
         </TdSecond>
