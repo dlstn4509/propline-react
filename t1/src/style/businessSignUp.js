@@ -33,6 +33,9 @@ export const Input = styled.input`
   display: block;
   :focus {
     border: 2px solid #000000;
+    ::placeholder {
+      color: #fff;
+    }
   }
 `;
 export const FlexDiv = styled.div`

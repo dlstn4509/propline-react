@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginCpWrap = styled.div`
   width: 344px;
@@ -76,9 +79,24 @@ const SignUpWrap = styled.div`
 `;
 
 const LoginCp = () => {
+  const { setIsUser, setLoginUser } = store();
+  const navigate = useNavigate();
   const [isCheckbox, setIsCheckbox] = useState(false);
   const checkboxClick = () => {
     setIsCheckbox(!isCheckbox);
+  };
+  const clickLogin = async (e) => {
+    e.preventDefault();
+    let id = document.querySelector('#member_id').value;
+    let password = document.querySelector('#member_pw').value;
+    const { data } = await axios.get(process.env.REACT_APP_URL_API + `login?id=${id}&password=${password}`);
+    if (data.success) {
+      setIsUser();
+      setLoginUser(data.user);
+      navigate('/main');
+    } else {
+      alert('ID와 비밀번호를 확인해주세요.');
+    }
   };
   return (
     <LoginCpWrap>
@@ -91,8 +109,8 @@ const LoginCp = () => {
         로그인 후 이용가능합니다.
       </TextWrap>
       <LoginForm>
-        <input type="text" name="userId" placeholder="ID" />
-        <input type="text" name="userPw" placeholder="비밀번호" />
+        <input type="text" name="member_id" id="member_id" placeholder="ID" />
+        <input type="text" name="member_pw" id="member_pw" placeholder="비밀번호" />
         <FindIdPwWrap>
           <FindIdPw>
             <Link to="/main">ID/비밀번호 찾기</Link>
@@ -117,7 +135,7 @@ const LoginCp = () => {
             <div>아이디저장</div>
           </ReMemberId>
         </FindIdPwWrap>
-        <BtnWrap>공실클럽 로그인</BtnWrap>
+        <BtnWrap onClick={clickLogin}>공실클럽 로그인</BtnWrap>
         <SignUpWrap>
           <Link to="/signup">회원가입</Link>
         </SignUpWrap>

@@ -1,5 +1,5 @@
 /* global daum */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import axios from 'axios';
 import styled, {
   SubTitle,
@@ -42,6 +42,7 @@ const CompanyInfoCp = () => {
   const [building_no_m, setBuilding_no_m] = useState('');
   const [building_no_s, setBuilding_no_s] = useState('');
   const [building_name, setBuilding_name] = useState('');
+  const detail_address = useRef();
   const changeCompany_name = (e) => {
     setCompany_alias(e.target.value);
   };
@@ -85,13 +86,16 @@ const CompanyInfoCp = () => {
         let rs = await axios(config);
         setPostCode(data.zonecode);
         setJibunAddress(data.jibunAddress);
-        setRoadAddress(data.roadAddress);
+        setRoadAddress(
+          roadAddressSplit[roadAddressSplit.length - 2] + ' ' + roadAddressSplit[roadAddressSplit.length - 1]
+        );
+        console.log(roadAddress);
         setLatitude(rs.data.documents[0].x);
         setLongitude(rs.data.documents[0].y);
         setLegal_dong_code(data.bcode);
         setSido(data.sido);
         setSigungu(data.sigungu);
-        seteUpmyeondong(data.bname1);
+        seteUpmyeondong(data.bname1 ? data.bname1 : data.bname);
         setRi(data.bname2 ? data.bname2 : '');
         setIs_mountain(data.buildingCode.charAt(10) === 0 ? 1 : 0);
         setLand_no_m(landNoM);
@@ -106,6 +110,7 @@ const CompanyInfoCp = () => {
         console.log(data);
       },
     }).open();
+    detail_address.current.focus();
   }, []);
 
   return (
@@ -251,6 +256,7 @@ const CompanyInfoCp = () => {
                 width={'410px'}
                 placeholder="상세주소를 입력하세요(건물명, 동/호수 등)"
                 name="detail_address"
+                ref={detail_address}
               />
               <input type="hidden" name="latitude" value={latitude} />
               <input type="hidden" name="longitude" value={longitude} />

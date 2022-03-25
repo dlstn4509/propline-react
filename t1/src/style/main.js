@@ -46,11 +46,13 @@ export const FllWrap = styled.div`
 export const FlrWrap = styled.div`
   ${Flr}
 `;
-export const HeaderLink = styled(Link)`
+export const HeaderLink = styled.div`
+  display: inline-block;
   font-size: 14px;
   color: #464d50;
   vertical-align: middle;
   margin-left: 20px;
+  cursor: pointer;
   :hover {
     text-decoration: underline;
     color: #888f91;
@@ -131,6 +133,7 @@ export const IdWrap = styled.div`
 `;
 export const Id = styled(Link)`
   vertical-align: middle;
+  margin-right: 10px;
   font-size: 13px;
 `;
 export const PayBtn = styled(Link)`

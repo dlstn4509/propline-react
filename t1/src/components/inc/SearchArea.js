@@ -1,8 +1,10 @@
 import React from 'react';
+import store from '@/store/store';
 import { FaSearch } from 'react-icons/fa';
 import { MainSearchArea, InnerWrap, LogoBox, InputWrap, IdWrap, Id, PayBtn } from '@/style/main';
 
 const SearchArea = () => {
+  const { isUser, loginUser } = store();
   return (
     <MainSearchArea>
       <InnerWrap>
@@ -15,13 +17,15 @@ const SearchArea = () => {
             <FaSearch />
           </span>
         </InputWrap>
-        <IdWrap>
-          <Id to="#" style={{ textDecoration: 'underline' }}>
-            dlstn7609님
-          </Id>
-          <span>2059-03-04 만기</span>
-          <PayBtn to="#">결제</PayBtn>
-        </IdWrap>
+        {isUser && (
+          <IdWrap>
+            <Id to="#" style={{ textDecoration: 'underline' }}>
+              {loginUser.member_id}님
+            </Id>
+            <span>2059-03-04 만기</span>
+            <PayBtn to="#">결제</PayBtn>
+          </IdWrap>
+        )}
       </InnerWrap>
     </MainSearchArea>
   );

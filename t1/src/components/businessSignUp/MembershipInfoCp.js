@@ -12,6 +12,7 @@ import {
 } from '@/style/businessSignUp';
 import { Link } from 'react-router-dom';
 
+import IdPwCheckCp from './IdPwCheckCp';
 import TelNumArrayCp from './TelNumArrayCp';
 import MailOptionCp from './MailOptionCp';
 
@@ -34,11 +35,11 @@ const MembershipInfoCp = () => {
   };
   const [isMarketing, setIsMarketing] = useState(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
   const isMarketingClick = () => {
-    if (isMarketing === 'https://t1.propline.co.kr/img/checkbox_01_on.png') {
-      setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_off.png');
+    if (isMarketing === process.env.REACT_APP_URL + 'img/checkbox_01_on.png') {
+      setIsMarketing(process.env.REACT_APP_URL + 'img/checkbox_01_off.png');
       setIs_agree_receive(0);
     } else {
-      setIsMarketing('https://t1.propline.co.kr/img/checkbox_01_on.png');
+      setIsMarketing(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
       setIs_agree_receive(1);
     }
   };
@@ -53,48 +54,7 @@ const MembershipInfoCp = () => {
           <col style={{ width: '320px' }} />
         </colgroup>
         <tbody>
-          <Tr>
-            <TdFirst>
-              아이디(대표) <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
-              <FlexDiv>
-                <Input type="text" mr={'20px'} name="member_id" />
-                <div className="btn">아이디 중복체크</div>
-                <div>
-                  <div>* 영문 소문자, 숫자 조합 6자 ~ 12자 (변경불가)</div>
-                  <div>
-                    * 대표아이디에 순번이 붙은 직원아이디가 자동으로 생성됩니다. <span>?</span>
-                  </div>
-                </div>
-              </FlexDiv>
-            </TdSecond>
-          </Tr>
-          <Tr>
-            <TdFirst>
-              비밀번호 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
-              <FlexDiv>
-                <Input type="password" mr={'20px'} name="member_pw" />
-                <div>
-                  <div>
-                    * 8~20자 영문 대소문자, 숫자, 특수문자 2가지 이상 조합 (~!@#$%^&*()_+ 특수문자만 사용
-                    가능)
-                  </div>
-                  <div>* 3개 이상 연속되는 동일한 문자/숫자 제외, 아이디와 동일한 비밀번호 제외</div>
-                </div>
-              </FlexDiv>
-            </TdSecond>
-          </Tr>
-          <Tr>
-            <TdFirst>
-              비밀번호 확인 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
-              <Input type="password" />
-            </TdSecond>
-          </Tr>
+          <IdPwCheckCp />
           <Tr>
             <TdFirst>
               본인인증 <RedStar>*</RedStar>

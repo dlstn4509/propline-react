@@ -17,7 +17,7 @@ import {
 } from '@/style/main';
 
 const LogoutCp = () => {
-  const { isAuth } = store();
+  const { isAuth, loginUser } = store();
   return (
     <MainLoginBox>
       <AfterLoginTit>
