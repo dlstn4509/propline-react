@@ -26,7 +26,7 @@ const LogoutCp = () => {
   return (
     <MainLoginBox>
       <AfterLoginTit>
-        <User>root</User>
+        <User>{loginUser.member_id}</User>
         <LogoutBtn to="/main" style={{ color: '#888f91' }} onClick={clickLogOut}>
           로그아웃
         </LogoutBtn>

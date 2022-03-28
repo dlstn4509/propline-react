@@ -41,41 +41,42 @@ const BusinessSignUpPage = () => {
   const checkAll = (bul) => {
     setIsCheckId(bul);
   };
-  const btSubmit = () => {
+  const btSubmit = (e) => {
     let redStar = document.querySelectorAll('.redStar');
     for (let i = 0; i < redStar.length; i++) {
       if (!isCheck) {
         redStar[1].focus();
         return false;
-      }
-      if (!redStar[i].value) {
+      } else if (!redStar[i].value) {
         redStar[i].focus();
         return false;
       }
     }
-    console.log('다함');
+    e.target.form.submit();
   };
   return (
-    <BusinessSignUpPageWrapper>
-      <BusinessSignUpCpForm
-        action={process.env.REACT_APP_URL_API + 'signup'}
-        method="post"
-        encType="multipart/form-data"
-      >
-        <BusinessSignUpInfoCp />
-        <MembershipInfoCp checkAll={checkAll} />
-        <CompanyInfoCp />
-        <AggrePrivacyCp />
-        <BtnWrap>
-          <BtnSubmit bgc={'#888f91'} type="button">
-            <Link to="/signup">이전페이지</Link>
-          </BtnSubmit>
-          <BtnSubmit type="button" onClick={btSubmit} bgc={'#3168ff'}>
-            회원가입
-          </BtnSubmit>
-        </BtnWrap>
-      </BusinessSignUpCpForm>
-    </BusinessSignUpPageWrapper>
+    <>
+      <BusinessSignUpPageWrapper>
+        <BusinessSignUpCpForm
+          action={process.env.REACT_APP_URL_API + 'signup'}
+          method="post"
+          encType="multipart/form-data"
+        >
+          <BusinessSignUpInfoCp />
+          <MembershipInfoCp checkAll={checkAll} />
+          <CompanyInfoCp />
+          <AggrePrivacyCp />
+          <BtnWrap>
+            <BtnSubmit bgc={'#888f91'} type="button">
+              <Link to="/signup">이전페이지</Link>
+            </BtnSubmit>
+            <BtnSubmit type="button" onClick={btSubmit} bgc={'#3168ff'}>
+              회원가입
+            </BtnSubmit>
+          </BtnWrap>
+        </BusinessSignUpCpForm>
+      </BusinessSignUpPageWrapper>
+    </>
   );
 };
 

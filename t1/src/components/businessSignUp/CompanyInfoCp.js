@@ -99,7 +99,7 @@ const CompanyInfoCp = () => {
         setRi(data.bname2 ? data.bname2 : '');
         setIs_mountain(data.buildingCode.charAt(10) === 0 ? 1 : 0);
         setLand_no_m(landNoM);
-        setLand_no_s(landNoS ? landNoS : '');
+        setLand_no_s(landNoS ? landNoS : 0);
         setBuilding_no_m(buildingNoM);
         setBuilding_no_s(buildingNoS ? buildingNoS : 0);
         setBuilding_name(

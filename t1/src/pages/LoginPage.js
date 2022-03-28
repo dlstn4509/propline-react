@@ -3,7 +3,7 @@ import styled from '@/style';
 
 import LoginCp from '@/components/login/LoginCp';
 
-const LoginWrapper = styled.div`
+const LoginPageWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -11,9 +11,9 @@ const LoginWrapper = styled.div`
 
 const LoginPage = () => {
   return (
-    <LoginWrapper>
+    <LoginPageWrapper>
       <LoginCp />
-    </LoginWrapper>
+    </LoginPageWrapper>
   );
 };
 

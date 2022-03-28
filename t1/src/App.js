@@ -10,6 +10,7 @@ import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';
 import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
+import ItemPage from '@/pages/ItemPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/businesssignup" element={<BusinessSignUpPage />} />
         <Route path="/normalsignup" element={<NormalSignUpPage />} />
+        <Route path="/item" element={<ItemPage />} />
       </Routes>
       <FooterText />
       <Footer />
