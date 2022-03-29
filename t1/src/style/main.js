@@ -262,6 +262,9 @@ export const SubNavWrapper = styled.div`
   left: 0;
   bottom: -50px;
   font-size: 0;
+  .active {
+    font-weight: 600;
+  }
 `;
 export const SubNavWrap = styled.ul`
   width: 1000px;

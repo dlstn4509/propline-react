@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
 import SearchDetailCp from './SearchDetailCp';
 import MapCp from './MapCp';
+import TotalCountCp from './TotalCountCp';
+import SubCp from './SubCp';
+
+import { typeArr, yearArr, parkingNumArr, plusFilter } from './SearchArr';
 
 const SearchCpWrapper = styled.div`
   border: 1px solid #2a55cc;
+  margin-bottom: 70px;
 `;
 const FilterWrapper = styled.div`
   display: flex;
@@ -35,45 +40,16 @@ const Filter = styled.div`
   padding: 10px 0 10px 10px;
   height: 133px;
   overflow-y: scroll;
+  div:focus {
+    color: blue;
+  }
 `;
 const CheckBox = styled.div`
   width: 49%;
   height: 20px;
 `;
 
-const SearchCp = () => {
-  const yearArr = [
-    '전체',
-    '2022년 이후',
-    '2021년 이후',
-    '2020년 이후',
-    '2019년 이후',
-    '2018년 이후',
-    '2017년 이후',
-    '2016년 이후',
-    '2015년 이후',
-    '2014년 이후',
-    '2013년 이후',
-    '2012년 이후',
-    '2011년 이후',
-    '2010년 이후',
-    '2009년 이후',
-    '2008년 이후',
-    '2008년 이전',
-  ];
-  const parkingNumArr = [
-    '전체',
-    '1대',
-    '1대 ~ 2대',
-    '2대',
-    '2대 ~ 3대',
-    '3대',
-    '3대 ~ 4대',
-    '4대',
-    '4대 ~ 5대',
-    '5대 이상',
-  ];
-  const plusFilter = ['건물사진 있음', '내부사진 있음', '동영상 있음', '관리비포함', '현재공실', '금액네고'];
+const SearchAllCp = () => {
   const clickImg = (e) => {
     e.target.src === 'https://t1.propline.co.kr/img/checkbox_03_off.png'
       ? (e.target.src = 'https://t1.propline.co.kr/img/checkbox_03_on.png')
@@ -86,17 +62,16 @@ const SearchCp = () => {
         <FilterWrap>
           <Title>임대구분</Title>
           <Filter>
-            <div>전체</div>
-            <div>월세</div>
-            <div>전세</div>
-            <div>전월세</div>
+            {typeArr.map((v, i) => (
+              <SubCp key={i} v={v} i={i} />
+            ))}
           </Filter>
         </FilterWrap>
         <FilterWrap>
           <Title>준공년도</Title>
           <Filter>
             {yearArr.map((v, i) => (
-              <div key={i}>{v}</div>
+              <SubCp key={i} v={v} i={i} />
             ))}
           </Filter>
         </FilterWrap>
@@ -104,7 +79,7 @@ const SearchCp = () => {
           <Title>주차대수</Title>
           <Filter>
             {parkingNumArr.map((v, i) => (
-              <div key={i}>{v}</div>
+              <SubCp key={i} v={v} i={i} />
             ))}
           </Filter>
         </FilterWrap>
@@ -121,8 +96,9 @@ const SearchCp = () => {
         </FilterWrap>
       </FilterWrapper>
       <SearchDetailCp />
+      <TotalCountCp />
     </SearchCpWrapper>
   );
 };
 
-export default React.memo(SearchCp);
+export default React.memo(SearchAllCp);

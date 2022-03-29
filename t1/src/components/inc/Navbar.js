@@ -35,7 +35,7 @@ const Navbar = () => {
       <NavbarWrapper>
         <NavbarWrap>
           <Menu className="menu">
-            <MenuLink to="/item">공실매물</MenuLink>
+            <MenuLink to="/item?type=all">공실매물</MenuLink>
             {navNum === 0 && <Gongsilmaemul mouseLeave={mouseLeave} />}
           </Menu>
           <Menu className="menu">
