@@ -5,16 +5,10 @@ import { FaSearch } from 'react-icons/fa';
 
 import SearchCp from './SearchCp';
 import AllTabCp from './AllTabCp';
+import ListFilterCp from './ListFilterCp';
+import ListCp from './ListCp';
+import PagerCp from './PagerCp';
 
-const ItemCpWrapper = styled.div`
-  width: 1000px;
-  .title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 30px;
-  }
-`;
 const SearchTypeWrap = styled.div`
   display: flex;
   margin-bottom: 30px;
@@ -111,44 +105,40 @@ const ItemCp = () => {
   const [img3, setImg3] = useState(process.env.REACT_APP_URL + 'img/3.searchtype_33.svg');
   return (
     <>
-      <ItemCpWrapper>
-        <div className="title">공실매물</div>
-        <SearchTypeWrap>
-          <SearchType>
-            <Type onMouseEnter={onMouseEnter1} onMouseLeave={onMouseLeave1}>
-              <TypeTxt>서울 블록지도</TypeTxt>
-              <TypeImg src={img1}></TypeImg>
-            </Type>
-            <SearchTypeBar>|</SearchTypeBar>
-            <Type onMouseEnter={onMouseEnter2} onMouseLeave={onMouseLeave2}>
-              <TypeTxt>일반지도</TypeTxt>
-              <TypeImg src={img2}></TypeImg>
-            </Type>
-            <SearchTypeBar>|</SearchTypeBar>
-            <Type onMouseEnter={onMouseEnter3} onMouseLeave={onMouseLeave3}>
-              <TypeTxt>주소검색</TypeTxt>
-              <TypeImg src={img3}></TypeImg>
-            </Type>
-          </SearchType>
-        </SearchTypeWrap>
-        <SearchCp />
-        <TotalWrapper>
-          <TotalCount>
-            총 <span>18865</span>건 검색완료
-          </TotalCount>
-          <TotalBtnWrap>
-            <Button>현재필터 첫화면으로 설정</Button>
-            <Button>첫화면 초기화</Button>
-            <Button>전체 초기화</Button>
-            <Button>검색필터 초기화</Button>
-            <Button style={{ color: '#3168ff', borderColor: '#3168ff' }}>
-              <FaSearch />
-              검색하기
-            </Button>
-          </TotalBtnWrap>
-        </TotalWrapper>
-        <AllTabCp />
-      </ItemCpWrapper>
+      <SearchTypeWrap>
+        <SearchType>
+          <Type onMouseEnter={onMouseEnter1} onMouseLeave={onMouseLeave1}>
+            <TypeTxt>서울 블록지도</TypeTxt>
+            <TypeImg src={img1}></TypeImg>
+          </Type>
+          <SearchTypeBar>|</SearchTypeBar>
+          <Type onMouseEnter={onMouseEnter2} onMouseLeave={onMouseLeave2}>
+            <TypeTxt>일반지도</TypeTxt>
+            <TypeImg src={img2}></TypeImg>
+          </Type>
+          <SearchTypeBar>|</SearchTypeBar>
+          <Type onMouseEnter={onMouseEnter3} onMouseLeave={onMouseLeave3}>
+            <TypeTxt>주소검색</TypeTxt>
+            <TypeImg src={img3}></TypeImg>
+          </Type>
+        </SearchType>
+      </SearchTypeWrap>
+      <SearchCp />
+      <TotalWrapper>
+        <TotalCount>
+          총 <span>18865</span>건 검색완료
+        </TotalCount>
+        <TotalBtnWrap>
+          <Button>현재필터 첫화면으로 설정</Button>
+          <Button>첫화면 초기화</Button>
+          <Button>전체 초기화</Button>
+          <Button>검색필터 초기화</Button>
+          <Button style={{ color: '#3168ff', borderColor: '#3168ff' }}>
+            <FaSearch />
+            검색하기
+          </Button>
+        </TotalBtnWrap>
+      </TotalWrapper>
     </>
   );
 };

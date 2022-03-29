@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const FooterWrap = styled.div`
   padding-top: 25px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 `;
 const FooterCon = styled.div`
   width: 1000px;
