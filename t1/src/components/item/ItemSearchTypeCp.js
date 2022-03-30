@@ -1,27 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
+
 import store from '@/store/store';
+
 import { FaThLarge, FaMapMarkedAlt, FaSearch } from 'react-icons/fa';
 
-import SearchAllCp from './SearchAllCp';
-import SearchNormalCp from './SearchNormalCp';
-
-const SearchTypeWrap = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-`;
-const SearchType = styled.div`
-  display: flex;
-`;
-const SearchTypeBar = styled.div`
-  width: 42px;
-  font-size: 20px;
-  font-family: Noto Sans KR;
-  font-weight: 400;
-  color: #888f91;
-  text-align: center;
-`;
 const Type = styled.div`
   width: 135px;
   font-size: 20px;
@@ -45,27 +29,16 @@ const Type = styled.div`
 const TypeTxt = styled.span`
   margin-right: 2px;
 `;
+const SearchTypeBar = styled.div`
+  width: 42px;
+  font-size: 20px;
+  font-family: Noto Sans KR;
+  font-weight: 400;
+  color: #888f91;
+  text-align: center;
+`;
 
-const ItemCp = () => {
-  const { setPathName } = store();
-  let pathname = window.location.href.split('?')[1].split('=')[1];
-  useEffect(() => {
-    setPathName(pathname);
-  }, [pathname]);
-  return (
-    <>
-      <SearchTypeWrap>
-        <SearchType className="searchType">
-          <SubCp />
-        </SearchType>
-      </SearchTypeWrap>
-      {pathname === 'all' && <SearchAllCp />}
-      {pathname === 'normal' && <SearchNormalCp />}
-    </>
-  );
-};
-
-const SubCp = () => {
+const ItemSearchTypeCp = () => {
   const { isPathname } = store();
   const onClick = (e) => {
     document.querySelector('.searchType').childNodes.forEach((v) => {
@@ -82,7 +55,7 @@ const SubCp = () => {
     document.querySelector('.searchType').childNodes.forEach((v) => {
       v.classList.remove('active');
     });
-    console.log(document.querySelector('.searchType').childNodes[0].classList.add('active'));
+    document.querySelector('.searchType').firstChild.classList.add('active');
   }, [isPathname]);
   return (
     <>
@@ -104,4 +77,4 @@ const SubCp = () => {
   );
 };
 
-export default React.memo(ItemCp);
+export default React.memo(ItemSearchTypeCp);

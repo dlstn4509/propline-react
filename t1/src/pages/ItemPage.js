@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@/style';
+import store from '@/store/store';
 
-import ItemCp from '@/components/item/ItemCp';
+import ItemTypeCp from '@/components/item/ItemTypeCp';
+import SearchAllCp from '@/components/item/SearchAllCp';
+import SearchNormalCp from '@/components/item/SearchNormalCp';
 import AllTabCp from '@/components/item/AllTabCp';
 import ListFilterCp from '@/components/item/ListFilterCp';
 import ListCp from '@/components/item/ListCp';
@@ -14,7 +17,7 @@ const ItemPageWrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `;
-const ItemCpWrapper = styled.div`
+const ItemPageWrap = styled.div`
   width: 1000px;
   .title {
     font-size: 20px;
@@ -25,16 +28,23 @@ const ItemCpWrapper = styled.div`
 `;
 
 const ItemPage = () => {
+  const { setPathName } = store();
+  let pathname = window.location.href.split('?')[1].split('=')[1];
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <ItemPageWrapper>
-      <ItemCpWrapper>
+      <ItemPageWrap>
         <div className="title">공실매물</div>
-        <ItemCp />
+        <ItemTypeCp />
+        {pathname === 'all' && <SearchAllCp />}
+        {pathname === 'normal' && <SearchNormalCp />}
         <AllTabCp />
         <ListFilterCp />
         <ListCp />
         <PagerCp />
-      </ItemCpWrapper>
+      </ItemPageWrap>
       <MyItemCp />
     </ItemPageWrapper>
   );

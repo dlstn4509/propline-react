@@ -39,7 +39,7 @@ const Navbar = () => {
             {navNum === 0 && <Gongsilmaemul mouseLeave={mouseLeave} />}
           </Menu>
           <Menu className="menu">
-            <MenuLink to="/main">공동중개</MenuLink>
+            <MenuLink to="/itempublic?type=all">공동중개</MenuLink>
             {navNum === 1 && <Gongdongjunggae mouseLeave={mouseLeave} />}
           </Menu>
           <Menu className="menu">

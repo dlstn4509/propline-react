@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
+import { FaRegSquare, FaRegCheckSquare } from 'react-icons/fa';
 
 const MyItemWrapper = styled.div`
   display: flex;
@@ -38,23 +39,45 @@ const Btn = styled.div`
   border: 1px solid ${(props) => (props.solidColor ? props.solidColor : '#888f91')};
   border-radius: 30px;
 `;
+const CheckBoxWrap = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
 const BtnWrap = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 const MyItemCp = () => {
+  const [checkBox01, setCheckBox01] = useState(false);
+  const [checkBox02, setCheckBox02] = useState(false);
   return (
     <MyItemWrapper>
       <MyItemWrap>
         <MyItem>
-          <img src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
-          <div>현재페이지 전체 선택</div>
+          <CheckBoxWrap
+            onClick={() => {
+              setCheckBox01(!checkBox01);
+            }}
+          >
+            {!checkBox01 && <FaRegSquare />}
+            {checkBox01 && <FaRegCheckSquare style={{ color: '#3168ff' }} />}
+            <div>현재페이지 전체 선택</div>
+          </CheckBoxWrap>
           <Btn>
             <img src={process.env.REACT_APP_URL + 'img/5.maemul_print.svg'} alt="" />
             선택매물인쇄
           </Btn>
-          <img src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
-          특이사항 포함
+          <CheckBoxWrap
+            onClick={() => {
+              setCheckBox02(!checkBox02);
+            }}
+          >
+            {!checkBox02 && <FaRegSquare />}
+            {checkBox02 && <FaRegCheckSquare style={{ color: '#3168ff' }} />}
+            특이사항 포함
+          </CheckBoxWrap>
         </MyItem>
         <BtnWrap>
           <Btn color={'#3168ff'} solidColor={'#3168ff'}>

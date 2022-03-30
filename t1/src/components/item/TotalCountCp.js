@@ -38,15 +38,20 @@ const Button = styled.div`
 `;
 
 const TotalCountCp = () => {
+  let pathname = window.location.pathname;
   return (
     <TotalWrapper>
       <TotalCount>
         총 <span>18865</span>건 검색완료
       </TotalCount>
       <TotalBtnWrap>
-        <Button>현재필터 첫화면으로 설정</Button>
-        <Button>첫화면 초기화</Button>
-        <Button>전체 초기화</Button>
+        {pathname === '/item' && (
+          <>
+            <Button>현재필터 첫화면으로 설정</Button>
+            <Button>첫화면 초기화</Button>
+            <Button>전체 초기화</Button>
+          </>
+        )}
         <Button>검색필터 초기화</Button>
         <Button style={{ color: '#3168ff', borderColor: '#3168ff' }}>
           <FaSearch />

@@ -112,17 +112,21 @@ const ListFilterCp = () => {
       ? setIsRadio(process.env.REACT_APP_URL + 'img/radio_01_on.png')
       : setIsRadio(process.env.REACT_APP_URL + 'img/radio_01_off.png');
   };
+  let pathname = window.location.pathname;
+  console.log(pathname);
 
   return (
     <ListFilterCpWrapper>
       <ListFilterWrap>
-        <Select name="" id="">
-          {type.map((v, i) => (
-            <option key={i} value={i}>
-              {v}
-            </option>
-          ))}
-        </Select>
+        {pathname === '/item' && (
+          <Select name="" id="">
+            {type.map((v, i) => (
+              <option key={i} value={i}>
+                {v}
+              </option>
+            ))}
+          </Select>
+        )}
         <Select name="" id="">
           {date.map((v, i) => (
             <option key={i} value={i}>
@@ -130,16 +134,17 @@ const ListFilterCp = () => {
             </option>
           ))}
         </Select>
+        {pathname === '/item' && (
+          <Select name="" id="">
+            <option value="">2차정렬(미선택)</option>
+            {date.map((v, i) => (
+              <option key={i} value={i}>
+                {v}
+              </option>
+            ))}
+          </Select>
+        )}
         <Select name="" id="">
-          <option value="">2차정렬(미선택)</option>
-          {date.map((v, i) => (
-            <option key={i} value={i}>
-              {v}
-            </option>
-          ))}
-        </Select>
-        <Select name="" id="">
-          <option value="">2차정렬(미선택)</option>
           {sortCount.map((v, i) => (
             <option key={i} value={i}>
               {v}
@@ -154,7 +159,11 @@ const ListFilterCp = () => {
             setIsHoverText(!isHoverText);
           }}
         >
-          <img src={process.env.REACT_APP_URL + 'img/exp_std_icon.png'} alt="" /> 매물노출기준
+          {pathname === '/item' && (
+            <>
+              <img src={process.env.REACT_APP_URL + 'img/exp_std_icon.png'} alt="" /> 매물노출기준
+            </>
+          )}
           {isHoverText && (
             <HoverText>
               <div style={{ position: 'relative' }}>
