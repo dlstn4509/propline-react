@@ -7,7 +7,7 @@ const SearchDetailForm = styled.form`
   justify-content: space-between;
   border-bottom: 1px solid #dae1e7;
   border-top: 1px solid #dae1e7;
-  padding: 10px 10px;
+  padding: 10px 8px;
 `;
 const SearchDetail = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const Input = styled.input`
   height: 25px;
   border: 1px solid #dae1e7;
   text-indent: 10px;
-  margin: 0 10px;
+  margin: 0 8px;
 `;
 
 const SearchDetailCp = () => {
@@ -33,15 +33,19 @@ const SearchDetailCp = () => {
         <Input /> ~ <Input />
       </SearchDetail>
       <SearchDetail>
-        <Title>임대면적(P)</Title>
+        <Title>전용면적(P)</Title>
         <Input /> ~ <Input />
       </SearchDetail>
       <SearchDetail>
-        <Title>임대면적(P)</Title>
+        <Title>기준가</Title>
         <Input /> ~ <Input />
       </SearchDetail>
       <SearchDetail>
-        <Title>임대면적(P)</Title>
+        <Title>보증금</Title>
+        <Input /> ~ <Input />
+      </SearchDetail>
+      <SearchDetail>
+        <Title>월세</Title>
         <Input /> ~ <Input />
       </SearchDetail>
     </SearchDetailForm>

@@ -6,7 +6,16 @@ import SearchDetailCp from './SearchDetailCp';
 import MapCp from './MapCp';
 import TotalCountCp from './TotalCountCp';
 
-import { typeArr, yearArr, parkingNumArr, plusFilter, roomCount, roomType } from './SearchArr';
+import {
+  typeArr,
+  yearArr,
+  parkingNumArr,
+  roomCount,
+  roomType,
+  floorType,
+  livingRoomSize,
+  plusFilterNormal,
+} from './SearchArr';
 
 const SearchCpWrapper = styled.div`
   border: 1px solid #2a55cc;
@@ -77,6 +86,14 @@ const SearchNormalCp = () => {
         <FilterWrap>
           <Title>룸형태</Title>
           <Filter>
+            {floorType.map((v, i) => (
+              <SubCp key={i} v={v} />
+            ))}
+          </Filter>
+        </FilterWrap>
+        <FilterWrap>
+          <Title>층구분</Title>
+          <Filter>
             {roomType.map((v, i) => (
               <SubCp key={i} v={v} />
             ))}
@@ -91,6 +108,14 @@ const SearchNormalCp = () => {
           </Filter>
         </FilterWrap>
         <FilterWrap>
+          <Title>거실크기</Title>
+          <Filter>
+            {livingRoomSize.map((v, i) => (
+              <SubCp key={i} v={v} />
+            ))}
+          </Filter>
+        </FilterWrap>
+        <FilterWrap>
           <Title>주차대수</Title>
           <Filter>
             {parkingNumArr.map((v, i) => (
@@ -99,9 +124,9 @@ const SearchNormalCp = () => {
           </Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title>추가필터</Title>
+          <Title style={{ width: '228px' }}>추가필터</Title>
           <Filter style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {plusFilter.map((v, i) => (
+            {plusFilterNormal.map((v, i) => (
               <CheckBox key={i}>
                 <img src={process.env.REACT_APP_URL + 'img/checkbox_03_off.png'} alt="" onClick={clickImg} />
                 <span>{v}</span>

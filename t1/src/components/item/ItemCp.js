@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
+import { FaThLarge, FaMapMarkedAlt, FaSearch } from 'react-icons/fa';
 
 import SearchAllCp from './SearchAllCp';
 import SearchNormalCp from './SearchNormalCp';
@@ -44,38 +45,18 @@ const Type = styled.div`
 const TypeTxt = styled.span`
   margin-right: 2px;
 `;
-const TypeImg = styled.img`
-  vertical-align: middle;
-`;
 
 const ItemCp = () => {
-  const { isPathname } = store();
-  const typeArr = [
-    {
-      txt: '서울 블록지도',
-      img01: process.env.REACT_APP_URL + 'img/1.searchtype_11.svg',
-      img02: process.env.REACT_APP_URL + 'img/1.searchtype_11_hover.svg',
-    },
-    {
-      txt: '일반지도',
-      img01: process.env.REACT_APP_URL + 'img/2.searchtype_22.svg',
-      img02: process.env.REACT_APP_URL + 'img/2.searchtype_22_hover.svg',
-    },
-    {
-      txt: '주소검색',
-      img01: process.env.REACT_APP_URL + 'img/3.searchtype_33.svg',
-      img02: process.env.REACT_APP_URL + 'img/3.searchtype_33_hover.svg',
-    },
-  ];
+  const { setPathName } = store();
   let pathname = window.location.href.split('?')[1].split('=')[1];
-
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <>
       <SearchTypeWrap>
-        <SearchType>
-          {typeArr.map((v, i) => (
-            <SubCp key={i} v={v} i={i} />
-          ))}
+        <SearchType className="searchType">
+          <SubCp />
         </SearchType>
       </SearchTypeWrap>
       {pathname === 'all' && <SearchAllCp />}
@@ -84,37 +65,41 @@ const ItemCp = () => {
   );
 };
 
-const SubCp = ({ v, i }) => {
-  const [isActive, setIsActive] = useState(true);
-  const onClick = () => {
-    setIsActive(!isActive);
-  };
-  const onMouseEnter = () => {
-    setIsActive(!isActive);
-  };
-  const onMouseLeave = () => {
-    setIsActive(!isActive);
+const SubCp = () => {
+  const { isPathname } = store();
+  const onClick = (e) => {
+    document.querySelector('.searchType').childNodes.forEach((v) => {
+      v.classList.remove('active');
+    });
+    let classList = e.target.parentNode.classList;
+    if (classList.value.includes('active')) {
+      classList.remove('active');
+    } else {
+      classList.add('active');
+    }
   };
   useEffect(() => {
-    onClick();
-    onMouseEnter();
-    onMouseLeave();
-  }, []);
+    document.querySelector('.searchType').childNodes.forEach((v) => {
+      v.classList.remove('active');
+    });
+    console.log(document.querySelector('.searchType').childNodes[0].classList.add('active'));
+  }, [isPathname]);
   return (
     <>
-      {!isActive && (
-        <Type onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-          <TypeTxt>{v.txt}</TypeTxt>
-          <TypeImg src={v.img01}></TypeImg>
-        </Type>
-      )}
-      {isActive && (
-        <Type onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="active">
-          <TypeTxt>{v.txt}</TypeTxt>
-          <TypeImg src={v.img02}></TypeImg>
-        </Type>
-      )}
-      {i < 2 && <SearchTypeBar>|</SearchTypeBar>}
+      <Type className="active" onClick={onClick}>
+        <TypeTxt>서울 블록지도</TypeTxt>
+        <FaThLarge />
+      </Type>
+      <SearchTypeBar>|</SearchTypeBar>
+      <Type onClick={onClick}>
+        <TypeTxt>일반지도</TypeTxt>
+        <FaMapMarkedAlt />
+      </Type>
+      <SearchTypeBar>|</SearchTypeBar>
+      <Type onClick={onClick}>
+        <TypeTxt>주소검색</TypeTxt>
+        <FaSearch />
+      </Type>
     </>
   );
 };

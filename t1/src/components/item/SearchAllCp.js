@@ -40,8 +40,8 @@ const Filter = styled.div`
   padding: 10px 0 10px 10px;
   height: 133px;
   overflow-y: scroll;
-  div:focus {
-    color: blue;
+  div.active {
+    color: #3168ff;
   }
 `;
 const CheckBox = styled.div`
@@ -63,7 +63,7 @@ const SearchAllCp = () => {
           <Title>임대구분</Title>
           <Filter>
             {typeArr.map((v, i) => (
-              <SubCp key={i} v={v} i={i} />
+              <SubCp key={i} v={v} i={i} arrName={'typeArr'} />
             ))}
           </Filter>
         </FilterWrap>
@@ -71,7 +71,7 @@ const SearchAllCp = () => {
           <Title>준공년도</Title>
           <Filter>
             {yearArr.map((v, i) => (
-              <SubCp key={i} v={v} i={i} />
+              <SubCp key={i} v={v} i={i} arrName={'yearArr'} />
             ))}
           </Filter>
         </FilterWrap>
@@ -79,7 +79,7 @@ const SearchAllCp = () => {
           <Title>주차대수</Title>
           <Filter>
             {parkingNumArr.map((v, i) => (
-              <SubCp key={i} v={v} i={i} />
+              <SubCp key={i} v={v} i={i} arrName={'parkingNumArr'} />
             ))}
           </Filter>
         </FilterWrap>
