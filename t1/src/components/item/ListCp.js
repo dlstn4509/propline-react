@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { Button } from '@/style';
 import { Link } from 'react-router-dom';
 
 const ListWrapper = styled.ul`
@@ -36,17 +36,12 @@ const CheckBox = styled.img`
   width: 15px;
   height: 15px;
 `;
-const Label = styled.div`
+const Label = styled(Button)`
   width: 110px;
-  border: 1px solid #3168ff;
-  color: #fff;
-  background-color: #3168ff;
   padding: 0 10px;
   height: 20px;
   line-height: 18.5px;
-  text-align: center;
   font-size: 12px;
-  border-radius: 20px;
 `;
 const Address = styled.div`
   display: flex;
@@ -118,7 +113,9 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label>공실매물 22.03.24</Label>
+            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+              공실매물 22.03.24
+            </Label>
             <Address>
               <img src={process.env.REACT_APP_URL + 'img/it_vip_icon03.png'} alt="" />
               강남구 논현동 222-4 더 큐브 논현 3층 301호
@@ -148,7 +145,9 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label>공실매물 22.03.24</Label>
+            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+              공실매물 22.03.24
+            </Label>
             <Address>
               <img src={process.env.REACT_APP_URL + 'img/it_vip_icon03.png'} alt="" />
               강남구 논현동 222-4 더 큐브 논현 3층 301호
@@ -178,7 +177,9 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label>공실매물 22.03.24</Label>
+            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+              공실매물 22.03.24
+            </Label>
             <Address>
               <img src={process.env.REACT_APP_URL + 'img/it_vip_icon03.png'} alt="" />
               강남구 논현동 222-4 더 큐브 논현 3층 301호
@@ -208,7 +209,9 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label>공실매물 22.03.24</Label>
+            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+              공실매물 22.03.24
+            </Label>
             <Address>
               <img src={process.env.REACT_APP_URL + 'img/it_vip_icon03.png'} alt="" />
               강남구 논현동 222-4 더 큐브 논현 3층 301호

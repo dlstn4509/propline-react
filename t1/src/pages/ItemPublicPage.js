@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from '@/style';
+import styled, { Title, Button, PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
@@ -12,24 +12,12 @@ import ListFilterMyCp from '../components/itempublic/ListFilterMyCp';
 import ListCp from '@/components/itempublic/ListCp';
 import PagerCp from '@/components/item/PagerCp';
 
-const ItemPublicPageWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
+const ItemPublicPageWrapper = styled(PageWrapper)`
   flex-wrap: wrap;
-`;
-const ItemPublicPageWrap = styled.div`
-  width: 1000px;
 `;
 const TitleWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  .title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 30px;
-  }
   .btn {
     font-size: 13px;
     color: #3168ff;
@@ -53,10 +41,10 @@ const ItemPublicPage = () => {
   }, [pathname]);
   return (
     <ItemPublicPageWrapper>
-      <ItemPublicPageWrap>
+      <PageWrap>
         <TitleWrap>
-          <div className="title">{pathname === 'all' ? '공동중개' : '나의 공동중개'}</div>
-          <div className="btn">공동중개 매물등록</div>
+          <Title>{pathname === 'all' ? '공동중개' : '나의 공동중개'}</Title>
+          <Button>공동중개 매물등록</Button>
         </TitleWrap>
         {pathname === 'all' && (
           <>
@@ -72,7 +60,7 @@ const ItemPublicPage = () => {
         {pathname === 'my' && <ListFilterMyCp />}
         <ListCp />
         <PagerCp />
-      </ItemPublicPageWrap>
+      </PageWrap>
       <MyItemCp />
     </ItemPublicPageWrapper>
   );

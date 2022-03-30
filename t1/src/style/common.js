@@ -1,29 +1,28 @@
 import styled from 'styled-components';
 
-export const Table = styled.table`
-  width: 370px;
-  height: 257px;
+export const Title = styled.div`
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
   margin-bottom: 30px;
-  thead {
-    height: 40px;
-    tr {
-      border-bottom: 1px solid black;
-      .title {
-        font-weight: bold;
-        span {
-          font-weight: normal;
-        }
-      }
-    }
-  }
-  tbody {
-    tr {
-      td:first-child {
-        width: 20%;
-      }
-      td:last-child {
-        width: 30%;
-      }
-    }
-  }
+`;
+
+export const Button = styled.div`
+  font-size: 13px;
+  color: ${(props) => (props.color ? props.color : '#464d50')};
+  text-align: center;
+  background-color: ${(props) => (props.bgc ? props.bgc : '#ffffff')};
+  padding: 2px 15px;
+  border: 1px solid ${(props) => (props.bdc ? props.bdc : '#464d50')};
+  border-radius: 30px;
+  height: 25px;
+  cursor: pointer;
+`;
+export const PageWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+export const PageWrap = styled.div`
+  width: 1000px;
 `;

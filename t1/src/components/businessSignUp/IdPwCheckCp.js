@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-import styled, { Tr, TdFirst, TdSecond, Input, FlexDiv, RedStar } from '@/style/businessSignUp';
+import { Tr, TdFirst, TdSecond, Input, FlexDiv, RedStar } from '@/style/businessSignUp';
+import styled, { Button } from '@/style';
 import { Link } from 'react-router-dom';
 
 import IdQuestionMarkCp from './IdQuestionMarkCp';

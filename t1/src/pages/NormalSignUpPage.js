@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { PageWrapper } from '@/style';
 import { Link } from 'react-router-dom';
 
 import NormalSignUpInfoCp from '@/components/normalSignUp/NormalSignUpInfoCp';
@@ -8,11 +8,6 @@ import MembershipInfoCp from '@/components/normalSignUp/MembershipInfoCp';
 import BillInfoCp from '@/components/normalSignUp/BillInfoCp';
 import AggrePrivacyCp from '../components/businessSignUp/AggrePrivacyCp';
 
-const NormalSignUpPageWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
 const BusinessSignUpCpForm = styled.form`
   width: 1000px;
 `;
@@ -39,7 +34,7 @@ const BtnSubmit = styled.button`
 
 const NormalSignUpPage = () => {
   return (
-    <NormalSignUpPageWrapper>
+    <PageWrapper>
       <BusinessSignUpCpForm action="">
         <NormalSignUpInfoCp />
         <MemberTypeCp />
@@ -53,7 +48,7 @@ const NormalSignUpPage = () => {
           <BtnSubmit bgc={'#3168ff'}>회원가입</BtnSubmit>
         </BtnWrap>
       </BusinessSignUpCpForm>
-    </NormalSignUpPageWrapper>
+    </PageWrapper>
   );
 };
 

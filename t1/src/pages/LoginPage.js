@@ -1,19 +1,13 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { PageWrapper } from '@/style';
 
 import LoginCp from '@/components/login/LoginCp';
 
-const LoginPageWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
 const LoginPage = () => {
   return (
-    <LoginPageWrapper>
+    <PageWrapper>
       <LoginCp />
-    </LoginPageWrapper>
+    </PageWrapper>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { Button } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
@@ -22,18 +22,7 @@ const TotalCount = styled.div`
 const TotalBtnWrap = styled.div`
   display: flex;
 `;
-const Button = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 300;
-  color: #888f91;
-  text-align: center;
-  background-color: #ffffff;
-  padding: 2px 15px 2px 15px;
-  border: 1px solid #888f91;
-  border-radius: 30px;
-  height: 26px;
+const ButtonWrap = styled(Button)`
   margin-right: 10px;
 `;
 
@@ -47,16 +36,16 @@ const TotalCountCp = () => {
       <TotalBtnWrap>
         {pathname === '/item' && (
           <>
-            <Button>현재필터 첫화면으로 설정</Button>
-            <Button>첫화면 초기화</Button>
-            <Button>전체 초기화</Button>
+            <ButtonWrap>현재필터 첫화면으로 설정</ButtonWrap>
+            <ButtonWrap>첫화면 초기화</ButtonWrap>
+            <ButtonWrap>전체 초기화</ButtonWrap>
           </>
         )}
-        <Button>검색필터 초기화</Button>
-        <Button style={{ color: '#3168ff', borderColor: '#3168ff' }}>
+        <ButtonWrap>검색필터 초기화</ButtonWrap>
+        <ButtonWrap color={'#3168ff'} bdc={'#3168ff'}>
           <FaSearch />
           검색하기
-        </Button>
+        </ButtonWrap>
       </TotalBtnWrap>
     </TotalWrapper>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from '@/style';
+import styled, { PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 
 import BusinessSignUpInfoCp from '@/components/businessSignUp/BusinessSignUpInfoCp';
@@ -7,14 +7,6 @@ import MembershipInfoCp from '@/components/businessSignUp/MembershipInfoCp';
 import CompanyInfoCp from '@/components/businessSignUp/CompanyInfoCp';
 import AggrePrivacyCp from '../components/businessSignUp/AggrePrivacyCp';
 
-const BusinessSignUpPageWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-const BusinessSignUpCpForm = styled.form`
-  width: 1000px;
-`;
 const BtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -56,8 +48,8 @@ const BusinessSignUpPage = () => {
   };
   return (
     <>
-      <BusinessSignUpPageWrapper>
-        <BusinessSignUpCpForm
+      <PageWrapper>
+        <PageWrap
           action={process.env.REACT_APP_URL_API + 'signup'}
           method="post"
           encType="multipart/form-data"
@@ -74,8 +66,8 @@ const BusinessSignUpPage = () => {
               회원가입
             </BtnSubmit>
           </BtnWrap>
-        </BusinessSignUpCpForm>
-      </BusinessSignUpPageWrapper>
+        </PageWrap>
+      </PageWrapper>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { Button } from '@/style';
 import { Link } from 'react-router-dom';
 
 const ListWrapper = styled.ul`
@@ -36,15 +36,12 @@ const CheckBox = styled.img`
   width: 15px;
   height: 15px;
 `;
-const Label = styled.div`
+const Label = styled(Button)`
   width: 110px;
-  border: 1px solid #ff5a61;
-  color: #fff;
-  background-color: #ff5a61;
+  color: #ffffff;
   padding: 0 10px;
   height: 20px;
   line-height: 18.5px;
-  text-align: center;
   font-size: 12px;
   border-radius: 20px;
 `;
@@ -113,7 +110,9 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label>공실매물 22.03.24</Label>
+            <Label bdc={'#ff5a61'} bgc={'#ff5a61'}>
+              공실매물 22.03.24
+            </Label>
             <Address>강남구 논현동 222-4 더 큐브 논현 3층 301호</Address>
             <Size>
               28.1m²(8.5P) / 28.1m²(8.5P) <span>풀옵션</span> 협의
