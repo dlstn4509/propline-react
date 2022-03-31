@@ -12,6 +12,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 import ItemPage from '@/pages/ItemPage';
 import ItemPublicPage from '@/pages/ItemPublicPage';
+import SaleInfoPage from '@/pages/SaleInfoPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/normalsignup" element={<NormalSignUpPage />} />
         <Route path="/item" element={<ItemPage />} />
         <Route path="/itempublic" element={<ItemPublicPage />} />
+        <Route path="/saleinfo" element={<SaleInfoPage />} />
       </Routes>
       <FooterText />
       <Footer />

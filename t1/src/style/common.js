@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Title = styled.div`
-  font-size: 20px;
+  font-size: ${(props) => (props.fs ? props.fs : '20px')};
   font-weight: 600;
   color: #000000;
   margin-bottom: 30px;

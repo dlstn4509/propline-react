@@ -43,7 +43,7 @@ const Navbar = () => {
             {navNum === 1 && <Gongdongjunggae mouseLeave={mouseLeave} />}
           </Menu>
           <Menu className="menu">
-            <MenuLink to="/main">매매정보</MenuLink>
+            <MenuLink to="/saleinfo">매매정보</MenuLink>
           </Menu>
           <Menu className="menu">
             <MenuLink to="/main">매물셀프코너</MenuLink>

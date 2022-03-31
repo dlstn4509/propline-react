@@ -6,5 +6,6 @@ export * from './common';
 
 export const color = {
   blue: '#3168ff',
+  darkblue: '#2a55cc',
   gray: '#464d50',
 };
