@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
 import SearchDetailCp from './SearchDetailCp';
@@ -41,7 +41,7 @@ const Filter = styled.div`
   height: 133px;
   overflow-y: scroll;
   div.active {
-    color: #3168ff;
+    color: ${color.blue};
   }
 `;
 const CheckBox = styled.div`

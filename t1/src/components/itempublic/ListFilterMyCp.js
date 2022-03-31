@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { Button, color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
@@ -25,15 +25,10 @@ const Input = styled.input`
   padding-left: 10px;
   margin-right: 20px;
 `;
-const BtnWrap = styled.div`
+const BtnWrap = styled(Button)`
   display: flex;
   align-items: center;
-  font-size: 13px;
-  color: #3168ff;
-  text-align: center;
-  background-color: #ffffff;
-  padding: 2px 15px 2px 15px;
-  border: 1px solid #3168ff;
+  color: ${color.blue};
   border-radius: 30px;
 `;
 
@@ -78,7 +73,7 @@ const ListFilterMyCp = () => {
         <option value="">등록자 전체</option>
       </Select>
       <Input type="text" placeholder="매물번호 검색" />
-      <BtnWrap>
+      <BtnWrap bdc={'#3168ff'}>
         <FaSearch />
         검색하기
       </BtnWrap>

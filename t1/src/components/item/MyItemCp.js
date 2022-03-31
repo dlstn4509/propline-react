@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import styled from '@/style';
+import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaRegCheckSquare } from 'react-icons/fa';
 
 const MyItemWrapper = styled.div`
   display: flex;
   justify-content: center;
-  border-top: 2px solid #3168ff;
+  border-top: 2px solid ${color.blue};
   background-color: #fff;
   width: 100%;
   height: 67px;
@@ -62,7 +62,7 @@ const MyItemCp = () => {
             }}
           >
             {!checkBox01 && <FaRegSquare />}
-            {checkBox01 && <FaRegCheckSquare style={{ color: '#3168ff' }} />}
+            {checkBox01 && <FaRegCheckSquare style={{ color: `${color.blue}` }} />}
             <div>현재페이지 전체 선택</div>
           </CheckBoxWrap>
           <Btn>
@@ -75,12 +75,12 @@ const MyItemCp = () => {
             }}
           >
             {!checkBox02 && <FaRegSquare />}
-            {checkBox02 && <FaRegCheckSquare style={{ color: '#3168ff' }} />}
+            {checkBox02 && <FaRegCheckSquare style={{ color: `${color.blue}` }} />}
             특이사항 포함
           </CheckBoxWrap>
         </MyItem>
         <BtnWrap>
-          <Btn color={'#3168ff'} solidColor={'#3168ff'}>
+          <Btn color={color.blue} solidColor={color.blue}>
             관심매물에 담기+
           </Btn>
           <Btn>관심매물 보기</Btn>

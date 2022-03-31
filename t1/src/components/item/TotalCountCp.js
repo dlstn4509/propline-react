@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { Button } from '@/style';
+import styled, { Button, color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
@@ -42,7 +42,7 @@ const TotalCountCp = () => {
           </>
         )}
         <ButtonWrap>검색필터 초기화</ButtonWrap>
-        <ButtonWrap color={'#3168ff'} bdc={'#3168ff'}>
+        <ButtonWrap color={color.blue} bdc={color.blue}>
           <FaSearch />
           검색하기
         </ButtonWrap>

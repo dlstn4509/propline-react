@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { Button } from '@/style';
+import styled, { Button, color } from '@/style';
 import { Link } from 'react-router-dom';
 
 const ListWrapper = styled.ul`
@@ -54,7 +54,7 @@ const Size = styled.div`
   font-size: 12px;
   color: #464d50;
   span {
-    color: #3168ff;
+    color: ${color.blue};
     margin: 0 6px;
   }
 `;
@@ -113,7 +113,7 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+            <Label color={'#fff'} bgc={color.blue} bdc={color.blue}>
               공실매물 22.03.24
             </Label>
             <Address>
@@ -145,7 +145,7 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+            <Label color={'#fff'} bgc={color.blue} bdc={color.blue}>
               공실매물 22.03.24
             </Label>
             <Address>
@@ -177,7 +177,7 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+            <Label color={'#fff'} bgc={color.blue} bdc={color.blue}>
               공실매물 22.03.24
             </Label>
             <Address>
@@ -209,7 +209,7 @@ const LispCp = () => {
           <CheckBox src={process.env.REACT_APP_URL + 'img/checkbox_04_off.png'} alt="" />
           <img src={process.env.REACT_APP_URL + 'img/더큐브논현%20203호%2022.jpg'} alt="" />
           <div>
-            <Label color={'#fff'} bgc={'#3168ff'} bdc={'#3168ff'}>
+            <Label color={'#fff'} bgc={color.blue} bdc={color.blue}>
               공실매물 22.03.24
             </Label>
             <Address>

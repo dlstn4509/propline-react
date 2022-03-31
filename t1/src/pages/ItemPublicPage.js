@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { Title, Button, PageWrapper, PageWrap } from '@/style';
+import styled, { Title, Button, PageWrapper, PageWrap, color } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
@@ -18,16 +18,6 @@ const ItemPublicPageWrapper = styled(PageWrapper)`
 const TitleWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  .btn {
-    font-size: 13px;
-    color: #3168ff;
-    text-align: center;
-    background-color: #ffffff;
-    padding: 2px 15px;
-    border: 1px solid #3168ff;
-    border-radius: 30px;
-    height: 25px;
-  }
 `;
 const ImgWrap = styled.div`
   margin-bottom: 50px;
@@ -44,7 +34,9 @@ const ItemPublicPage = () => {
       <PageWrap>
         <TitleWrap>
           <Title>{pathname === 'all' ? '공동중개' : '나의 공동중개'}</Title>
-          <Button>공동중개 매물등록</Button>
+          <Button color={color.blue} bdc={color.blue}>
+            공동중개 매물등록
+          </Button>
         </TitleWrap>
         {pathname === 'all' && (
           <>
