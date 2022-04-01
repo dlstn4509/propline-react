@@ -6,7 +6,11 @@ export const Title = styled.div`
   color: #000000;
   margin-bottom: 30px;
 `;
-
+export const Text = styled.div`
+  font-size: 14px;
+  color: #464d50;
+  margin-bottom: 30px;
+`;
 export const Button = styled.div`
   font-size: 13px;
   color: ${(props) => (props.color ? props.color : '#464d50')};

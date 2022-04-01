@@ -50,11 +50,11 @@ const Navbar = () => {
             {navNum === 3 && <MamulSelf mouseLeave={mouseLeave} />}
           </Menu>
           <Type02 className="menu">
-            <Type02Link to="/main">커뮤니티</Type02Link>
+            <Type02Link to="/freeboard">커뮤니티</Type02Link>
             {navNum === 4 && <Community mouseLeave={mouseLeave} />}
           </Type02>
           <Type02 className="menu">
-            <Type02Link to="/main">고객센터</Type02Link>
+            <Type02Link to="/notice">고객센터</Type02Link>
             {navNum === 5 && <Servicecenter mouseLeave={mouseLeave} />}
           </Type02>
           <Type02 className="menu">

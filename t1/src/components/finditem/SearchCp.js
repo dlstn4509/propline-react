@@ -27,7 +27,7 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const InputCp = () => {
+const SearchCp = () => {
   const [checkWriter, setCheckWriter] = useState(true);
   const [checkTitle, setCheckTitle] = useState(false);
   const [checkContent, setCheckContent] = useState(false);
@@ -65,4 +65,4 @@ const InputCp = () => {
   );
 };
 
-export default React.memo(InputCp);
+export default React.memo(SearchCp);

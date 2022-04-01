@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
+import { FaCamera } from 'react-icons/fa';
 
 const TableWrap = styled.table`
   height: 45px;
@@ -36,8 +37,9 @@ const TableWrap = styled.table`
   td {
     padding: 15px 0;
     border-bottom: 1px solid #dae1e7;
-    :nth-child(3) {
+    :nth-child(4) {
       text-align: left;
+      padding-left: 10px;
     }
   }
   thead {
@@ -50,44 +52,27 @@ const ListCp = () => {
     <TableWrap>
       <thead>
         <tr>
-          <th style={{ width: '100px' }}>종류</th>
-          <th style={{ width: '100px' }}>유형</th>
-          <th style={{ width: '520px' }}>제목</th>
+          <th style={{ width: '80px' }}>시</th>
+          <th style={{ width: '80px' }}>구</th>
+          <th style={{ width: '80px' }}>동</th>
+          <th style={{ width: '450px' }}>제목</th>
           <th style={{ width: '150px' }}>부동산명</th>
           <th style={{ width: '80px' }}>작성일</th>
-          <th>조회</th>
+          <th>조회수</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="sale">매매</span>
+          <td>서울</td>
+          <td>관악구</td>
+          <td>봉천동</td>
+          <td style={{ display: 'flex', alignItems: 'center' }}>
+            ▶비율제 실장님 모십니다◀경력⁄신입 모두 환영입니다▶광고지원빵빵합니다◀
+            <FaCamera style={{ marginLeft: '5px', color: `${color.blue}` }} />
           </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="rental">월세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="charter">전세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
+          <td>하나엠케이공인중개사사무소</td>
+          <td>2022-04-01</td>
+          <td>142</td>
         </tr>
       </tbody>
     </TableWrap>

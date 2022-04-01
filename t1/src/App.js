@@ -15,6 +15,15 @@ import ItemPublicPage from '@/pages/ItemPublicPage';
 import SaleInfoPage from '@/pages/SaleInfoPage';
 import FindItemPage from '@/pages/FindItemPage';
 import SaleItemPage from '@/pages/SaleItemPage';
+import RequestPage from '@/pages/RequestPage';
+import FreeBoardPage from '@/pages/FreeBoardPage';
+import KnowHowPage from '@/pages/KnowHowPage';
+import RecruitPage from '@/pages/RecruitPage';
+import ConsultPage from '@/pages/ConsultPage';
+import DirectPage from '@/pages/DirectPage';
+import NoticePage from '@/pages/NoticePage';
+import QuestionPage from '@/pages/QuestionPage';
+import RequestBoardPage from '@/pages/RequestBoardPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -39,6 +48,15 @@ const App = () => {
         <Route path="/saleinfo" element={<SaleInfoPage />} />
         <Route path="/finditem" element={<FindItemPage />} />
         <Route path="/saleitem" element={<SaleItemPage />} />
+        <Route path="/request" element={<RequestPage />} />
+        <Route path="/freeboard" element={<FreeBoardPage />} />
+        <Route path="/knowhow" element={<KnowHowPage />} />
+        <Route path="/recruit" element={<RecruitPage />} />
+        <Route path="/consult" element={<ConsultPage />} />
+        <Route path="/direct" element={<DirectPage />} />
+        <Route path="/notice" element={<NoticePage />} />
+        <Route path="/question" element={<QuestionPage />} />
+        <Route path="/requestboard" element={<RequestBoardPage />} />
       </Routes>
       <FooterText />
       <Footer />

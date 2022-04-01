@@ -36,8 +36,9 @@ const TableWrap = styled.table`
   td {
     padding: 15px 0;
     border-bottom: 1px solid #dae1e7;
-    :nth-child(3) {
+    :nth-child(1) {
       text-align: left;
+      padding-left: 10px;
     }
   }
   thead {
@@ -50,42 +51,16 @@ const ListCp = () => {
     <TableWrap>
       <thead>
         <tr>
-          <th style={{ width: '100px' }}>종류</th>
-          <th style={{ width: '100px' }}>유형</th>
-          <th style={{ width: '520px' }}>제목</th>
-          <th style={{ width: '150px' }}>부동산명</th>
+          <th style={{ width: '790px' }}>제목</th>
+          <th style={{ width: '60px' }}>작성자</th>
           <th style={{ width: '80px' }}>작성일</th>
           <th>조회</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="sale">매매</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="rental">월세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="charter">전세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
+          <td>다세대주택 및 근린생활시설 쪼개기 방에대한 최우선변제발...</td>
+          <td>김강현</td>
           <td>2022-03-30 </td>
           <td>5</td>
         </tr>

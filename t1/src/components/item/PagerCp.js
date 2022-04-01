@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -27,20 +27,30 @@ const Btn = styled.div`
 `;
 
 const PagerCp = () => {
+  useEffect(() => {
+    document.querySelectorAll('.num').forEach((v) => {
+      v.addEventListener('click', (e) => {
+        // console.log(window.location.href.split('?')[0] + '?page=' + e.target.innerText);
+        console.log(window.location.href.split('=')[1]);
+        console.log(e.target.innerText);
+      });
+    });
+  });
+
   return (
     <PagerWrapper>
       <PagerWrap>
         <Btn>{'< 이전'}</Btn>
-        <Num>1</Num>
-        <Num>2</Num>
-        <Num>3</Num>
-        <Num>4</Num>
-        <Num>5</Num>
-        <Num>6</Num>
-        <Num>7</Num>
-        <Num>8</Num>
-        <Num>9</Num>
-        <Num>10</Num>
+        <Num className="num">1</Num>
+        <Num className="num">2</Num>
+        <Num className="num">3</Num>
+        <Num className="num">4</Num>
+        <Num className="num">5</Num>
+        <Num className="num">6</Num>
+        <Num className="num">7</Num>
+        <Num className="num">8</Num>
+        <Num className="num">9</Num>
+        <Num className="num">10</Num>
         <Btn>{'다음 >'}</Btn>
       </PagerWrap>
     </PagerWrapper>
