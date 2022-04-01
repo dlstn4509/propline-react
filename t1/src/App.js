@@ -13,6 +13,8 @@ import NormalSignUpPage from '@/pages/NormalSignUpPage';
 import ItemPage from '@/pages/ItemPage';
 import ItemPublicPage from '@/pages/ItemPublicPage';
 import SaleInfoPage from '@/pages/SaleInfoPage';
+import FindItemPage from '@/pages/FindItemPage';
+import SaleItemPage from '@/pages/SaleItemPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -35,6 +37,8 @@ const App = () => {
         <Route path="/item" element={<ItemPage />} />
         <Route path="/itempublic" element={<ItemPublicPage />} />
         <Route path="/saleinfo" element={<SaleInfoPage />} />
+        <Route path="/finditem" element={<FindItemPage />} />
+        <Route path="/saleitem" element={<SaleItemPage />} />
       </Routes>
       <FooterText />
       <Footer />

@@ -46,7 +46,7 @@ const Navbar = () => {
             <MenuLink to="/saleinfo">매매정보</MenuLink>
           </Menu>
           <Menu className="menu">
-            <MenuLink to="/main">매물셀프코너</MenuLink>
+            <MenuLink to="/finditem">매물셀프코너</MenuLink>
             {navNum === 3 && <MamulSelf mouseLeave={mouseLeave} />}
           </Menu>
           <Type02 className="menu">

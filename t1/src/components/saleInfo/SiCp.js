@@ -2,11 +2,13 @@ import React from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
-import { sigunguArr } from './sigunguArr';
-
 const SiWrap = styled.div`
   display: flex;
   border-bottom: 1px solid ${color.darkblue};
+  .active {
+    background-color: ${color.darkblue};
+    color: #fff;
+  }
 `;
 const Si = styled.div`
   padding: 6px 10px;
@@ -14,6 +16,7 @@ const Si = styled.div`
   border-right: 1px solid ${color.darkblue};
   text-align: center;
   cursor: pointer;
+
   :last-child {
     border: none;
   }
@@ -21,6 +24,12 @@ const Si = styled.div`
 
 const SiCp = ({ clickSi }) => {
   const onClick = (e) => {
+    e.target.parentNode.childNodes.forEach((v) => {
+      v.classList.remove('active');
+    });
+    e.target.classList.value.includes('active')
+      ? e.target.classList.remove('active')
+      : e.target.classList.add('active');
     clickSi(e.target.innerText);
     document.querySelectorAll('.gunguWrap').forEach((v) => {
       v.classList.remove('active');
@@ -29,7 +38,7 @@ const SiCp = ({ clickSi }) => {
   };
   return (
     <SiWrap onClick={onClick}>
-      <Si>서울</Si>
+      <Si className="active">서울</Si>
       <Si>경기</Si>
       <Si>인천</Si>
       <Si>강원</Si>

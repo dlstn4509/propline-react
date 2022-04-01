@@ -8,10 +8,13 @@ import GunguCp from './GunguCp';
 import DongCp from './DongCp';
 import ChoicAreaCp from './ChoicAreaCp';
 import PropertyTypeCp from './PropertyTypeCp';
+import SearchDetailCp from './SearchDetailCp';
+import TotalCountCp from '../item/TotalCountCp';
 
 const SearchWrapper = styled.div`
   border: 1px solid ${color.darkblue};
   font-size: 15px;
+  margin-bottom: 70px;
 `;
 const GunguWrapper = styled.div`
   display: flex;
@@ -63,6 +66,8 @@ const SearchCp = () => {
       )}
       <ChoicAreaCp dongArr={dongArr} clickDong={clickDong} />
       <PropertyTypeCp />
+      <SearchDetailCp />
+      <TotalCountCp />
     </SearchWrapper>
   );
 };

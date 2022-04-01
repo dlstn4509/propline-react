@@ -15,7 +15,7 @@ const ItemSearchTypeWrap = styled.div`
 const ItemTypeCp = () => {
   return (
     <ItemTypeCpWrap>
-      <ItemSearchTypeWrap className="searchType">
+      <ItemSearchTypeWrap>
         <ItemSearchTypeCp />
       </ItemSearchTypeWrap>
     </ItemTypeCpWrap>

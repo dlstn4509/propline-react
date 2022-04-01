@@ -15,6 +15,7 @@ const PagerWrap = styled.div`
 const Num = styled.div`
   font-size: 13px;
   color: #464d50;
+  cursor: pointer;
 `;
 const Btn = styled.div`
   padding: 1px 10px 3px 10px;
@@ -22,6 +23,7 @@ const Btn = styled.div`
   border-radius: 3px;
   font-size: 13px;
   color: #464d50;
+  cursor: pointer;
 `;
 
 const PagerCp = () => {

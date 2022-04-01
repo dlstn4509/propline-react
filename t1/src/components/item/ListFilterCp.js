@@ -113,7 +113,6 @@ const ListFilterCp = () => {
       : setIsRadio(process.env.REACT_APP_URL + 'img/radio_01_off.png');
   };
   let pathname = window.location.pathname;
-  console.log(pathname);
 
   return (
     <ListFilterCpWrapper>

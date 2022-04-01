@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
-import store from '@/store/store';
-
 import { FaThLarge, FaMapMarkedAlt, FaSearch } from 'react-icons/fa';
 
 const Type = styled.div`
@@ -39,7 +37,6 @@ const SearchTypeBar = styled.div`
 `;
 
 const ItemSearchTypeCp = () => {
-  const { isPathname } = store();
   const onClick = (e) => {
     document.querySelector('.searchType').childNodes.forEach((v) => {
       v.classList.remove('active');
@@ -51,12 +48,6 @@ const ItemSearchTypeCp = () => {
       classList.add('active');
     }
   };
-  useEffect(() => {
-    document.querySelector('.searchType').childNodes.forEach((v) => {
-      v.classList.remove('active');
-    });
-    document.querySelector('.searchType').firstChild.classList.add('active');
-  }, [isPathname]);
   return (
     <>
       <Type className="active" onClick={onClick}>
