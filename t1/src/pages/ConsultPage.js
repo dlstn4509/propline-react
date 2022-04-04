@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { Title, PageWrapper, PageWrap, Text } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import SearchCp from '@/components/finditem/SearchCp';
 import ListCp from '@/components/consult/ListCp';
@@ -8,6 +9,11 @@ import PagerCp from '@/components/item/PagerCp';
 import BottomTextCp from '@/components/consult/BottomTextCp';
 
 const ConsultPage = () => {
+  const { setPathName } = store();
+  let pathname = window.location.pathname;
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <PageWrapper>
       <PageWrap>

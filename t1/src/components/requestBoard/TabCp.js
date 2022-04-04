@@ -28,37 +28,24 @@ const EmptyTab = styled.div`
 `;
 
 const TabCp = () => {
-  const { setPathName } = store();
-  let pathname = window.location.href.split('?')[1].split('=')[1];
+  const { setTypename } = store();
+  let typename = window.location.href.split('?')[1];
   useEffect(() => {
-    setPathName(pathname);
-  }, [pathname]);
+    setTypename(typename);
+  }, [typename]);
+  const onClick = (e) => {
+    setTypename(typename);
+    e.target.parentNode.childNodes.forEach((v) => v.classList.remove('active'));
+    e.target.classList.add('active');
+  };
   return (
     <TabWrapper>
-      <Tab className="active" to="/requestboard?type=all">
+      <Tab className="active" to="/requestboard" onClick={onClick}>
         정보수정요청
       </Tab>
-      <Tab to="/requestboard?type=sale">(매매)정보수정요청</Tab>
-      {/* {path && (
-        <>
-          <Tab className="active">
-            <Link to="/requestboard">정보수정요청</Link>
-          </Tab>
-          <Tab>
-            <Link to="/requestboard?type=sale">(매매)정보수정요청</Link>
-          </Tab>
-        </>
-      )}
-      {!path && (
-        <>
-          <Tab>
-            <Link to="/requestboard?type=all">정보수정요청</Link>
-          </Tab>
-          <Tab className="active">
-            <Link to="/requestboard?type=sale">(매매)정보수정요청</Link>
-          </Tab>
-        </>
-      )} */}
+      <Tab to="/requestboard?type=sale" onClick={onClick}>
+        (매매)정보수정요청
+      </Tab>
       <EmptyTab></EmptyTab>
     </TabWrapper>
   );

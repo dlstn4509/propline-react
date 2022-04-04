@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { Title, PageWrapper, PageWrap, Text } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import SearchCp from '@/components/request/SearchCp';
 import ListCp from '@/components/request/ListCp';
 import PagerCp from '@/components/item/PagerCp';
 
 const RequestPage = () => {
+  const { setPathName } = store();
+  let pathname = window.location.pathname;
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <PageWrapper>
       <PageWrap>

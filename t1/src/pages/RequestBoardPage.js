@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled, { Title, PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import TabCp from '@/components/requestBoard/TabCp';
 import SearchCp from '@/components/requestBoard/SearchCp';
 import ListCp from '@/components/requestBoard/ListCp';
+import ListSaleCp from '@/components/requestBoard/ListSaleCp';
 import PagerCp from '@/components/item/PagerCp';
 
 const RequestBoardPage = () => {
-  // const [type, setType] = useState(false);
-  // useEffect(() => {
-  //   console.log(type);
-  //   console.log(window.location.href);
-  //   setType(window.location.href.split('?')[1] ? true : false);
-  // }, [window.location.href]);
+  const { isPathname } = store();
   return (
     <PageWrapper>
       <PageWrap>
@@ -23,8 +20,8 @@ const RequestBoardPage = () => {
         </div>
         <TabCp />
         <SearchCp />
-        {/* {!type ? <ListCp /> : ''} */}
-        <ListCp />
+        {isPathname === undefined && <ListCp />}
+        {isPathname !== undefined && <ListSaleCp />}
         <PagerCp />
       </PageWrap>
     </PageWrapper>

@@ -24,6 +24,9 @@ import DirectPage from '@/pages/DirectPage';
 import NoticePage from '@/pages/NoticePage';
 import QuestionPage from '@/pages/QuestionPage';
 import RequestBoardPage from '@/pages/RequestBoardPage';
+import InquiryPage from '@/pages/InquiryPage';
+import EventPage from '@/pages/EventPage';
+import ServiceIntroPage from '@/pages/ServiceIntroPage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -57,6 +60,10 @@ const App = () => {
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/question" element={<QuestionPage />} />
         <Route path="/requestboard" element={<RequestBoardPage />} />
+        <Route path="/inquiry" element={<InquiryPage />} />
+        <Route path="/inquiry" element={<InquiryPage />} />
+        <Route path="/event" element={<EventPage />} />
+        <Route path="/serviceintro" element={<ServiceIntroPage />} />
       </Routes>
       <FooterText />
       <Footer />

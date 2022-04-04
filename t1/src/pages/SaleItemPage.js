@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { PageWrapper, PageWrap, Title, Text } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import SearchCp from '@/components/finditem/SearchCp';
 import ListCp from '@/components/saleitem/ListCp';
 import PagerCp from '@/components/item/PagerCp';
 
 const SaleItemPage = () => {
+  const { setPathName } = store();
+  let pathname = window.location.pathname;
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <PageWrapper>
       <PageWrap>

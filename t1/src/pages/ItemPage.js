@@ -16,18 +16,18 @@ const ItemPageWrapper = styled(PageWrapper)`
 `;
 
 const ItemPage = () => {
-  const { setPathName } = store();
-  let pathname = window.location.href.split('?')[1].split('=')[1];
+  const { setTypename } = store();
+  let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
-    setPathName(pathname);
-  }, [pathname]);
+    setTypename(typename);
+  }, [typename]);
   return (
     <ItemPageWrapper>
       <PageWrap>
         <Title>공실매물</Title>
         <ItemTypeCp />
-        {pathname === 'all' && <SearchAllCp />}
-        {pathname === 'normal' && <SearchNormalCp />}
+        {typename === 'all' && <SearchAllCp />}
+        {typename === 'normal' && <SearchNormalCp />}
         <AllTabCp />
         <ListFilterCp />
         <ListCp />

@@ -43,7 +43,7 @@ const TableWrap = styled.table`
   }
 `;
 
-const ListCp = () => {
+const ListSaleCp = () => {
   return (
     <TableWrap>
       <thead>
@@ -83,4 +83,4 @@ const ListCp = () => {
   );
 };
 
-export default React.memo(ListCp);
+export default React.memo(ListSaleCp);

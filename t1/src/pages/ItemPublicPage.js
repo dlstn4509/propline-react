@@ -24,32 +24,32 @@ const ImgWrap = styled.div`
 `;
 
 const ItemPublicPage = () => {
-  const { setPathName } = store();
-  let pathname = window.location.href.split('?')[1].split('=')[1];
+  const { setTypename } = store();
+  let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
-    setPathName(pathname);
-  }, [pathname]);
+    setTypename(typename);
+  }, [typename]);
   return (
     <ItemPublicPageWrapper>
       <PageWrap>
         <TitleWrap>
-          <Title>{pathname === 'all' ? '공동중개' : '나의 공동중개'}</Title>
+          <Title>{typename === 'all' ? '공동중개' : '나의 공동중개'}</Title>
           <Button color={color.blue} bdc={color.blue}>
             공동중개 매물등록
           </Button>
         </TitleWrap>
-        {pathname === 'all' && (
+        {typename === 'all' && (
           <>
             <ItemPublicTypeCp />
             <SearchPublicAllCp />
           </>
         )}
-        {pathname === 'my' && <SearchPublicMyCp />}
+        {typename === 'my' && <SearchPublicMyCp />}
         <ImgWrap>
           <img src={process.env.REACT_APP_URL + 'img/coopitem_gpoint.png'} alt="" />
         </ImgWrap>
-        {pathname === 'all' && <ListFilterCp />}
-        {pathname === 'my' && <ListFilterMyCp />}
+        {typename === 'all' && <ListFilterCp />}
+        {typename === 'my' && <ListFilterMyCp />}
         <ListCp />
         <PagerCp />
       </PageWrap>
