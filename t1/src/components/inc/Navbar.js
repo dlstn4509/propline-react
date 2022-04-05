@@ -26,7 +26,7 @@ const NavWrap = styled.div`
 const NavLeft = styled.div`
   display: flex;
 `;
-const NavRight = styled.div`
+const NavRight = styled(Link)`
   display: flex;
 `;
 const Nav = styled.div`
@@ -176,14 +176,21 @@ const Navbar = () => {
               onMouseEnter={() => {
                 setNavNum(8);
               }}
-              className={isPathname === '/main' ? 'active' : ''}
+              className={
+                isPathname === '/card' ||
+                isPathname === '/extrapayment' ||
+                isPathname === '/gpoint' ||
+                isPathname === '/paymenthistory'
+                  ? 'active'
+                  : ''
+              }
               fs={'15px'}
             >
-              <Link to="/main">MY결제</Link>
+              <Link to="/card">MY결제</Link>
             </Nav>
           </NavLeft>
-          <NavRight>
-            <Nav mr={'0'}>
+          <NavRight to="/requestsale">
+            <Nav mr={'0'} className={isPathname === '/requestsale' ? 'active' : ''}>
               <img src={process.env.REACT_APP_URL + 'img/mamul_wr.png'} alt="" />
               <div>매물의뢰</div>
             </Nav>

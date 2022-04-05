@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 const SubNavWrapper = styled.div`
   width: 100%;
@@ -26,20 +27,21 @@ const SubNav = styled.div`
 `;
 
 const MyPayment = ({ mouseLeave }) => {
+  const { isPathname } = store();
   return (
     <SubNavWrapper>
       <SubNavWrap onMouseLeave={mouseLeave} style={{ paddingLeft: '540px' }}>
-        <SubNav>
-          <Link to="/main">유료서비스 결제</Link>
+        <SubNav className={isPathname === '/card' ? 'active' : ''}>
+          <Link to="/card">유료서비스 결제</Link>
         </SubNav>
-        <SubNav>
-          <Link to="/main">부가서비스 결제</Link>
+        <SubNav className={isPathname === '/extrapayment' ? 'active' : ''}>
+          <Link to="/extrapayment">부가서비스 결제</Link>
         </SubNav>
-        <SubNav>
-          <Link to="/main">G포인트 충전</Link>
+        <SubNav className={isPathname === '/gpoint' ? 'active' : ''}>
+          <Link to="/gpoint">G포인트 충전</Link>
         </SubNav>
-        <SubNav>
-          <Link to="/main">결제 내역</Link>
+        <SubNav className={isPathname === '/paymenthistory' ? 'active' : ''}>
+          <Link to="/paymenthistory">결제 내역</Link>
         </SubNav>
       </SubNavWrap>
     </SubNavWrapper>

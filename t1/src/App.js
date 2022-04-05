@@ -27,6 +27,12 @@ import RequestBoardPage from '@/pages/RequestBoardPage';
 import InquiryPage from '@/pages/InquiryPage';
 import EventPage from '@/pages/EventPage';
 import ServiceIntroPage from '@/pages/ServiceIntroPage';
+import ChargePage from '@/pages/ChargePage';
+import MobileappPage from '@/pages/MobileappPage';
+import CardPage from '@/pages/CardPage';
+import ExtraPaymentPage from '@/pages/ExtraPaymentPage';
+import GPointPage from '@/pages/GPointPage';
+import RequestSalePage from '@/pages/RequestSalePage';
 
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
@@ -64,6 +70,13 @@ const App = () => {
         <Route path="/inquiry" element={<InquiryPage />} />
         <Route path="/event" element={<EventPage />} />
         <Route path="/serviceintro" element={<ServiceIntroPage />} />
+        <Route path="/charge" element={<ChargePage />} />
+        <Route path="/mobileapp" element={<MobileappPage />} />
+        <Route path="/card" element={<CardPage />} />
+        <Route path="/extrapayment" element={<ExtraPaymentPage />} />
+        <Route path="/gpoint" element={<GPointPage />} />
+        <Route path="/paymenthistory" element={<CardPage />} />
+        <Route path="/requestsale" element={<RequestSalePage />} />
       </Routes>
       <FooterText />
       <Footer />
