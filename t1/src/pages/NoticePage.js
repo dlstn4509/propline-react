@@ -10,6 +10,7 @@ import PagerCp from '@/components/item/PagerCp';
 const NoticeWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-top: 30px;
 `;
 
 const NoticePage = () => {
@@ -22,7 +23,7 @@ const NoticePage = () => {
     <PageWrapper>
       <PageWrap>
         <NoticeWrap>
-          <Title>공지사항</Title>
+          <Title pt={'0'}>공지사항</Title>
           <SearchCp />
         </NoticeWrap>
         <ListCp />

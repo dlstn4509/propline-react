@@ -5,6 +5,7 @@ export const Title = styled.div`
   font-weight: 600;
   color: #000000;
   margin-bottom: 30px;
+  padding-top: ${(props) => (props.pt ? props.pt : '30px')};
 `;
 export const Text = styled.div`
   font-size: 14px;

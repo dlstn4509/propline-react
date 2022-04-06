@@ -20,7 +20,6 @@ const SubNav = styled.div`
   margin-right: 25px;
   font-size: 13px;
   color: #464d50;
-  cursor: pointer;
   &.active {
     font-weight: bold;
   }
@@ -41,7 +40,7 @@ const Servicecenter = ({ mouseLeave }) => {
           <Link to="/requestboard">요청게시판</Link>
         </SubNav>
         <SubNav className={isPathname === '/inquiry' ? 'active' : ''}>
-          제휴&<Link to="/inquiry">광고문의</Link>
+          <Link to="/inquiry">제휴&광고문의</Link>
         </SubNav>
         <SubNav className={isPathname === '/event' ? 'active' : ''}>
           <Link to="/event">이벤트</Link>

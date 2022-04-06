@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import store from '@/store/store';
 
 import Header from '@/components/inc/Header';
 import SearchArea from '@/components/inc/SearchArea';
@@ -39,6 +40,11 @@ import Footer from '@/components/inc/Footer';
 import QuickMenu from '@/components/inc/QuickMenu';
 
 const App = () => {
+  const { setPathName } = store();
+  let pathname = window.location.pathname;
+  useEffect(() => {
+    setPathName(pathname);
+  }, [pathname]);
   return (
     <BrowserRouter>
       <Header />

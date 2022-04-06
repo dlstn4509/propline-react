@@ -10,6 +10,7 @@ import PagerCp from '@/components/item/PagerCp';
 const QuestioneWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-top: 30px;
 `;
 
 const QuestionPage = () => {
@@ -22,7 +23,7 @@ const QuestionPage = () => {
     <PageWrapper>
       <PageWrap>
         <QuestioneWrap>
-          <Title>자주하는질문</Title>
+          <Title pt={'0'}>자주하는질문</Title>
           <SearchCp />
         </QuestioneWrap>
         <ListCp />

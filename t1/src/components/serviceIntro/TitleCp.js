@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
-import store from '@/store/store';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const TitleWrapper = styled.div`
   position: relative;
+  padding-top: 30px;
 `;
 const TitleWrap = styled.div`
   position: absolute;
   font-size: 35px;
   color: #fff;
   letter-spacing: -0.06em;
-  top: 200px;
+  top: 230px;
   right: 50px;
 `;
 const FirstTitle = styled.div``;
@@ -41,14 +41,9 @@ const SecondTitle = styled.div`
 `;
 
 const TitleCp = () => {
-  const { isPageY } = store();
-  const [pageY, setPageY] = useState('');
   useEffect(() => {
-    setPageY(document.querySelector('.titleWrapper').offsetTop);
-    if (isPageY > pageY) {
-      AOS.init({ duration: 1000 });
-    }
-  }, [isPageY]);
+    AOS.init({ duration: 1000 });
+  }, []);
   return (
     <TitleWrapper className="titleWrapper">
       <img src={process.env.REACT_APP_URL + 'img/fs_con_bg.png'} alt="" />

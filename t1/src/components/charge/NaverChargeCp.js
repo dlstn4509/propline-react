@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { Title } from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaAngleRight } from 'react-icons/fa';
 
 const NaverChargeWrapper = styled.div`
@@ -24,7 +24,7 @@ const NaverBtnWrap = styled.div`
     width: 15px;
     margin-right: 5px;
   }
-  span {
+  a {
     cursor: pointer;
     margin-right: 30px;
     :hover {
@@ -99,13 +99,14 @@ const Price = styled.div`
 `;
 
 const NaverChargeCp = () => {
+  const navigate = useNavigate();
   return (
     <NaverChargeWrapper>
       <NaverChargeWrap>
         <Title>네이버 요금제</Title>
         <NaverBtnWrap>
           <img src={process.env.REACT_APP_URL + 'img/naver-icon.png'} alt="" />
-          <span>네이버 매물관리센터</span>
+          <a href="http://n.gongsilclub.com/">네이버 매물관리센터</a>
           <FaAngleRight />
         </NaverBtnWrap>
       </NaverChargeWrap>

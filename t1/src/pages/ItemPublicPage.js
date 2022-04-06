@@ -18,6 +18,7 @@ const ItemPublicPageWrapper = styled(PageWrapper)`
 const TitleWrap = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-top: 30px;
 `;
 const ImgWrap = styled.div`
   margin-bottom: 50px;
@@ -33,7 +34,7 @@ const ItemPublicPage = () => {
     <ItemPublicPageWrapper>
       <PageWrap>
         <TitleWrap>
-          <Title>{typename === 'all' ? '공동중개' : '나의 공동중개'}</Title>
+          <Title pt={'0'}>{typename === 'all' ? '공동중개' : '나의 공동중개'}</Title>
           <Button color={color.blue} bdc={color.blue}>
             공동중개 매물등록
           </Button>
