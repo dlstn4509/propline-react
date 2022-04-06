@@ -8,12 +8,7 @@ import 'swiper/css/pagination';
 SwiperCore.use([Autoplay]);
 
 const SlideCpWrapper = styled.div`
-  width: 780px;
-  display: table-cell;
-  padding: 0 24px 60px 0px;
-  .swiper-pointer-events {
-    width: 780px;
-  }
+  padding-bottom: 60px;
   .swiper-pagination-bullet {
     background-color: black;
   }
@@ -33,19 +28,12 @@ const SlideCpWrapper = styled.div`
     opacity: 0.3;
   }
 `;
-const SlideImgWrap = styled.div`
-  width: 780px;
-  height: 440px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
 
 const SlideCp = () => {
   const swiperRef = useRef(null);
   return (
     <SlideCpWrapper
+      className="aaa"
       onMouseEnter={() => swiperRef.current.swiper.autoplay.stop()}
       onMouseLeave={() => swiperRef.current.swiper.autoplay.start()}
     >
@@ -59,19 +47,19 @@ const SlideCp = () => {
         pagination={{ clickable: true, color: '#ffffff' }}
       >
         <SwiperSlide>
-          <SlideImgWrap className="slideImg">
+          <div className="slideImg">
             <img src={process.env.REACT_APP_URL + 'img/slide01.jpg'} alt="" className="slideImg mw-100" />
-          </SlideImgWrap>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <SlideImgWrap className="slideImg">
+          <div className="slideImg">
             <img src={process.env.REACT_APP_URL + 'img/slide02.jpg'} alt="" className="mw-100" />
-          </SlideImgWrap>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
-          <SlideImgWrap className="slideImg">
+          <div className="slideImg">
             <img src={process.env.REACT_APP_URL + 'img/slide03.jpg'} alt="" className="mw-100" />
-          </SlideImgWrap>
+          </div>
         </SwiperSlide>
       </Swiper>
     </SlideCpWrapper>

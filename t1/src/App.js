@@ -50,6 +50,7 @@ import GPointPage from '@/pages/myPayment/GPointPage';
 import RequestSalePage from '@/pages/myPayment/RequestSalePage';
 
 /***************** other *****************/
+// import MainPage from '@/pages/MainPage_';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';

@@ -1,6 +1,6 @@
 import React from 'react';
-import styled, { PageWrapper, PageWrap, FlexDiv } from '@/style';
-import { Link } from 'react-router-dom';
+import styled from '@/style';
+import store from '@/store/store';
 
 import SlideCp from '@/components/main/SlideCp';
 import RealTimeMamulCp from '@/components/main/RealTimeMamulCp';
@@ -16,48 +16,74 @@ import NonePassBookTableCp from '@/components/main/NonePassBookTableCp';
 import YouTubeBtnCp from '@/components/main/YouTubeBtnCp';
 import RegistryBuildingBtnCp from '@/components/main/RegistryBuildingBtnCp';
 
-const MainPageWrap = styled(PageWrap)`
+const MainWrapper = styled.div`
+  width: 100%;
+`;
+
+const MainWrap = styled.div`
+  width: 1000px;
+  margin: 0 auto;
+  display: table;
+`;
+const LeftCon = styled.div`
+  padding: 0;
+  width: 804px;
+  height: 440px;
+  display: table-cell;
+  vertical-align: top;
+`;
+const ListWrapper = styled.div`
   display: flex;
+  padding-right: 24px;
   justify-content: space-between;
 `;
-const MainLeftWrap = styled.div`
-  width: 780px;
+const NoticeWrapper = styled.div`
+  display: flex;
+  padding-right: 24px;
+  justify-content: space-between;
+  margin: 60px 0;
 `;
-const MainRightWrap = styled.div`
+const RightCon = styled.div`
   width: 196px;
-`;
-const ListWrap = styled(FlexDiv)`
-  justify-content: space-between;
-  margin-bottom: 40px;
+  display: table-cell;
 `;
 
 const MainPage = () => {
+  const { isUser, quickMenuTop, setQuickMenuTop } = store();
+  const onWheel = (e) => {
+    let y = e.deltaY;
+    if (y > 0 && quickMenuTop < 800) {
+      setQuickMenuTop(y);
+    } else if (y < 0 && quickMenuTop > 0) {
+      setQuickMenuTop(y);
+    }
+  };
   return (
-    <PageWrapper>
-      <MainPageWrap>
-        <MainLeftWrap>
+    <MainWrapper onWheel={onWheel}>
+      <MainWrap>
+        <LeftCon>
           <SlideCp />
-          <ListWrap>
+          <ListWrapper>
             <RealTimeMamulCp />
             <FreeMamulCp />
-          </ListWrap>
-          <ListWrap>
+          </ListWrapper>
+          <NoticeWrapper>
             <NoticeCp />
             <QuestionsCp />
-          </ListWrap>
-        </MainLeftWrap>
-        <MainRightWrap>
-          <LoginCp />
-          <LogoutCp />
+          </NoticeWrapper>
+        </LeftCon>
+        <RightCon>
+          {!isUser && <LoginCp />}
+          {isUser && <LogoutCp />}
           <NaverMamulMgmBtnCp />
           <GongsliPrdPriceBtnCp />
           <GongsliPrdListTableCp />
           <NonePassBookTableCp />
           <YouTubeBtnCp />
           <RegistryBuildingBtnCp />
-        </MainRightWrap>
-      </MainPageWrap>
-    </PageWrapper>
+        </RightCon>
+      </MainWrap>
+    </MainWrapper>
   );
 };
 
