@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { Title } from '@/style';
+import styled, { Title, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
 const ClientInfoWrapper = styled.div`
@@ -37,10 +37,6 @@ const Input = styled.input`
   :focus {
     border: 2px solid #000;
   }
-`;
-const FlexDiv = styled.div`
-  display: flex;
-  align-items: center;
 `;
 const Select = styled.select`
   width: ${(props) => props.width};

@@ -3,16 +3,16 @@ import styled, { PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
-import MyInfoCp from '../components/card/MyInfoCp';
-import PaymentCp from '../components/card/PaymentCp';
-import PaymentMethodCp from '../components/card/PaymentMethodCp';
-import ProductCp from '../components/card/ProductCp';
-import ApplicantInfoCp from '../components/card/ApplicantInfoCp';
-import CardGuideCp from '../components/card/CardGuideCp';
-import TaxBillCp from '../components/card/TaxBillCp';
-import DepositInfoCp from '../components/card/DepositInfoCp';
-import TotalAmountCp from '../components/card/TotalAmountCp';
-import BtnCp from '../components/card/BtnCp';
+import MyInfoCp from '@/components/card/MyInfoCp';
+import PaymentCp from '@/components/card/PaymentCp';
+import PaymentMethodCp from '@/components/card/PaymentMethodCp';
+import ProductCp from '@/components/card/ProductCp';
+import ApplicantInfoCp from '@/components/card/ApplicantInfoCp';
+import CardGuideCp from '@/components/card/CardGuideCp';
+import TaxBillCp from '@/components/card/TaxBillCp';
+import DepositInfoCp from '@/components/card/DepositInfoCp';
+import TotalAmountCp from '@/components/card/TotalAmountCp';
+import BtnCp from '@/components/card/BtnCp';
 
 const CardPage = () => {
   const { setPathName } = store();

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
 import SearchCp from '@/components/finditem/SearchCp';
-import ListCp from '../components/direact/ListCp';
+import ListCp from '@/components/direact/ListCp';
 import PagerCp from '@/components/item/PagerCp';
 
 const DirectPage = () => {

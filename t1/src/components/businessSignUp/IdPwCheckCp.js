@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
-import { Tr, TdFirst, TdSecond, Input, FlexDiv, RedStar } from '@/style/businessSignUp';
-import styled, { Button } from '@/style';
+import styled, { Button, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
 import IdQuestionMarkCp from './IdQuestionMarkCp';
@@ -15,6 +14,30 @@ const RegSame = styled.div`
 const PasswordCheckTxt = styled.div`
   margin-left: 20px;
   color: red;
+`;
+const Tr = styled.tr`
+  border-top: 1px solid #dae1e7;
+`;
+const TdTitle = styled.td`
+  background-color: #f9fbfc;
+  padding-left: 15px;
+  span {
+    color: red;
+  }
+`;
+const Td = styled.td`
+  padding: 10px 15px;
+`;
+const Input = styled.input`
+  width: ${(props) => (props.width ? props.width : '177px')};
+  color: ${(props) => props.color};
+  margin-right: ${(props) => (props.mr ? props.mr : 0)};
+  margin-left: ${(props) => (props.ml ? props.ml : 0)};
+  margin-bottom: ${(props) => (props.mb ? props.mb : 0)};
+  display: block;
+  :focus {
+    border: 2px solid #000000;
+  }
 `;
 
 const IdPwCheckCp = ({ checkAll }) => {
@@ -73,15 +96,15 @@ const IdPwCheckCp = ({ checkAll }) => {
   return (
     <>
       <Tr>
-        <TdFirst>
-          아이디(대표) <RedStar>*</RedStar>
-        </TdFirst>
-        <TdSecond colSpan="3">
+        <TdTitle>
+          아이디(대표) <span>*</span>
+        </TdTitle>
+        <Td colSpan="3">
           <FlexDiv>
             <Input type="text" mr={'20px'} name="member_id" id="member_id" className="redStar" />
-            <div className="btn" onClick={idDuplication}>
+            <Button onClick={idDuplication} mr={'10px'}>
               아이디 중복체크
-            </div>
+            </Button>
             <div>
               <div style={{ color: '#888f91' }}>* 영문 소문자, 숫자 조합 6자 ~ 12자 (변경불가)</div>
               <div style={{ position: 'relative', color: '#888f91' }}>
@@ -93,13 +116,13 @@ const IdPwCheckCp = ({ checkAll }) => {
               </div>
             </div>
           </FlexDiv>
-        </TdSecond>
+        </Td>
       </Tr>
       <Tr>
-        <TdFirst>
-          비밀번호 <RedStar>*</RedStar>
-        </TdFirst>
-        <TdSecond colSpan="3">
+        <TdTitle>
+          비밀번호 <span>*</span>
+        </TdTitle>
+        <Td colSpan="3">
           <FlexDiv>
             <Input
               type="password"
@@ -118,18 +141,18 @@ const IdPwCheckCp = ({ checkAll }) => {
               </RegSame>
             </div>
           </FlexDiv>
-        </TdSecond>
+        </Td>
       </Tr>
       <Tr>
-        <TdFirst>
-          비밀번호 확인 <RedStar>*</RedStar>
-        </TdFirst>
-        <TdSecond colSpan="3">
+        <TdTitle>
+          비밀번호 확인 <span>*</span>
+        </TdTitle>
+        <Td colSpan="3">
           <FlexDiv>
             <Input type="password" onKeyUp={passwordCheckKeyUp} className="redStar" />
             {passwordCheck && <PasswordCheckTxt>비밀번호 확인바람.</PasswordCheckTxt>}
           </FlexDiv>
-        </TdSecond>
+        </Td>
       </Tr>
     </>
   );

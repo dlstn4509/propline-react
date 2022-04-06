@@ -1,17 +1,7 @@
 /* global daum */
 import React, { useState, useCallback, useRef } from 'react';
 import axios from 'axios';
-import styled, {
-  SubTitle,
-  TableWrap,
-  Tr,
-  TdFirst,
-  TdSecond,
-  Input,
-  FlexDiv,
-  RedStar,
-  Label,
-} from '@/style/businessSignUp';
+import styled, { Button, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
 import TelNumArrayCp from './TelNumArrayCp';
@@ -19,6 +9,45 @@ import TelNumCompanyArrayCp from './TelNumCompanyArrayCp';
 import FaxNumArrayCp from './FaxNumArrayCp';
 import FavoriteAreaCp from './FavoriteAreaCp';
 import MainIndustryCp from './MainIndustryCp';
+
+const SubTitle = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  color: #464d50;
+  margin-bottom: 20px;
+`;
+const TableWrap = styled.table`
+  font-size: 13px;
+  color: #464d50;
+  margin-bottom: 30px;
+`;
+const Tr = styled.tr`
+  border-top: 1px solid #dae1e7;
+`;
+const TdTitle = styled.td`
+  background-color: #f9fbfc;
+  padding: 20px 0 20px 15px;
+  span {
+    color: red;
+  }
+`;
+const Td = styled.td`
+  padding: 15px;
+`;
+const Input = styled.input`
+  width: ${(props) => (props.width ? props.width : '177px')};
+  color: ${(props) => props.color};
+  margin-right: ${(props) => (props.mr ? props.mr : 0)};
+  margin-left: ${(props) => (props.ml ? props.ml : 0)};
+  margin-bottom: ${(props) => (props.mb ? props.mb : 0)};
+  display: block;
+  :focus {
+    border: 2px solid #000000;
+    ::placeholder {
+      color: #fff;
+    }
+  }
+`;
 
 const CompanyInfoCp = () => {
   const [companyPhone01, setCompanyPhone01] = useState('02');
@@ -125,25 +154,25 @@ const CompanyInfoCp = () => {
         </colgroup>
         <tbody>
           <Tr>
-            <TdFirst>
-              업체명 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            <TdTitle>
+              업체명 <span>*</span>
+            </TdTitle>
+            <Td>
               <Input type="text" name="company_name" className="redStar" onChange={changeCompany_name} />
               <input type="hidden" name="company_alias" value={company_alias} />
-            </TdSecond>
-            <TdFirst>
-              대표자명 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            </Td>
+            <TdTitle>
+              대표자명 <span>*</span>
+            </TdTitle>
+            <Td>
               <Input type="text" name="president" className="redStar" />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              사업자등록번호 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>
+              사업자등록번호 <span>*</span>
+            </TdTitle>
+            <Td colSpan="3">
               <FlexDiv>
                 <Input width={'73px'} mr={'10px'} type="text" name="company_no01" className="redStar" />-
                 <Input
@@ -157,77 +186,79 @@ const CompanyInfoCp = () => {
                 -
                 <Input width={'73px'} ml={'10px'} type="text" name="company_no03" className="redStar" />
               </FlexDiv>
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>사업자등록증</TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>사업자등록증</TdTitle>
+            <Td colSpan="3">
               <FlexDiv>
                 <Input type="text" width={'280px'} mr={'20px'} value={companyNoFile} readOnly />
-                <Label className="btn" htmlFor="company_no_file" name="company_no_file">
-                  파일등록
-                </Label>
-                <Input
+                <label htmlFor="company_no_file" name="company_no_file">
+                  <Button>파일등록</Button>
+                </label>
+                <label
                   type="file"
                   onChange={changeCompanyNoFile}
                   id="company_no_file"
                   name="company_no_file"
+                  style={{ display: 'none', border: '1px solid red' }}
                 />
-                <div>
+                <div style={{ marginLeft: '10px' }}>
                   <div>*JPG 또는 PNG 파일로 첨부해주세요.(카메라 촬영, 스캔 이미지 가능)</div>
                   <div>*입력하신 사업자등록번호와 동일한 사업자등록증을 첨부해 주셔야 합니다.</div>
                 </div>
               </FlexDiv>
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              업태 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            <TdTitle>
+              업태 <span>*</span>
+            </TdTitle>
+            <Td>
               <Input type="text" name="business_kind" className="redStar" />
-            </TdSecond>
-            <TdFirst>
-              종목 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            </Td>
+            <TdTitle>
+              종목 <span>*</span>
+            </TdTitle>
+            <Td>
               <Input type="text" name="business_item" className="redStar" />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              중개사무소등록번호 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>
+              중개사무소등록번호 <span>*</span>
+            </TdTitle>
+            <Td colSpan="3">
               <Input type="text" name="registration_no" className="redStar" />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>중개사무소등록증</TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>중개사무소등록증</TdTitle>
+            <Td colSpan="3">
               <FlexDiv>
                 <Input type="text" width={'280px'} mr={'20px'} value={registrationNoFile} readOnly />
-                <Label className="btn" htmlFor="registration_no_file">
-                  파일등록
-                </Label>
-                <Input
+                <label htmlFor="registration_no_file">
+                  <Button>파일등록</Button>
+                </label>
+                <input
                   type="file"
                   id="registration_no_file"
                   onChange={changeRegistrationFile}
                   name="registration_no_file"
+                  style={{ display: 'none' }}
                 />
-                <div>
+                <div style={{ marginLeft: '10px' }}>
                   <div>*JPG 또는 PNG 파일로 첨부해주세요.(카메라 촬영, 스캔 이미지 가능)</div>
                   <div>*입력하신 사업자등록번호와 동일한 개설등록증을 첨부해 주셔야 합니다.</div>
                 </div>
               </FlexDiv>
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              주소 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>
+              주소 <span>*</span>
+            </TdTitle>
+            <Td colSpan="3">
               <FlexDiv style={{ marginBottom: '10px' }}>
                 <Input
                   type="text"
@@ -239,9 +270,7 @@ const CompanyInfoCp = () => {
                   readOnly
                   className="redStar"
                 />
-                <div className="btn" onClick={findAddress}>
-                  우편번호찾기
-                </div>
+                <Button onClick={findAddress}>우편번호찾기</Button>
               </FlexDiv>
               <Input
                 type="text"
@@ -281,13 +310,13 @@ const CompanyInfoCp = () => {
               <input type="hidden" name="building_no_m" value={building_no_m} />
               <input type="hidden" name="building_no_s" value={building_no_s} />
               <input type="hidden" name="building_name" value={building_name} />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              전화번호 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            <TdTitle>
+              전화번호 <span>*</span>
+            </TdTitle>
+            <Td>
               <FlexDiv>
                 <TelNumCompanyArrayCp changeCompanyPhone01={changeCompanyPhone01} />-
                 <input type="hidden" name="companyPhone01" value={companyPhone01} />
@@ -302,42 +331,42 @@ const CompanyInfoCp = () => {
                 -
                 <Input width={'73px'} ml={'10px'} type="text" name="companyPhone03" className="redStar" />
               </FlexDiv>
-            </TdSecond>
-            <TdFirst>팩스번호</TdFirst>
-            <TdSecond>
+            </Td>
+            <TdTitle>팩스번호</TdTitle>
+            <Td>
               <FlexDiv>
                 <FaxNumArrayCp changeFax01={changeFax01} />-
                 <input type="hidden" name="fax01" value={fax01} />
                 <Input width={'73px'} mr={'10px'} ml={'10px'} type="text" name="fax02" />-
                 <Input width={'73px'} ml={'10px'} type="text" name="fax03" />
               </FlexDiv>
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              선호지역 선택 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            <TdTitle>
+              선호지역 선택 <span>*</span>
+            </TdTitle>
+            <Td>
               <FavoriteAreaCp />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr>
-            <TdFirst>
-              주력업종 선택 <RedStar>*</RedStar>
-            </TdFirst>
-            <TdSecond>
+            <TdTitle>
+              주력업종 선택 <span>*</span>
+            </TdTitle>
+            <Td>
               <MainIndustryCp />
-            </TdSecond>
+            </Td>
           </Tr>
           <Tr style={{ borderBottom: '1px solid #dae1e7' }}>
-            <TdFirst>추천인 ID</TdFirst>
-            <TdSecond colSpan="3">
+            <TdTitle>추천인 ID</TdTitle>
+            <Td colSpan="3">
               <Input type="text" />
-            </TdSecond>
+            </Td>
           </Tr>
           <tr style={{ marginTop: '10px' }}>
             <td colSpan="4">
-              <RedStar>*</RedStar>표시는 필수항목입니다.
+              <span style={{ color: 'red' }}>*</span>표시는 필수항목입니다.
             </td>
           </tr>
         </tbody>

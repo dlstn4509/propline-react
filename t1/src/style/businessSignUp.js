@@ -37,30 +37,27 @@ export const Input = styled.input`
       color: #fff;
     }
   }
-`;
+`; // @/style/
 export const FlexDiv = styled.div`
   display: flex;
   align-items: center;
 `;
 export const TdSecond = styled.td`
   padding: 10px 0 10px 15px;
-  .btn {
+  /* .btn {
     font-size: 13px;
-    font-family: Noto Sans KR;
     font-weight: 400;
     color: #888f91;
-    text-decoration: none;
     background-color: #ffffff;
-    padding: 2px 15px 2px 15px;
+    padding: 2px 15px;
     border: 1px solid #888f91;
     border-radius: 30px;
-    display: inline-block;
     margin-right: 10px;
     &.btnBlue {
       color: #3168ff;
       border: 1px solid #3168ff;
     }
-  }
+  } */
   span {
     margin-left: 6px;
     display: inline-block;

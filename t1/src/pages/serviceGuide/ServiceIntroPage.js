@@ -3,11 +3,11 @@ import styled, { PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
-import TitleCp from '../components/serviceIntro/TitleCp';
-import SlideCp from '../components/serviceIntro/SlideCp';
-import AboutGingsilCp from '../components/serviceIntro/AboutGingsilCp';
-import CircleCp from '../components/serviceIntro/CircleCp';
-import StartBtnCp from '../components/serviceIntro/StartBtnCp';
+import TitleCp from '@/components/serviceIntro/TitleCp';
+import SlideCp from '@/components/serviceIntro/SlideCp';
+import AboutGingsilCp from '@/components/serviceIntro/AboutGingsilCp';
+import CircleCp from '@/components/serviceIntro/CircleCp';
+import StartBtnCp from '@/components/serviceIntro/StartBtnCp';
 
 const ServiceIntroPage = () => {
   const { setPathName, setPageY } = store();

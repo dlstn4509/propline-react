@@ -22,6 +22,8 @@ export const Button = styled.div`
   border-radius: 30px;
   height: 25px;
   cursor: pointer;
+  margin-right: ${(props) => (props.mr ? props.mr : '0')};
+  width: ${(props) => props.width};
 `;
 export const PageWrapper = styled.div`
   width: 100%;
@@ -30,4 +32,8 @@ export const PageWrapper = styled.div`
 `;
 export const PageWrap = styled.div`
   width: 1000px;
+`;
+export const FlexDiv = styled.div`
+  display: flex;
+  align-items: center;
 `;

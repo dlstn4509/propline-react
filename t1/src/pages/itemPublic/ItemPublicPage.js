@@ -8,7 +8,7 @@ import SearchPublicAllCp from '@/components/itempublic/SearchPublicAllCp';
 import SearchPublicMyCp from '@/components/itempublic/SearchPublicMyCp';
 import MyItemCp from '@/components/item/MyItemCp';
 import ListFilterCp from '@/components/item/ListFilterCp';
-import ListFilterMyCp from '../components/itempublic/ListFilterMyCp';
+import ListFilterMyCp from '@/components/itempublic/ListFilterMyCp';
 import ListCp from '@/components/itempublic/ListCp';
 import PagerCp from '@/components/item/PagerCp';
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { FlexDiv } from '@/style/businessSignUp';
+import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
 const Title = styled.div`

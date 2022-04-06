@@ -3,6 +3,7 @@ import styled from '@/style';
 
 const SelectWrap = styled.select`
   width: 73px;
+  height: 31px;
   margin-right: 10px;
 `;
 

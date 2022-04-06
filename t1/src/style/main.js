@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 export default styled;
 
+// import styled from '@/style';
+
 /************************** common **************************/
 const Inner = { width: '1000px', margin: '0 auto' };
 const Flr = { float: 'right' };

@@ -3,9 +3,9 @@ import styled, { Title, PageWrapper, PageWrap, color } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
-import ChargeCp from '../components/charge/ChargeCp';
-import NaverChargeCp from '../components/charge/NaverChargeCp';
-import NaverCouponCp from '../components/charge/NaverCouponCp';
+import ChargeCp from '@/components/charge/ChargeCp';
+import NaverChargeCp from '@/components/charge/NaverChargeCp';
+import NaverCouponCp from '@/components/charge/NaverCouponCp';
 
 const TextWrap = styled.div`
   margin-bottom: 70px;

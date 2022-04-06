@@ -2,42 +2,59 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import store from '@/store/store';
 
+/***************** inc *****************/
 import Header from '@/components/inc/Header';
 import SearchArea from '@/components/inc/SearchArea';
 import Navbar from '@/components/inc/Navbar';
+import FooterText from '@/components/inc/FooterText';
+import Footer from '@/components/inc/Footer';
+import QuickMenu from '@/components/inc/QuickMenu';
 
+/***************** item *****************/
+import ItemPage from '@/pages/item/ItemPage';
+
+/***************** itemPublic *****************/
+import ItemPublicPage from '@/pages/itemPublic/ItemPublicPage';
+
+/***************** saleinfo *****************/
+import SaleInfoPage from '@/pages/saleinfo/SaleInfoPage';
+
+/***************** mamulSelf *****************/
+import FindItemPage from '@/pages/mamulSelf/FindItemPage';
+import SaleItemPage from '@/pages/mamulSelf/SaleItemPage';
+import RequestPage from '@/pages/mamulSelf/RequestPage';
+
+/***************** community *****************/
+import FreeBoardPage from '@/pages/community/FreeBoardPage';
+import KnowHowPage from '@/pages/community/KnowHowPage';
+import RecruitPage from '@/pages/community/RecruitPage';
+import ConsultPage from '@/pages/community/ConsultPage';
+import DirectPage from '@/pages/community/DirectPage';
+
+/***************** servicecenter *****************/
+import NoticePage from '@/pages/servicecenter/NoticePage';
+import QuestionPage from '@/pages/servicecenter/QuestionPage';
+import RequestBoardPage from '@/pages/servicecenter/RequestBoardPage';
+import InquiryPage from '@/pages/servicecenter/InquiryPage';
+import EventPage from '@/pages/servicecenter/EventPage';
+
+/***************** serviceGuide *****************/
+import ServiceIntroPage from '@/pages/serviceGuide/ServiceIntroPage';
+import ChargePage from '@/pages/serviceGuide/ChargePage';
+import MobileappPage from '@/pages/serviceGuide/MobileappPage';
+
+/***************** myPayment *****************/
+import CardPage from '@/pages/myPayment/CardPage';
+import ExtraPaymentPage from '@/pages/myPayment/ExtraPaymentPage';
+import GPointPage from '@/pages/myPayment/GPointPage';
+import RequestSalePage from '@/pages/myPayment/RequestSalePage';
+
+/***************** other *****************/
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';
 import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
-import ItemPage from '@/pages/ItemPage';
-import ItemPublicPage from '@/pages/ItemPublicPage';
-import SaleInfoPage from '@/pages/SaleInfoPage';
-import FindItemPage from '@/pages/FindItemPage';
-import SaleItemPage from '@/pages/SaleItemPage';
-import RequestPage from '@/pages/RequestPage';
-import FreeBoardPage from '@/pages/FreeBoardPage';
-import KnowHowPage from '@/pages/KnowHowPage';
-import RecruitPage from '@/pages/RecruitPage';
-import ConsultPage from '@/pages/ConsultPage';
-import DirectPage from '@/pages/DirectPage';
-import NoticePage from '@/pages/NoticePage';
-import QuestionPage from '@/pages/QuestionPage';
-import RequestBoardPage from '@/pages/RequestBoardPage';
-import InquiryPage from '@/pages/InquiryPage';
-import EventPage from '@/pages/EventPage';
-import ServiceIntroPage from '@/pages/ServiceIntroPage';
-import ChargePage from '@/pages/ChargePage';
-import MobileappPage from '@/pages/MobileappPage';
-import CardPage from '@/pages/CardPage';
-import ExtraPaymentPage from '@/pages/ExtraPaymentPage';
-import GPointPage from '@/pages/GPointPage';
-import RequestSalePage from '@/pages/RequestSalePage';
-
-import FooterText from '@/components/inc/FooterText';
-import Footer from '@/components/inc/Footer';
-import QuickMenu from '@/components/inc/QuickMenu';
 
 const App = () => {
   const { setPathName } = store();
