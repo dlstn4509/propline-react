@@ -20,6 +20,14 @@ const SubNav = styled.div`
   margin-right: 25px;
   font-size: 13px;
   color: #464d50;
+  span {
+    color: #fff;
+    background-color: #f1174b;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 0px 4px 0px 3px;
+  }
   &.active {
     font-weight: bold;
   }
