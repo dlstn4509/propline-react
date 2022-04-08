@@ -80,7 +80,7 @@ const SignUpWrap = styled.div`
 
 const LoginCp = () => {
   const navigate = useNavigate();
-  const { setIsUser, setLoginUser, loginUser } = store();
+  const { setIsUser, setLoginUser } = store();
   const [isCheckbox, setIsCheckbox] = useState(false);
   const [loginIp, setLoginIp] = useState('');
   useEffect(() => {
@@ -92,28 +92,7 @@ const LoginCp = () => {
   const checkboxClick = () => {
     setIsCheckbox(!isCheckbox);
   };
-
-  const clickLogin = async (e) => {
-    e.preventDefault();
-    let id = document.querySelector('#member_id').value;
-    let password = document.querySelector('#member_pw').value;
-    const { data } = await axios.post(
-      process.env.REACT_APP_URL_API + `login?id=${id}&password=${password}&loginIp=${loginIp}`
-    );
-    // if (data.success) {
-    //   setIsUser();
-    //   setLoginUser(data.user);
-    //   navigate('/main');
-    // } else {
-    //   alert('ID와 비밀번호를 확인해주세요.');
-    // }
-  };
   const onClick = async (e) => {
-    // const rs = await e.target.form.submit();
-    // setLoginUser(rs);
-    // setTimeout(() => {
-    //   navigate('/main');
-    // }, 0);
     axios({
       method: 'post',
       url: process.env.REACT_APP_URL_API + 'login',
@@ -124,7 +103,6 @@ const LoginCp = () => {
       },
     })
       .then((r) => {
-        console.log(r.data);
         if (r.data === '아이디와 패스워드를 확인하세요.') {
           alert(r.data);
         } else {

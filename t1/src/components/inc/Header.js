@@ -30,7 +30,7 @@ const Title = styled.div`
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
-  const { isUser, setIsUser } = store();
+  const { isUser, setIsUser, loginUser } = store();
   useEffect(() => {
     (async () => {
       const rs = await axios.get('https://api.ipify.org?format=json');
@@ -58,12 +58,12 @@ const Header = () => {
                 IP: {clientIp}
               </Title>
             )}
-            {!isUser && (
+            {loginUser.length <= 0 && (
               <Title>
                 <Link to="/login">로그인</Link>
               </Title>
             )}
-            {isUser && <Title onClick={clickLogOut}>로그아웃</Title>}
+            {loginUser.legnth > 0 && <Title onClick={clickLogOut}>로그아웃</Title>}
           </HeaderDiv>
         </HeaderWrap>
       </HeaderWrapper>

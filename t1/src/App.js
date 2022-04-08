@@ -59,7 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName, setQuickMenuY, setLoginUser } = store();
+  const { setPathName, setQuickMenuY, setLoginUser, loginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -79,7 +79,7 @@ const App = () => {
       const user = await axios.get(process.env.REACT_APP_URL_API + 'isuser');
       setLoginUser(user.data);
     })();
-  }, []);
+  }, [loginUser]);
   return (
     <BrowserRouter>
       <Header />
