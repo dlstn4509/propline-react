@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import store from '@/store/store';
+import axios from 'axios';
 
 /***************** inc *****************/
 import Header from '@/components/inc/Header';
@@ -58,7 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName, setQuickMenuY } = store();
+  const { setPathName, setQuickMenuY, setLoginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -72,6 +73,12 @@ const App = () => {
         setQuickMenuY(-7);
       }
     });
+  }, []);
+  useEffect(() => {
+    (async () => {
+      const user = await axios.get(process.env.REACT_APP_URL_API + 'isuser');
+      setLoginUser(user);
+    })();
   }, []);
   return (
     <BrowserRouter>
