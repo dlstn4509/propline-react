@@ -30,7 +30,7 @@ const Title = styled.div`
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
-  const { isUser, setIsUser, loginUser } = store();
+  const { setLoginUser, setIsUser, isUser } = store();
   useEffect(() => {
     (async () => {
       const rs = await axios.get('https://api.ipify.org?format=json');
@@ -39,6 +39,7 @@ const Header = () => {
   }, []);
   const clickLogOut = () => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
+      setLoginUser(null);
       setIsUser();
     }
   };
@@ -58,12 +59,12 @@ const Header = () => {
                 IP: {clientIp}
               </Title>
             )}
-            {loginUser.length <= 0 && (
+            {!isUser && (
               <Title>
                 <Link to="/login">로그인</Link>
               </Title>
             )}
-            {loginUser.legnth > 0 && <Title onClick={clickLogOut}>로그아웃</Title>}
+            {isUser && <Title onClick={clickLogOut}>로그아웃</Title>}
           </HeaderDiv>
         </HeaderWrap>
       </HeaderWrapper>

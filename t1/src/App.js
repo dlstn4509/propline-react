@@ -59,7 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName, setQuickMenuY, setLoginUser, loginUser } = store();
+  const { setPathName, setQuickMenuY, setLoginUser, setIsUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -76,8 +76,13 @@ const App = () => {
   }, []);
   useEffect(() => {
     (async () => {
-      const user = await axios.get(process.env.REACT_APP_URL_API + 'isuser');
-      setLoginUser(user.data);
+      await axios
+        .get(process.env.REACT_APP_URL_API + 'isuser')
+        .then((r) => {
+          setLoginUser(r.data);
+          setIsUser();
+        })
+        .catch((err) => console.log(err));
     })();
   }, []);
   return (

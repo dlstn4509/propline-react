@@ -62,10 +62,11 @@ const IconsWrap = styled(Link)`
 `;
 
 const LogoutCp = () => {
-  const { setIsUser, loginUser } = store();
+  const { setIsUser, loginUser, setLoginUser } = store();
   const clickLogOut = () => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
       setIsUser();
+      setLoginUser(null);
     }
   };
   return (

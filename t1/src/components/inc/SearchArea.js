@@ -55,7 +55,7 @@ const PayBtn = styled.div`
 `;
 
 const SearchArea = () => {
-  const { isUser, loginUser } = store();
+  const { loginUser, isUser } = store();
   return (
     <SearchAreaWrapper>
       <SearchAreaWrap>
