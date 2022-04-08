@@ -77,7 +77,7 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const user = await axios.get(process.env.REACT_APP_URL_API + 'isuser');
-      setLoginUser(user);
+      setLoginUser(user.data);
     })();
   }, []);
   return (
