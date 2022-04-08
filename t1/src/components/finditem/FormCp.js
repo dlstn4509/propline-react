@@ -3,6 +3,7 @@ import styled, { color } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import store from '@/store/store';
 import axios from 'axios';
+import qs from 'qs';
 
 const FormWrapper = styled.div`
   margin-bottom: 70px;
@@ -66,19 +67,10 @@ const Btn = styled.button`
 
 const FormCp = () => {
   const { loginUser } = store();
-  const navigate = useNavigate();
-  const onClick = async (e) => {
-    const { success } = await e.target.form.submit();
-    // console.log(success);
-    // success ? navigate('/main') : navigate('/login');
-    // const data = await axios.post(process.env.REACT_APP_URL_API + 'finditem');
-    console.log(success);
-  };
   return (
     <FormWrapper>
-      {/* <form> */}
       <form action={process.env.REACT_APP_URL_API + 'finditem'} method="POST">
-        <input type="hidden" name="midx" value={loginUser.midx} />
+        <input type="hidden" name="midx" value={loginUser.midx ? loginUser.midx : 1011} />
         <Table>
           <tbody>
             <Tr>
@@ -136,7 +128,7 @@ const FormCp = () => {
           <textarea name="contents" cols="30" rows="10"></textarea>
         </TextareaWrap>
         <BtnWrap>
-          <Btn type="button" bgc={color.blue} mr={'10px'} onClick={onClick}>
+          <Btn bgc={color.blue} mr={'10px'}>
             등록
           </Btn>
           <Link to="/finditem">

@@ -59,7 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName, setQuickMenuY, setLoginUser, setIsUser } = store();
+  const { setPathName, setQuickMenuY, setLoginUser, setIsUser, loginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -80,6 +80,7 @@ const App = () => {
         .get(process.env.REACT_APP_URL_API + 'isuser')
         .then((r) => {
           setLoginUser(r.data);
+          console.log(r);
           setIsUser();
         })
         .catch((err) => console.log(err));
