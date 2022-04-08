@@ -33,7 +33,7 @@ const ListWrap = styled(FlexDiv)`
 `;
 
 const MainPage = () => {
-  const { isUser } = store();
+  const { loginUser } = store();
   return (
     <PageWrapper style={{ paddingTop: '30px' }}>
       <MainPageWrap>
@@ -49,8 +49,8 @@ const MainPage = () => {
           </ListWrap>
         </MainLeftWrap>
         <MainRightWrap>
-          {!isUser && <LoginCp />}
-          {isUser && <LogoutCp />}
+          {!loginUser.midx && <LoginCp />}
+          {loginUser.midx && <LogoutCp />}
           <NaverBtnCp />
           <PriceBtnCp />
           <PrdListCp />

@@ -80,7 +80,7 @@ const SignUpWrap = styled.div`
 
 const LoginCp = () => {
   const navigate = useNavigate();
-  const { setIsUser, setLoginUser } = store();
+  const { setLoginUser } = store();
   const [isCheckbox, setIsCheckbox] = useState(false);
   const [loginIp, setLoginIp] = useState('');
   useEffect(() => {
@@ -107,7 +107,6 @@ const LoginCp = () => {
           alert(r.data);
         } else {
           setLoginUser(r.data);
-          setIsUser();
           navigate('/main');
         }
       })

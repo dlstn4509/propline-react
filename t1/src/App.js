@@ -59,7 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName, setQuickMenuY, setLoginUser, setIsUser, loginUser } = store();
+  const { setPathName, setQuickMenuY, setLoginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -74,17 +74,16 @@ const App = () => {
       }
     });
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     await axios
-  //       .get(process.env.REACT_APP_URL_API + 'isuser')
-  //       .then((r) => {
-  //         setLoginUser(r.data);
-  //         setIsUser();
-  //       })
-  //       .catch((err) => console.log(err));
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      await axios
+        .get(process.env.REACT_APP_URL_API + 'isuser')
+        .then((r) => {
+          setLoginUser(r.data);
+        })
+        .catch((err) => console.log(err));
+    })();
+  }, []);
   return (
     <BrowserRouter>
       <Header />

@@ -55,7 +55,7 @@ const PayBtn = styled.div`
 `;
 
 const SearchArea = () => {
-  const { loginUser, isUser } = store();
+  const { loginUser } = store();
   return (
     <SearchAreaWrapper>
       <SearchAreaWrap>
@@ -76,7 +76,7 @@ const SearchArea = () => {
             />
           </InputWrap>
         </LogoSearchArea>
-        {isUser && (
+        {loginUser.midx && (
           <IdWrap>
             <Id>
               <Link to="/main">{loginUser.member_id}님</Link>
