@@ -74,18 +74,17 @@ const App = () => {
       }
     });
   }, []);
-  useEffect(() => {
-    (async () => {
-      await axios
-        .get(process.env.REACT_APP_URL_API + 'isuser')
-        .then((r) => {
-          setLoginUser(r.data);
-          console.log(r);
-          setIsUser();
-        })
-        .catch((err) => console.log(err));
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     await axios
+  //       .get(process.env.REACT_APP_URL_API + 'isuser')
+  //       .then((r) => {
+  //         setLoginUser(r.data);
+  //         setIsUser();
+  //       })
+  //       .catch((err) => console.log(err));
+  //   })();
+  // }, []);
   return (
     <BrowserRouter>
       <Header />
