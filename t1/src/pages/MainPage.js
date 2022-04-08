@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { PageWrapper, PageWrap, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import SlideCp from '@/components/main/SlideCp';
 import RealTimeMamulCp from '@/components/main/RealTimeMamulCp';
@@ -9,10 +10,10 @@ import NoticeCp from '@/components/main/NoticeCp';
 import QuestionsCp from '@/components/main/QuestionsCp';
 import LoginCp from '@/components/main/LoginCp';
 import LogoutCp from '@/components/main/LogoutCp';
-import NaverMamulMgmBtnCp from '@/components/main/NaverMamulMgmBtnCp';
-import GongsliPrdPriceBtnCp from '@/components/main/GongsliPrdPriceBtnCp';
-import GongsliPrdListTableCp from '@/components/main/GongsliPrdListTableCp';
-import NonePassBookTableCp from '@/components/main/NonePassBookTableCp';
+import NaverBtnCp from '@/components/main/NaverBtnCp';
+import PriceBtnCp from '@/components/main/PriceBtnCp';
+import PrdListCp from '@/components/main/PrdListCp';
+import AccountCp from '@/components/main/AccountCp';
 import YouTubeBtnCp from '@/components/main/YouTubeBtnCp';
 import RegistryBuildingBtnCp from '@/components/main/RegistryBuildingBtnCp';
 
@@ -32,8 +33,9 @@ const ListWrap = styled(FlexDiv)`
 `;
 
 const MainPage = () => {
+  const { isUser } = store();
   return (
-    <PageWrapper>
+    <PageWrapper style={{ paddingTop: '30px' }}>
       <MainPageWrap>
         <MainLeftWrap>
           <SlideCp />
@@ -47,12 +49,12 @@ const MainPage = () => {
           </ListWrap>
         </MainLeftWrap>
         <MainRightWrap>
-          <LoginCp />
-          <LogoutCp />
-          <NaverMamulMgmBtnCp />
-          <GongsliPrdPriceBtnCp />
-          <GongsliPrdListTableCp />
-          <NonePassBookTableCp />
+          {!isUser && <LoginCp />}
+          {isUser && <LogoutCp />}
+          <NaverBtnCp />
+          <PriceBtnCp />
+          <PrdListCp />
+          <AccountCp />
           <YouTubeBtnCp />
           <RegistryBuildingBtnCp />
         </MainRightWrap>

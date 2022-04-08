@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Title = styled.div`
   font-size: ${(props) => (props.fs ? props.fs : '20px')};
@@ -24,6 +25,19 @@ export const Button = styled.div`
   cursor: pointer;
   margin-right: ${(props) => (props.mr ? props.mr : '0')};
   width: ${(props) => props.width};
+`;
+export const Button02 = styled(Link)`
+  width: 65px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3168ff;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  position: absolute;
+  right: 0px;
 `;
 export const PageWrapper = styled.div`
   width: 100%;

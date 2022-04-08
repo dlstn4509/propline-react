@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@/style';
+import styled, { Button02 } from '@/style';
 import { Link } from 'react-router-dom';
 
 const TableWrap = styled.table`
@@ -47,50 +47,55 @@ const TableWrap = styled.table`
 
 const ListCp = () => {
   return (
-    <TableWrap>
-      <thead>
-        <tr>
-          <th style={{ width: '100px' }}>종류</th>
-          <th style={{ width: '100px' }}>유형</th>
-          <th style={{ width: '520px' }}>제목</th>
-          <th style={{ width: '150px' }}>부동산명</th>
-          <th style={{ width: '80px' }}>작성일</th>
-          <th>조회</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="sale">매매</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="rental">월세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>빌딩</td>
-          <td>
-            <span className="charter">전세</span>
-          </td>
-          <td>청담동 상가주택 매수합니다</td>
-          <td>골드공인중개사사무소</td>
-          <td>2022-03-30 </td>
-          <td>5</td>
-        </tr>
-      </tbody>
-    </TableWrap>
+    <div style={{ position: 'relative' }}>
+      <TableWrap>
+        <thead>
+          <tr>
+            <th style={{ width: '100px' }}>종류</th>
+            <th style={{ width: '100px' }}>유형</th>
+            <th style={{ width: '520px' }}>제목</th>
+            <th style={{ width: '150px' }}>부동산명</th>
+            <th style={{ width: '80px' }}>작성일</th>
+            <th>조회</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>빌딩</td>
+            <td>
+              <span className="sale">매매</span>
+            </td>
+            <td>청담동 상가주택 매수합니다</td>
+            <td>골드공인중개사사무소</td>
+            <td>2022-03-30 </td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>빌딩</td>
+            <td>
+              <span className="rental">월세</span>
+            </td>
+            <td>청담동 상가주택 매수합니다</td>
+            <td>골드공인중개사사무소</td>
+            <td>2022-03-30 </td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>빌딩</td>
+            <td>
+              <span className="charter">전세</span>
+            </td>
+            <td>청담동 상가주택 매수합니다</td>
+            <td>골드공인중개사사무소</td>
+            <td>2022-03-30 </td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </TableWrap>
+      <Button02 to="/finditemform" style={{ color: '#fff' }}>
+        등록
+      </Button02>
+    </div>
   );
 };
 

@@ -21,6 +21,7 @@ import SaleInfoPage from '@/pages/saleinfo/SaleInfoPage';
 
 /***************** mamulSelf *****************/
 import FindItemPage from '@/pages/mamulSelf/FindItemPage';
+import FindItemFormPage from '@/pages/mamulSelf/FindItemFormPage';
 import SaleItemPage from '@/pages/mamulSelf/SaleItemPage';
 import RequestPage from '@/pages/mamulSelf/RequestPage';
 
@@ -50,7 +51,6 @@ import GPointPage from '@/pages/myPayment/GPointPage';
 import RequestSalePage from '@/pages/myPayment/RequestSalePage';
 
 /***************** other *****************/
-// import MainPage from '@/pages/MainPage_';
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';
@@ -58,11 +58,21 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 
 const App = () => {
-  const { setPathName } = store();
+  const { setPathName, setQuickMenuY } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
   }, [pathname]);
+  useEffect(() => {
+    let body = document.querySelector('body');
+    body.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) {
+        setQuickMenuY(7);
+      } else {
+        setQuickMenuY(-7);
+      }
+    });
+  }, []);
   return (
     <BrowserRouter>
       <Header />
@@ -80,6 +90,7 @@ const App = () => {
         <Route path="/itempublic" element={<ItemPublicPage />} />
         <Route path="/saleinfo" element={<SaleInfoPage />} />
         <Route path="/finditem" element={<FindItemPage />} />
+        <Route path="/finditemform" element={<FindItemFormPage />} />
         <Route path="/saleitem" element={<SaleItemPage />} />
         <Route path="/request" element={<RequestPage />} />
         <Route path="/freeboard" element={<FreeBoardPage />} />

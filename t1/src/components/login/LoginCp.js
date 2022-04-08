@@ -80,7 +80,7 @@ const SignUpWrap = styled.div`
 
 const LoginCp = () => {
   const navigate = useNavigate();
-  const { setIsUser, setLoginUser } = store();
+  const { setIsUser, setLoginUser, loginUser } = store();
   const [isCheckbox, setIsCheckbox] = useState(false);
   const [loginIp, setLoginIp] = useState('');
   useEffect(() => {
@@ -97,60 +97,92 @@ const LoginCp = () => {
     e.preventDefault();
     let id = document.querySelector('#member_id').value;
     let password = document.querySelector('#member_pw').value;
-    const { data } = await axios.get(
+    const { data } = await axios.post(
       process.env.REACT_APP_URL_API + `login?id=${id}&password=${password}&loginIp=${loginIp}`
     );
-    if (data.success) {
-      setIsUser();
-      setLoginUser(data.user);
-      navigate('/main');
-    } else {
-      alert('ID와 비밀번호를 확인해주세요.');
-    }
+    // if (data.success) {
+    //   setIsUser();
+    //   setLoginUser(data.user);
+    //   navigate('/main');
+    // } else {
+    //   alert('ID와 비밀번호를 확인해주세요.');
+    // }
+  };
+  const onClick = async (e) => {
+    // const rs = await e.target.form.submit();
+    // setLoginUser(rs);
+    // setTimeout(() => {
+    //   navigate('/main');
+    // }, 0);
+    axios({
+      method: 'post',
+      url: process.env.REACT_APP_URL_API + 'login',
+      data: {
+        member_id: 'dlstn4509',
+        member_pw: 'dkfkek09**',
+      },
+    })
+      .then((r) => {
+        console.log(r.data);
+        setLoginUser(r.data);
+        setIsUser();
+      })
+      .catch((err) => console.log(err));
   };
   return (
-    <LoginCpWrap>
-      <LogoWrap>
-        <img src={process.env.REACT_APP_URL + 'img/loggs.svg'} alt="" />
-      </LogoWrap>
-      <TextWrap>
-        공실클럽에 오신 것을 환영합니다.
-        <br />
-        로그인 후 이용가능합니다.
-      </TextWrap>
-      <LoginForm>
-        <input type="text" name="member_id" id="member_id" placeholder="ID" />
-        <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호" />
-        <FindIdPwWrap>
-          <FindIdPw>
-            <Link to="/main">ID/비밀번호 찾기</Link>
-            <span>&nbsp; | &nbsp;</span>
-            <Link to="/main">MAC ID 찾기</Link>
-          </FindIdPw>
-          <ReMemberId>
-            {!isCheckbox && (
-              <img
-                src={process.env.REACT_APP_URL + 'img/checkbox_01_off.png'}
-                alt=""
-                onClick={checkboxClick}
-              />
-            )}
-            {isCheckbox && (
-              <img
-                src={process.env.REACT_APP_URL + 'img/checkbox_01_on.png'}
-                alt=""
-                onClick={checkboxClick}
-              />
-            )}
-            <div>아이디저장</div>
-          </ReMemberId>
-        </FindIdPwWrap>
-        <BtnWrap onClick={clickLogin}>공실클럽 로그인</BtnWrap>
-        <SignUpWrap>
-          <Link to="/signup">회원가입</Link>
-        </SignUpWrap>
-      </LoginForm>
-    </LoginCpWrap>
+    <div>
+      <form action={process.env.REACT_APP_URL_API + 'login'} method="post">
+        <input type="text" name="member_id" />
+        <input type="password" name="member_pw" />
+        <button type="button" onClick={onClick}>
+          로그인
+        </button>
+        <div>loginUser.member_id</div>
+        {loginUser && <div>{loginUser.member_id}</div>}
+      </form>
+    </div>
+    // <LoginCpWrap>
+    //   <LogoWrap>
+    //     <img src={process.env.REACT_APP_URL + 'img/loggs.svg'} alt="" />
+    //   </LogoWrap>
+    //   <TextWrap>
+    //     공실클럽에 오신 것을 환영합니다.
+    //     <br />
+    //     로그인 후 이용가능합니다.
+    //   </TextWrap>
+    //   <LoginForm>
+    //     <input type="text" name="member_id" id="member_id" placeholder="ID" />
+    //     <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호" />
+    //     <FindIdPwWrap>
+    //       <FindIdPw>
+    //         <Link to="/main">ID/비밀번호 찾기</Link>
+    //         <span>&nbsp; | &nbsp;</span>
+    //         <Link to="/main">MAC ID 찾기</Link>
+    //       </FindIdPw>
+    //       <ReMemberId>
+    //         {!isCheckbox && (
+    //           <img
+    //             src={process.env.REACT_APP_URL + 'img/checkbox_01_off.png'}
+    //             alt=""
+    //             onClick={checkboxClick}
+    //           />
+    //         )}
+    //         {isCheckbox && (
+    //           <img
+    //             src={process.env.REACT_APP_URL + 'img/checkbox_01_on.png'}
+    //             alt=""
+    //             onClick={checkboxClick}
+    //           />
+    //         )}
+    //         <div>아이디저장</div>
+    //       </ReMemberId>
+    //     </FindIdPwWrap>
+    //     <BtnWrap onClick={clickLogin}>공실클럽 로그인</BtnWrap>
+    //     <SignUpWrap>
+    //       <Link to="/signup">회원가입</Link>
+    //     </SignUpWrap>
+    //   </LoginForm>
+    // </LoginCpWrap>
   );
 };
 
