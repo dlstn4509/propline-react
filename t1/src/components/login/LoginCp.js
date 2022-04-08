@@ -120,28 +120,22 @@ const LoginCp = () => {
       data: {
         member_id: document.querySelector('#member_id').value,
         member_pw: document.querySelector('#member_pw').value,
+        loginIp: loginIp,
       },
     })
       .then((r) => {
         console.log(r.data);
-        setLoginUser(r.data);
-        setIsUser();
+        if (r.data === '아이디와 패스워드를 확인하세요.') {
+          alert(r.data);
+        } else {
+          setLoginUser(r.data);
+          setIsUser();
+          navigate('/main');
+        }
       })
       .catch((err) => console.log(err));
   };
   return (
-    // <div>
-    //   <form action={process.env.REACT_APP_URL_API + 'login'} method="post">
-    //     <input type="text" name="member_id" />
-    //     <input type="password" name="member_pw" />
-    //     <button type="button" onClick={onClick}>
-    //       로그인
-    //     </button>
-    //     <div>loginUser.member_id</div>
-    //     {loginUser && <div>{loginUser.member_id}</div>}
-    //   </form>
-    // </div>
-
     <LoginCpWrap>
       <LogoWrap>
         <img src={process.env.REACT_APP_URL + 'img/loggs.svg'} alt="" />
