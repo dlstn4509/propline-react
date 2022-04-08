@@ -39,7 +39,8 @@ const Header = () => {
   }, []);
   const clickLogOut = () => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
-      setLoginUser(null);
+      // setLoginUser(null);
+      axios.get(process.env.REACT_APP_URL_API + 'logout');
       setIsUser();
     }
   };
