@@ -79,7 +79,7 @@ const App = () => {
       const user = await axios.get(process.env.REACT_APP_URL_API + 'isuser');
       setLoginUser(user.data);
     })();
-  }, [loginUser]);
+  }, []);
   return (
     <BrowserRouter>
       <Header />
