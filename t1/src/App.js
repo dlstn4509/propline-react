@@ -68,9 +68,9 @@ const App = () => {
     let body = document.querySelector('body');
     body.addEventListener('wheel', (e) => {
       if (e.deltaY > 0) {
-        setQuickMenuY(7);
+        setQuickMenuY(7.3);
       } else {
-        setQuickMenuY(-7);
+        setQuickMenuY(-7.3);
       }
     });
   }, []);
