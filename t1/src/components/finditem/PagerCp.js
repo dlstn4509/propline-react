@@ -9,10 +9,10 @@ const PagerCp = ({ page, setPage, totalCount }) => {
     <Pagination
       activePage={page}
       itemsCountPerPage={20}
-      totalItemsCount={totalCount}
+      totalItemsCount={Number(totalCount)}
       pageRangeDisplayed={10}
-      prevPageText={'< 이전'}
-      nextPageText={'다음 >'}
+      prevPageText={'이전'}
+      nextPageText={'다음'}
       onChange={handlePageChange}
     />
   );

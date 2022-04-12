@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaRegCheckSquare, FaSearch } from 'react-icons/fa';
+import axios from 'axios';
 
 const InputWrapper = styled.div`
   display: flex;
@@ -27,18 +28,29 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const SearchCp = () => {
-  const [checkWriter, setCheckWriter] = useState(true);
+const SearchCp = ({ setCompany_name, setTitle, setContents }) => {
+  const [checkCompany_name, setCheckCompany_name] = useState(true);
   const [checkTitle, setCheckTitle] = useState(false);
   const [checkContent, setCheckContent] = useState(false);
+  const clickSearch = async () => {
+    let searchValue = document.querySelector('.search').value;
+    checkCompany_name ? setCompany_name(searchValue) : setCompany_name('%');
+    checkTitle ? setTitle(searchValue) : setTitle('%');
+    checkContent ? setContents(searchValue) : setContents('%');
+  };
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      clickSearch();
+    }
+  };
   return (
     <InputWrapper>
       <CheckBoxWrap
         onClick={() => {
-          setCheckWriter(!checkWriter);
+          setCheckCompany_name(!checkCompany_name);
         }}
       >
-        {checkWriter ? <FaRegCheckSquare /> : <FaRegSquare />}
+        {checkCompany_name ? <FaRegCheckSquare /> : <FaRegSquare />}
         작성자
       </CheckBoxWrap>
       <CheckBoxWrap
@@ -58,8 +70,11 @@ const SearchCp = () => {
         내용
       </CheckBoxWrap>
       <InputWrap>
-        <Input />
-        <FaSearch style={{ position: 'absolute', right: '10', top: '10', color: `${color.blue}` }} />
+        <Input type="text" className="search" onKeyPress={onKeyPress} />
+        <FaSearch
+          style={{ position: 'absolute', right: '10', top: '10', color: `${color.blue}`, cursor: 'pointer' }}
+          onClick={clickSearch}
+        />
       </InputWrap>
     </InputWrapper>
   );
