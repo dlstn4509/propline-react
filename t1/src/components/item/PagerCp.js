@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 const PagerWrapper = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ const PagerWrap = styled.div`
   display: flex;
   width: 420px;
 `;
-const Num = styled.div`
+const Num = styled(Link)`
   font-size: 13px;
   color: #464d50;
   cursor: pointer;
@@ -27,32 +28,20 @@ const Btn = styled.div`
 `;
 
 const PagerCp = () => {
-  useEffect(() => {
-    document.querySelectorAll('.num').forEach((v) => {
-      v.addEventListener('click', (e) => {
-        // console.log(window.location.href.split('?')[0] + '?page=' + e.target.innerText);
-        console.log(window.location.href.split('=')[1]);
-        console.log(e.target.innerText);
-      });
-    });
-  });
+  // useEffect(() => {
+  //   document.querySelectorAll('.num').forEach((v) => {
+  //     v.addEventListener('click', (e) => {
+  //       // console.log(window.location.href.split('?')[0] + '?page=' + e.target.innerText);
+  //       console.log(window.location.href.split('=')[1]);
+  //       console.log(e.target.innerText);
+  //     });
+  //   });
+  // });
+  const { isPathname, isFindItemLists } = store();
 
   return (
     <PagerWrapper>
-      <PagerWrap>
-        <Btn>{'< 이전'}</Btn>
-        <Num className="num">1</Num>
-        <Num className="num">2</Num>
-        <Num className="num">3</Num>
-        <Num className="num">4</Num>
-        <Num className="num">5</Num>
-        <Num className="num">6</Num>
-        <Num className="num">7</Num>
-        <Num className="num">8</Num>
-        <Num className="num">9</Num>
-        <Num className="num">10</Num>
-        <Btn>{'다음 >'}</Btn>
-      </PagerWrap>
+      <PagerWrap></PagerWrap>
     </PagerWrapper>
   );
 };

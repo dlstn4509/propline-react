@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { Button02 } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 const TableWrap = styled.table`
   height: 45px;
@@ -45,7 +46,7 @@ const TableWrap = styled.table`
   }
 `;
 
-const ListCp = () => {
+const ListCp = ({ findItemLists }) => {
   return (
     <div style={{ position: 'relative' }}>
       <TableWrap>
@@ -60,36 +61,19 @@ const ListCp = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>빌딩</td>
-            <td>
-              <span className="sale">매매</span>
-            </td>
-            <td>청담동 상가주택 매수합니다</td>
-            <td>골드공인중개사사무소</td>
-            <td>2022-03-30 </td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>빌딩</td>
-            <td>
-              <span className="rental">월세</span>
-            </td>
-            <td>청담동 상가주택 매수합니다</td>
-            <td>골드공인중개사사무소</td>
-            <td>2022-03-30 </td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>빌딩</td>
-            <td>
-              <span className="charter">전세</span>
-            </td>
-            <td>청담동 상가주택 매수합니다</td>
-            <td>골드공인중개사사무소</td>
-            <td>2022-03-30 </td>
-            <td>5</td>
-          </tr>
+          {findItemLists.length > 0 &&
+            findItemLists.map((v, i) => (
+              <tr key={i}>
+                <td>{v.idx}</td>
+                <td>
+                  <span className={v.className}>{v.trade_type}</span>
+                </td>
+                <td style={{ cursor: 'pointer' }}>{v.title}</td>
+                <td style={{ cursor: 'pointer' }}>{v.company_name}</td>
+                <td>{v.reg_date}</td>
+                <td>{v.hit}</td>
+              </tr>
+            ))}
         </tbody>
       </TableWrap>
       <Button02 to="/finditemform" style={{ color: '#fff' }}>

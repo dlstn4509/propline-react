@@ -99,7 +99,7 @@ const FormCp = () => {
             <Tr>
               <TdTitle>부동산명</TdTitle>
               <Td>
-                <Input type="text" name="company_type" />
+                <Input type="text" name="company_name" />
               </Td>
               <TdTitle>담당자</TdTitle>
               <Td>
