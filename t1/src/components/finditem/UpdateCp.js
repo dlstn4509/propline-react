@@ -1,9 +1,7 @@
 import React from 'react';
 import styled, { color } from '@/style';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import store from '@/store/store';
-import axios from 'axios';
-import qs from 'qs';
 
 const FormWrapper = styled.div`
   margin-bottom: 70px;
@@ -65,12 +63,8 @@ const Btn = styled.button`
   color: #ffffff;
 `;
 
-const UpdateCp = ({ itemList, itemIdx }) => {
+const UpdateCp = ({ itemList }) => {
   const { loginUser } = store();
-  const onChange = (e) => {
-    console.log(e.target.value);
-    itemList.company_name = e.target.value;
-  };
   return (
     <FormWrapper>
       <form action={process.env.REACT_APP_URL_API + 'finditem'} method="POST">
@@ -171,4 +165,3 @@ const UpdateCp = ({ itemList, itemIdx }) => {
 };
 
 export default React.memo(UpdateCp);
-// #3168ff

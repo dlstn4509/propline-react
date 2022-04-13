@@ -2,8 +2,6 @@ import React from 'react';
 import styled, { color } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import store from '@/store/store';
-import axios from 'axios';
-import qs from 'qs';
 
 const FormWrapper = styled.div`
   margin-bottom: 70px;

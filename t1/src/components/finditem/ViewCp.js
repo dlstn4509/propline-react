@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -66,9 +66,27 @@ const Button = styled(Link)`
   font-weight: 600;
   margin-right: ${(props) => (props.mr ? props.mr : '10px')};
 `;
+const DeleteButton = styled.button`
+  width: 65px;
+  height: 35px;
+  line-height: 35px;
+  background-color: red;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+`;
 
 const ViewCp = ({ itemList }) => {
   const { loginUser } = store();
+  const clickDelete = (e) => {
+    if (window.confirm('정말 삭제하시겠습니까')) {
+      e.target.form.submit();
+      console.log(e.target.form);
+    }
+  };
   return (
     <ViewWrap>
       <TitleWrap>
@@ -111,9 +129,13 @@ const ViewCp = ({ itemList }) => {
               <Button color={'green'} to={`/finditem?type=update`} style={{ color: '#fff' }}>
                 수정
               </Button>
-              <Button color={'red'} mr={'0'} to="/finditem" style={{ color: '#fff' }}>
-                삭제
-              </Button>
+              <form action={process.env.REACT_APP_URL_API + 'finditem'} method="POST">
+                <input type="hidden" name="_method" value="DELETE" />
+                <input type="hidden" name="idx" value={itemList.idx} />
+                <DeleteButton type="button" onClick={clickDelete}>
+                  삭제
+                </DeleteButton>
+              </form>
             </>
           )}
         </ButtonWrap>

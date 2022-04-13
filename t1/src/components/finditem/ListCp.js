@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import styled, { Button02 } from '@/style';
-import { Link, useNavigate, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import store from '@/store/store';
 
 const TableWrap = styled.table`
@@ -47,12 +47,12 @@ const TableWrap = styled.table`
 `;
 
 const ListCp = ({ findItemLists, setItemIdx }) => {
-  const { isPathname } = store();
   const navigate = useNavigate();
   const onClick = useCallback((e) => {
     let idx = e.target.dataset['idx'];
     setItemIdx(idx);
     navigate(`/finditem?idx=${idx}`);
+    window.scrollTo(0, 0);
   }, []);
   return (
     <div style={{ position: 'relative' }}>
