@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -23,19 +23,22 @@ const Si = styled.div`
 `;
 
 const SiCp = ({ clickSi }) => {
-  const onClick = (e) => {
-    e.target.parentNode.childNodes.forEach((v) => {
-      v.classList.remove('active');
-    });
-    e.target.classList.value.includes('active')
-      ? e.target.classList.remove('active')
-      : e.target.classList.add('active');
-    clickSi(e.target.innerText);
-    document.querySelectorAll('.gunguWrap').forEach((v) => {
-      v.classList.remove('active');
-      v.firstChild.lastChild.classList.add('hide');
-    });
-  };
+  const onClick = useCallback(
+    (e) => {
+      e.target.parentNode.childNodes.forEach((v) => {
+        v.classList.remove('active');
+      });
+      e.target.classList.value.includes('active')
+        ? e.target.classList.remove('active')
+        : e.target.classList.add('active');
+      clickSi(e.target.innerText);
+      document.querySelectorAll('.gunguWrap').forEach((v) => {
+        v.classList.remove('active');
+        v.firstChild.lastChild.classList.add('hide');
+      });
+    },
+    [clickSi]
+  );
   return (
     <SiWrap onClick={onClick}>
       <Si className="active">서울</Si>

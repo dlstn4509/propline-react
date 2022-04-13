@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import store from '@/store/store';
 import styled from '@/style';
@@ -37,12 +37,12 @@ const Header = () => {
       setClientIp(rs.data.ip);
     })();
   }, []);
-  const clickLogOut = () => {
+  const clickLogOut = useCallback(() => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
       setLoginUser('');
       axios.get(process.env.REACT_APP_URL_API + 'logout');
     }
-  };
+  }, []);
   return (
     <>
       <HeaderWrapper>

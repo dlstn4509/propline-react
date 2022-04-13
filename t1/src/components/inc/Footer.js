@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -78,9 +78,9 @@ const FamilySiteTit = styled.div`
 `;
 
 const Footer = () => {
-  const selectChange = (e) => {
+  const selectChange = useCallback((e) => {
     window.open(e.target.value);
-  };
+  }, []);
   return (
     <FooterWrap>
       <FooterCon>

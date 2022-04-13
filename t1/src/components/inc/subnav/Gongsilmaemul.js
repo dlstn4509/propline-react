@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -37,9 +37,9 @@ const Gongsilmaemul = ({ mouseLeave }) => {
     { txt: '아파트', path: '/item?type=apt' },
   ];
   const { setTypename } = store();
-  const onClick = () => {
+  const onClick = useCallback(() => {
     setTypename(window.location.href.includes('?') ? window.location.href.split('?')[1].split('=')[1] : '');
-  };
+  }, []);
   useEffect(() => {
     onClick();
   }, []);

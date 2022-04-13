@@ -56,7 +56,7 @@ const AggrePrivacyCp = () => {
       setCheckLeft(checkSmallOff);
       setCheckRight(checkSmallOff);
     }
-  }, []);
+  }, [checkAll, checkBigOff, checkBigOn, checkSmallOn, checkSmallOff]);
   const clickCheckLeft = useCallback(() => {
     if (checkLeft === checkSmallOff) {
       setCheckLeft(checkSmallOn);
@@ -69,7 +69,7 @@ const AggrePrivacyCp = () => {
         setCheckAll(checkBigOff);
       }
     }
-  }, []);
+  }, [checkAll, checkBigOff, checkBigOn, checkLeft, checkRight, checkSmallOn, checkSmallOff]);
   const clickCheckRight = useCallback(() => {
     if (checkRight === checkSmallOff) {
       setCheckRight(checkSmallOn);
@@ -82,7 +82,7 @@ const AggrePrivacyCp = () => {
         setCheckAll(checkBigOff);
       }
     }
-  }, []);
+  }, [checkAll, checkBigOff, checkBigOn, checkLeft, checkRight, checkSmallOn, checkSmallOff]);
   return (
     <AggrePrivacyWrap>
       <FlexDiv style={{ marginBottom: '30px' }}>

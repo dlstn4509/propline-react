@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import store from '@/store/store';
 import styled, { color, FlexDiv } from '@/style';
 import { FaUserAlt, FaFolderOpen } from 'react-icons/fa';
@@ -63,11 +63,11 @@ const IconsWrap = styled(Link)`
 
 const LogoutCp = () => {
   const { loginUser, setLoginUser } = store();
-  const clickLogOut = () => {
+  const clickLogOut = useCallback(() => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
       setLoginUser(null);
     }
-  };
+  }, []);
   return (
     <LogoutWrapper>
       <IdWrap>

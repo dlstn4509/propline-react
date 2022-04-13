@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -41,18 +41,18 @@ const SignUpTypeWrpa = styled.div`
 const SignUpCp = () => {
   const [hoverType1, setHoverType1] = useState(process.env.REACT_APP_URL + 'img/member_type1_off.png');
   const [hoverType2, setHoverType2] = useState(process.env.REACT_APP_URL + 'img/member_type2_off.png');
-  const onMouseEnter1 = () => {
+  const onMouseEnter1 = useCallback(() => {
     setHoverType1(process.env.REACT_APP_URL + 'img/member_type1_on.png');
-  };
-  const onMouseLeave1 = () => {
+  }, []);
+  const onMouseLeave1 = useCallback(() => {
     setHoverType1(process.env.REACT_APP_URL + 'img/member_type1_off.png');
-  };
-  const onMouseEnter2 = () => {
+  }, []);
+  const onMouseEnter2 = useCallback(() => {
     setHoverType2(process.env.REACT_APP_URL + 'img/member_type2_on.png');
-  };
-  const onMouseLeave2 = () => {
+  }, []);
+  const onMouseLeave2 = useCallback(() => {
     setHoverType2(process.env.REACT_APP_URL + 'img/member_type2_off.png');
-  };
+  }, []);
 
   return (
     <SignUpCpWrapper>

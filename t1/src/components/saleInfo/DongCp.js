@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaCheckSquare } from 'react-icons/fa';
@@ -17,16 +17,19 @@ const Dong = styled.div`
 `;
 
 const DongCp = ({ v, clickDong }) => {
-  const onClick = (e) => {
-    clickDong(e.target.innerText);
-    if (e.target.parentNode.firstChild.classList.value.includes('hide')) {
-      e.target.parentNode.firstChild.classList.remove('hide');
-      e.target.parentNode.firstChild.nextSibling.classList.add('hide');
-    } else {
-      e.target.parentNode.firstChild.classList.add('hide');
-      e.target.parentNode.firstChild.nextSibling.classList.remove('hide');
-    }
-  };
+  const onClick = useCallback(
+    (e) => {
+      clickDong(e.target.innerText);
+      if (e.target.parentNode.firstChild.classList.value.includes('hide')) {
+        e.target.parentNode.firstChild.classList.remove('hide');
+        e.target.parentNode.firstChild.nextSibling.classList.add('hide');
+      } else {
+        e.target.parentNode.firstChild.classList.add('hide');
+        e.target.parentNode.firstChild.nextSibling.classList.remove('hide');
+      }
+    },
+    [clickDong]
+  );
   return (
     <DongWrap className="dongWrap">
       <FaCheckSquare className="checkBoxIcon, hide" style={{ color: `${color.blue}` }} />

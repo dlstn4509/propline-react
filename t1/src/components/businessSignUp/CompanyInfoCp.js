@@ -118,7 +118,6 @@ const CompanyInfoCp = () => {
         setRoadAddress(
           roadAddressSplit[roadAddressSplit.length - 2] + ' ' + roadAddressSplit[roadAddressSplit.length - 1]
         );
-        console.log(roadAddress);
         setLatitude(rs.data.documents[0].x);
         setLongitude(rs.data.documents[0].y);
         setLegal_dong_code(data.bcode);

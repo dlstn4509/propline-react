@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -36,19 +36,25 @@ const SearchCp = () => {
   const [siArr, setSiArr] = useState(sigunguArr[0].서울);
   const [gungu, setGungu] = useState('');
   const [dongArr, setDongArr] = useState([]);
-  const clickSi = (val) => {
+  const clickSi = useCallback((val) => {
     setSiArr(sigunguArr[0][val]);
     setGungu('');
     setSi(val);
-  };
-  const clickGungu = (val) => {
-    setGungu(sigunguArr[0][si][val]);
-  };
-  const clickDong = (val) => {
-    dongArr.includes(si + ' ' + val)
-      ? setDongArr(dongArr.filter((v) => v !== si + ' ' + val))
-      : setDongArr([...dongArr, si + ' ' + val]);
-  };
+  }, []);
+  const clickGungu = useCallback(
+    (val) => {
+      setGungu(sigunguArr[0][si][val]);
+    },
+    [si]
+  );
+  const clickDong = useCallback(
+    (val) => {
+      dongArr.includes(si + ' ' + val)
+        ? setDongArr(dongArr.filter((v) => v !== si + ' ' + val))
+        : setDongArr([...dongArr, si + ' ' + val]);
+    },
+    [dongArr, si]
+  );
   return (
     <SearchWrapper>
       <SiCp clickSi={clickSi} />

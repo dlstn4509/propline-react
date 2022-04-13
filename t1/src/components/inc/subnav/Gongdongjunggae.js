@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled, { color } from '@/style';
 import store from '@/store/store';
 import { Link } from 'react-router-dom';
@@ -31,9 +31,9 @@ const Gongdongjunggae = ({ mouseLeave }) => {
     { txt: '나의공동중개', path: '/itempublic?type=my' },
   ];
   const { setTypename } = store();
-  const onClick = () => {
+  const onClick = useCallback(() => {
     setTypename(window.location.href.includes('?') ? window.location.href.split('?')[1].split('=')[1] : '');
-  };
+  }, []);
   useEffect(() => {
     onClick();
   }, []);

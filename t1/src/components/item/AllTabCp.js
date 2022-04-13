@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -50,17 +50,17 @@ const TtBox = styled.div`
 `;
 
 const AllTabCp = () => {
-  const [tab01, setTab01] = useState(false);
+  const [tab01, setTab01] = useState(true);
   const [tab02, setTab02] = useState(false);
   const [tab03, setTab03] = useState(false);
   const [tab04, setTab04] = useState(false);
   const [isTtBox, setIsTtbox] = useState(true);
-  const showTtbox = () => {
+  const showTtbox = useCallback(() => {
     setIsTtbox(!isTtBox);
-  };
-  const hideTtbox = () => {
+  }, []);
+  const hideTtbox = useCallback(() => {
     setIsTtbox(!isTtBox);
-  };
+  }, []);
   useEffect(() => {
     showTtbox();
     hideTtbox();

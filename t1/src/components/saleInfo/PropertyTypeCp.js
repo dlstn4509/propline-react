@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { Title } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaCheckSquare } from 'react-icons/fa';
@@ -46,10 +46,10 @@ const PropertyTypeCp = () => {
     setIcon11,
     setIcon12,
   ];
-  const onClick01 = () => {
+  const onClick01 = useCallback(() => {
     setIcon01(!icon01);
     setIcons.map((v) => v(false));
-  };
+  }, [icon01]);
   return (
     <PropertyTypeWrap>
       <Title fs={'13px'} style={{ marginRight: '30px' }}>

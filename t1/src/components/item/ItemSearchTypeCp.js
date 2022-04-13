@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ const SearchTypeBar = styled.div`
 `;
 
 const ItemSearchTypeCp = () => {
-  const onClick = (e) => {
+  const onClick = useCallback((e) => {
     document.querySelector('.searchType').childNodes.forEach((v) => {
       v.classList.remove('active');
     });
@@ -47,7 +47,7 @@ const ItemSearchTypeCp = () => {
     } else {
       classList.add('active');
     }
-  };
+  }, []);
   return (
     <>
       <Type className="active" onClick={onClick}>

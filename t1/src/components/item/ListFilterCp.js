@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -107,11 +107,11 @@ const ListFilterCp = () => {
     '90개씩 보기',
     '100개씩 보기',
   ];
-  const clickRadio = () => {
+  const clickRadio = useCallback(() => {
     isRadio === process.env.REACT_APP_URL + 'img/radio_01_off.png'
       ? setIsRadio(process.env.REACT_APP_URL + 'img/radio_01_on.png')
       : setIsRadio(process.env.REACT_APP_URL + 'img/radio_01_off.png');
-  };
+  }, [isRadio]);
   let pathname = window.location.pathname;
 
   return (

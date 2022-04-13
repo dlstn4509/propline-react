@@ -89,29 +89,32 @@ const LoginCp = () => {
       setLoginIp(rs.data.ip);
     })();
   }, []);
-  const checkboxClick = () => {
+  const checkboxClick = useCallback(() => {
     setIsCheckbox(!isCheckbox);
-  };
-  const onClick = async (e) => {
-    axios({
-      method: 'post',
-      url: process.env.REACT_APP_URL_API + 'login',
-      data: {
-        member_id: document.querySelector('#member_id').value,
-        member_pw: document.querySelector('#member_pw').value,
-        loginIp: loginIp,
-      },
-    })
-      .then((r) => {
-        if (r.data === '아이디와 패스워드를 확인하세요.') {
-          alert(r.data);
-        } else {
-          setLoginUser(r.data);
-          navigate('/main');
-        }
+  }, [isCheckbox]);
+  const onClick = useCallback(
+    async (e) => {
+      axios({
+        method: 'post',
+        url: process.env.REACT_APP_URL_API + 'login',
+        data: {
+          member_id: document.querySelector('#member_id').value,
+          member_pw: document.querySelector('#member_pw').value,
+          loginIp: loginIp,
+        },
       })
-      .catch((err) => console.log(err));
-  };
+        .then((r) => {
+          if (r.data === '아이디와 패스워드를 확인하세요.') {
+            alert(r.data);
+          } else {
+            setLoginUser(r.data);
+            navigate('/main');
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    [loginIp]
+  );
   const onKeyPress = useCallback((e) => {
     if (e.key === 'Enter') {
       onClick();

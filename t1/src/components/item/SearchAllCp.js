@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -50,11 +50,11 @@ const CheckBox = styled.div`
 `;
 
 const SearchAllCp = () => {
-  const clickImg = (e) => {
+  const clickImg = useCallback((e) => {
     e.target.src === 'https://t1.propline.co.kr/img/checkbox_03_off.png'
       ? (e.target.src = 'https://t1.propline.co.kr/img/checkbox_03_on.png')
       : (e.target.src = 'https://t1.propline.co.kr/img/checkbox_03_off.png');
-  };
+  }, []);
   return (
     <SearchCpWrapper>
       <MapCp />

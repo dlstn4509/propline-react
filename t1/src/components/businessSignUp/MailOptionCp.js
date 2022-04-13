@@ -7,7 +7,6 @@ const SelectWrap = styled.select`
 
 const MailOptionCp = ({ changeMailOption }) => {
   const onChange = useCallback((e) => {
-    console.log(e.target.value);
     changeMailOption(e.target.value);
   }, []);
   return (

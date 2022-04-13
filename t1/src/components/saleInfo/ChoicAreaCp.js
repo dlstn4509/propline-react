@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -28,12 +28,15 @@ const DongArrWrap = styled.div`
 `;
 
 const ChoiceAreaCp = ({ dongArr, clickDong }) => {
-  const iconClick = (e) => {
-    let dong = e.target.previousSibling
-      ? e.target.previousSibling.innerText.split(' ')[1]
-      : e.target.parentNode.previousSibling.innerText.split(' ')[1];
-    clickDong(dong);
-  };
+  const iconClick = useCallback(
+    (e) => {
+      let dong = e.target.previousSibling
+        ? e.target.previousSibling.innerText.split(' ')[1]
+        : e.target.parentNode.previousSibling.innerText.split(' ')[1];
+      clickDong(dong);
+    },
+    [clickDong]
+  );
   return (
     <ChoiceAreaWrap>
       <span>선택한 지역 :</span>
