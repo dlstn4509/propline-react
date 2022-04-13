@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { Title } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -21,9 +21,9 @@ const PaymentMethodWrapper = styled.div`
 
 const PaymentMethodCp = ({ changePayment }) => {
   const { isPathname } = store();
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     changePayment(e.target.value);
-  };
+  }, []);
   return (
     <>
       <Title>결제방식 선택</Title>

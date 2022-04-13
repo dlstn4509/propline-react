@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { Title, color } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -42,11 +42,11 @@ const PaymentMethodWrap = styled.div`
 
 const ProductCp = ({ paymentMethod, changeId, changeMoney, changeMonth }) => {
   const [idNum, setIdNum] = useState('2');
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     setIdNum(e.target.value);
     changeId(e.target.value);
     changeMonth('3개월');
-  };
+  }, []);
   useEffect(() => {
     if (idNum === '2') {
       changeMoney('462,000원');

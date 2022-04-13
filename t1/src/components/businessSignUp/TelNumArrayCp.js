@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 
 const SelectWrap = styled.select`
@@ -7,9 +7,9 @@ const SelectWrap = styled.select`
 `;
 
 const TelNumArrayCp = ({ changePhone01 }) => {
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     changePhone01(e.target.value);
-  };
+  }, []);
   return (
     <SelectWrap defaultValue="02" onChange={onChange}>
       <option value="010">010</option>

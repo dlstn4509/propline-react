@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -46,7 +46,7 @@ const AggrePrivacyCp = () => {
   const [checkAll, setCheckAll] = useState(checkBigOff);
   const [checkLeft, setCheckLeft] = useState(checkSmallOff);
   const [checkRight, setCheckRight] = useState(checkSmallOff);
-  const clickCheckAll = () => {
+  const clickCheckAll = useCallback(() => {
     if (checkAll === checkBigOff) {
       setCheckAll(checkBigOn);
       setCheckLeft(checkSmallOn);
@@ -56,8 +56,8 @@ const AggrePrivacyCp = () => {
       setCheckLeft(checkSmallOff);
       setCheckRight(checkSmallOff);
     }
-  };
-  const clickCheckLeft = () => {
+  }, []);
+  const clickCheckLeft = useCallback(() => {
     if (checkLeft === checkSmallOff) {
       setCheckLeft(checkSmallOn);
       if (checkRight === checkSmallOn) {
@@ -69,8 +69,8 @@ const AggrePrivacyCp = () => {
         setCheckAll(checkBigOff);
       }
     }
-  };
-  const clickCheckRight = () => {
+  }, []);
+  const clickCheckRight = useCallback(() => {
     if (checkRight === checkSmallOff) {
       setCheckRight(checkSmallOn);
       if (checkLeft === checkSmallOn) {
@@ -82,7 +82,7 @@ const AggrePrivacyCp = () => {
         setCheckAll(checkBigOff);
       }
     }
-  };
+  }, []);
   return (
     <AggrePrivacyWrap>
       <FlexDiv style={{ marginBottom: '30px' }}>

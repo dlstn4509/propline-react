@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -48,13 +48,13 @@ const FavoriteAreaCp = () => {
     '중구',
     '중랑구',
   ];
-  const checkImgClick = (e) => {
+  const checkImgClick = useCallback((e) => {
     if (e.target.src == process.env.REACT_APP_URL + 'img/checkbox_01_off.png') {
       e.target.src = process.env.REACT_APP_URL + 'img/checkbox_01_on.png';
     } else {
       e.target.src = process.env.REACT_APP_URL + 'img/checkbox_01_off.png';
     }
-  };
+  }, []);
   document.querySelectorAll('.checkImg').forEach((v) => {
     v.addEventListener('click', checkImgClick);
   });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -112,6 +112,11 @@ const LoginCp = () => {
       })
       .catch((err) => console.log(err));
   };
+  const onKeyPress = useCallback((e) => {
+    if (e.key === 'Enter') {
+      onClick();
+    }
+  }, []);
   return (
     <LoginCpWrap>
       <LogoWrap>
@@ -123,8 +128,14 @@ const LoginCp = () => {
         로그인 후 이용가능합니다.
       </TextWrap>
       <LoginForm>
-        <input type="text" name="member_id" id="member_id" placeholder="ID" />
-        <input type="password" name="member_pw" id="member_pw" placeholder="비밀번호" />
+        <input type="text" name="member_id" id="member_id" placeholder="ID" onKeyPress={onKeyPress} />
+        <input
+          type="password"
+          name="member_pw"
+          id="member_pw"
+          placeholder="비밀번호"
+          onKeyPress={onKeyPress}
+        />
         <FindIdPwWrap>
           <FindIdPw>
             <Link to="/main">ID/비밀번호 찾기</Link>

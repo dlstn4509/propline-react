@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled, { PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -28,15 +28,15 @@ const CardPage = () => {
   const changePayment = (val) => {
     setPaymentMethod(val);
   };
-  const changeId = (val) => {
+  const changeId = useCallback((val) => {
     setIdNum(val);
-  };
-  const changeMoney = (val) => {
+  }, []);
+  const changeMoney = useCallback((val) => {
     setMoney(val);
-  };
-  const changeMonth = (val) => {
+  }, []);
+  const changeMonth = useCallback((val) => {
     setMonth(val);
-  };
+  }, []);
   return (
     <PageWrapper>
       <PageWrap>

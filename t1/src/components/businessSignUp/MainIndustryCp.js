@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -22,13 +22,13 @@ const CheckText = styled.div`
 
 const MainIndustryCp = () => {
   const industryArr = ['주택', '아파트', '오피스텔', '분양권', '사무실', '상가', '빌딩', '토지'];
-  const checkImgClick = (e) => {
+  const checkImgClick = useCallback((e) => {
     if (e.target.src.includes('off')) {
       e.target.src = process.env.REACT_APP_URL + 'img/checkbox_01_on.png';
     } else {
       e.target.src = process.env.REACT_APP_URL + 'img/checkbox_01_off.png';
     }
-  };
+  }, []);
   useEffect(() => {
     document.querySelectorAll('.checkImg').forEach((v) => {
       v.addEventListener('click', checkImgClick);

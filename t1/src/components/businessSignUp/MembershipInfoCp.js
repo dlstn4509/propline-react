@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { Button, FlexDiv, color } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -64,14 +64,14 @@ const MembershipInfoCp = ({ checkAll }) => {
   const [is_foreigner, setIs_foreigner] = useState('');
   const [is_certified_mobile, setIs_certified_mobile] = useState('');
   const [is_agree_receive, setIs_agree_receive] = useState(1);
-  const changePhone01 = (value) => {
+  const changePhone01 = useCallback((value) => {
     setPhone01(value);
-  };
-  const changeMailOption = (value) => {
+  }, []);
+  const changeMailOption = useCallback((value) => {
     setMailOptionValue(value);
-  };
+  }, []);
   const [isMarketing, setIsMarketing] = useState(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
-  const isMarketingClick = () => {
+  const isMarketingClick = useCallback(() => {
     if (isMarketing === process.env.REACT_APP_URL + 'img/checkbox_01_on.png') {
       setIsMarketing(process.env.REACT_APP_URL + 'img/checkbox_01_off.png');
       setIs_agree_receive(0);
@@ -79,7 +79,7 @@ const MembershipInfoCp = ({ checkAll }) => {
       setIsMarketing(process.env.REACT_APP_URL + 'img/checkbox_01_on.png');
       setIs_agree_receive(1);
     }
-  };
+  }, []);
 
   return (
     <>

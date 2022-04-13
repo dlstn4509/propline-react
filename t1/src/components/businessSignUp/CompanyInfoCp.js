@@ -72,15 +72,15 @@ const CompanyInfoCp = () => {
   const [building_no_s, setBuilding_no_s] = useState('');
   const [building_name, setBuilding_name] = useState('');
   const detail_address = useRef();
-  const changeCompany_name = (e) => {
+  const changeCompany_name = useCallback((e) => {
     setCompany_alias(e.target.value);
-  };
-  const changeCompanyPhone01 = (value) => {
+  }, []);
+  const changeCompanyPhone01 = useCallback((value) => {
     setCompanyPhone01(value);
-  };
-  const changeFax01 = (value) => {
+  }, []);
+  const changeFax01 = useCallback((value) => {
     setFax01(value);
-  };
+  }, []);
   const changeCompanyNoFile = useCallback((e) => {
     setCompanyNoFile(e.target.value);
   }, []);
@@ -136,7 +136,6 @@ const CompanyInfoCp = () => {
             ? rs.data.documents[0].road_address.building_name
             : ''
         );
-        console.log(data);
       },
     }).open();
     detail_address.current.focus();

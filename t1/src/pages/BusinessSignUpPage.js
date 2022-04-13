@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { PageWrapper, PageWrap } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const BusinessSignUpPage = () => {
   const checkAll = (bul) => {
     setIsCheckId(bul);
   };
-  const btSubmit = (e) => {
+  const btSubmit = useCallback((e) => {
     let redStar = document.querySelectorAll('.redStar');
     for (let i = 0; i < redStar.length; i++) {
       if (!isCheck) {
@@ -45,7 +45,7 @@ const BusinessSignUpPage = () => {
       }
     }
     e.target.form.submit();
-  };
+  }, []);
   return (
     <>
       <PageWrapper>

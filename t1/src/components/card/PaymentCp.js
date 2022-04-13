@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import styled, { Title, color } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -32,9 +32,9 @@ const EmptyTab = styled.div`
 const PaymentCp = () => {
   const { isPathname, setPathName } = store();
   let pathname = window.location.pathname;
-  const onClick = () => {
+  const onClick = useCallback(() => {
     setPathName(pathname);
-  };
+  }, []);
   useEffect(() => {
     setPathName(pathname);
   }, [pathname]);

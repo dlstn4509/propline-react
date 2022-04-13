@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled, { Button02 } from '@/style';
 import { Link, useNavigate, useHistory } from 'react-router-dom';
 import store from '@/store/store';
@@ -49,11 +49,11 @@ const TableWrap = styled.table`
 const ListCp = ({ findItemLists, setItemIdx }) => {
   const { isPathname } = store();
   const navigate = useNavigate();
-  const onClick = (e) => {
+  const onClick = useCallback((e) => {
     let idx = e.target.dataset['idx'];
     setItemIdx(idx);
-    navigate(isPathname + `?idx=${idx}`);
-  };
+    navigate(`/finditem?idx=${idx}`);
+  }, []);
   return (
     <div style={{ position: 'relative' }}>
       <TableWrap>
@@ -101,7 +101,13 @@ const ListCp = ({ findItemLists, setItemIdx }) => {
             ))}
         </tbody>
       </TableWrap>
-      <Button02 to="/finditemform" style={{ color: '#fff' }}>
+      <Button02
+        to="/finditem?type=form"
+        style={{ color: '#fff' }}
+        onClick={() => {
+          window.scrollTo(0, 0);
+        }}
+      >
         등록
       </Button02>
     </div>

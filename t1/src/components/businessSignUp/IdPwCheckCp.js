@@ -61,7 +61,7 @@ const IdPwCheckCp = ({ checkAll }) => {
   const questionMarkLeave = useCallback(() => {
     setIsQuestionMark(false);
   }, []);
-  const passwordKeyUp = (e) => {
+  const passwordKeyUp = useCallback((e) => {
     let password = e.target.value;
     let reg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,20}$/;
     let regSame = /(\w)\1\1/;
@@ -73,8 +73,8 @@ const IdPwCheckCp = ({ checkAll }) => {
       setRegColor('#888f91');
       setRegSameColor('#888f91');
     }
-  };
-  const passwordCheckKeyUp = (e) => {
+  }, []);
+  const passwordCheckKeyUp = useCallback((e) => {
     let password = document.querySelector('#member_pw').value;
     let checkPassword = e.target.value;
     if (password === checkPassword) {
@@ -82,7 +82,7 @@ const IdPwCheckCp = ({ checkAll }) => {
     } else {
       setPasswordCheck(true);
     }
-  };
+  }, []);
   useEffect(() => {
     check();
   }, [passwordKeyUp, passwordCheckKeyUp]);

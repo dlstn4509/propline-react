@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './pagerCp.css';
 import Pagination from 'react-js-pagination';
 const PagerCp = ({ page, setPage, totalCount }) => {
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setPage(page);
-  };
+  }, []);
   return (
     <Pagination
       activePage={page}

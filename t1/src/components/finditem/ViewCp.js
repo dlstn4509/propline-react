@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 import axios from 'axios';
 
 const ViewWrap = styled.div`
@@ -53,25 +54,21 @@ const DateWrap = styled(FlexDiv)`
     margin-left: 10px;
   }
 `;
+const ButtonWrap = styled(FlexDiv)``;
 const Button = styled(Link)`
   width: 65px;
   height: 35px;
   line-height: 35px;
-  background-color: #888f91;
+  background-color: ${(props) => props.color};
   border-radius: 5px;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+  margin-right: ${(props) => (props.mr ? props.mr : '10px')};
 `;
 
-const ViewCp = ({ itemIdx }) => {
-  const [itemList, setItemList] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const rs = await axios.get(process.env.REACT_APP_URL_API + `finditem/${itemIdx}`);
-      setItemList(rs.data);
-    })();
-  }, [itemIdx]);
+const ViewCp = ({ itemList }) => {
+  const { loginUser } = store();
   return (
     <ViewWrap>
       <TitleWrap>
@@ -105,9 +102,21 @@ const ViewCp = ({ itemIdx }) => {
         <div>
           {itemList.reg_date} <span>{itemList.user_name}</span>
         </div>
-        <Button to="/finditem" style={{ color: '#fff' }}>
-          목록
-        </Button>
+        <ButtonWrap>
+          <Button color={'#888f91'} to="/finditem" style={{ color: '#fff' }}>
+            목록
+          </Button>
+          {loginUser.midx === itemList.reg_midx && (
+            <>
+              <Button color={'green'} to={`/finditem?type=update`} style={{ color: '#fff' }}>
+                수정
+              </Button>
+              <Button color={'red'} mr={'0'} to="/finditem" style={{ color: '#fff' }}>
+                삭제
+              </Button>
+            </>
+          )}
+        </ButtonWrap>
       </DateWrap>
     </ViewWrap>
   );

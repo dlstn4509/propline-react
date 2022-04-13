@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaRegCheckSquare, FaSearch } from 'react-icons/fa';
-import axios from 'axios';
 
 const InputWrapper = styled.div`
   display: flex;
@@ -28,21 +27,25 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const SearchCp = ({ setCompany_name, setTitle, setContents }) => {
+const SearchCp = ({ setCompany_name, setTitle, setContents, setPage }) => {
   const [checkCompany_name, setCheckCompany_name] = useState(true);
   const [checkTitle, setCheckTitle] = useState(false);
   const [checkContent, setCheckContent] = useState(false);
-  const clickSearch = async () => {
+  const clickSearch = useCallback(async () => {
+    setPage(1);
     let searchValue = document.querySelector('.search').value;
     checkCompany_name ? setCompany_name(searchValue) : setCompany_name('%');
     checkTitle ? setTitle(searchValue) : setTitle('%');
     checkContent ? setContents(searchValue) : setContents('%');
-  };
-  const onKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      clickSearch();
-    }
-  };
+  }, [checkCompany_name, checkTitle, checkContent]);
+  const onKeyPress = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        clickSearch();
+      }
+    },
+    [checkCompany_name, checkTitle, checkContent]
+  );
   return (
     <InputWrapper>
       <CheckBoxWrap

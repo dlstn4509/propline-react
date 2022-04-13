@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 
 const SelectWrap = styled.select`
@@ -8,9 +8,9 @@ const SelectWrap = styled.select`
 `;
 
 const FaxNumArrayCp = ({ changeFax01 }) => {
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     changeFax01(e.target.value);
-  };
+  }, []);
   return (
     <SelectWrap defaultValue="02" onChange={onChange}>
       <option value="02">02</option>

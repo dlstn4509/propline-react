@@ -22,7 +22,6 @@ import SaleInfoPage from '@/pages/saleinfo/SaleInfoPage';
 
 /***************** mamulSelf *****************/
 import FindItemPage from '@/pages/mamulSelf/FindItemPage';
-import FindItemFormPage from '@/pages/mamulSelf/FindItemFormPage';
 import SaleItemPage from '@/pages/mamulSelf/SaleItemPage';
 import RequestPage from '@/pages/mamulSelf/RequestPage';
 
@@ -101,7 +100,6 @@ const App = () => {
         <Route path="/itempublic" element={<ItemPublicPage />} />
         <Route path="/saleinfo" element={<SaleInfoPage />} />
         <Route path="/finditem" element={<FindItemPage />} />
-        <Route path="/finditemform" element={<FindItemFormPage />} />
         <Route path="/saleitem" element={<SaleItemPage />} />
         <Route path="/request" element={<RequestPage />} />
         <Route path="/freeboard" element={<FreeBoardPage />} />

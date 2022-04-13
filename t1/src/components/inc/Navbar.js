@@ -117,10 +117,7 @@ const Navbar = () => {
                 setNavNum(4);
               }}
               className={
-                isPathname === '/finditem' ||
-                isPathname === '/finditemform' ||
-                isPathname === '/saleitem' ||
-                isPathname === '/request'
+                isPathname === '/finditem' || isPathname === '/saleitem' || isPathname === '/request'
                   ? 'active'
                   : ''
               }

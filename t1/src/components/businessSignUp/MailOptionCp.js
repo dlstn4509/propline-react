@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 
 const SelectWrap = styled.select`
@@ -6,10 +6,10 @@ const SelectWrap = styled.select`
 `;
 
 const MailOptionCp = ({ changeMailOption }) => {
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     console.log(e.target.value);
     changeMailOption(e.target.value);
-  };
+  }, []);
   return (
     <SelectWrap onChange={onChange}>
       <option value="">-- 직접입력 --</option>
