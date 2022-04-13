@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { Button02 } from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useHistory } from 'react-router-dom';
 import store from '@/store/store';
 
 const TableWrap = styled.table`
@@ -46,7 +46,14 @@ const TableWrap = styled.table`
   }
 `;
 
-const ListCp = ({ findItemLists }) => {
+const ListCp = ({ findItemLists, setItemIdx }) => {
+  const { isPathname } = store();
+  const navigate = useNavigate();
+  const onClick = (e) => {
+    let idx = e.target.dataset['idx'];
+    setItemIdx(idx);
+    navigate(isPathname + `?idx=${idx}`);
+  };
   return (
     <div style={{ position: 'relative' }}>
       <TableWrap>
@@ -64,12 +71,30 @@ const ListCp = ({ findItemLists }) => {
           {findItemLists.length > 0 &&
             findItemLists.map((v, i) => (
               <tr key={i}>
-                <td>{v.idx}</td>
+                <td>
+                  {v.idx} / {v.item_type}
+                </td>
                 <td>
                   <span className={v.className}>{v.trade_type}</span>
                 </td>
-                <td style={{ cursor: 'pointer' }}>{v.title}</td>
-                <td style={{ cursor: 'pointer' }}>{v.company_name}</td>
+                <td>
+                  <span
+                    onClick={onClick}
+                    data-idx={v.idx}
+                    style={{ cursor: 'pointer', width: 'auto', color: '#464d50' }}
+                  >
+                    {v.title}
+                  </span>
+                </td>
+                <td>
+                  <span
+                    onClick={onClick}
+                    data-idx={v.idx}
+                    style={{ cursor: 'pointer', width: 'auto', color: '#464d50' }}
+                  >
+                    {v.company_name}
+                  </span>
+                </td>
                 <td>{v.reg_date}</td>
                 <td>{v.hit}</td>
               </tr>

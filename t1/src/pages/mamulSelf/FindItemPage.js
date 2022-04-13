@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import styled, { PageWrapper, PageWrap, Title, Text } from '@/style';
-import { Link } from 'react-router-dom';
-import store from '@/store/store';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import SearchCp from '@/components/finditem/SearchCp';
 import ListCp from '@/components/finditem/ListCp';
 import PagerCp from '@/components/finditem/PagerCp';
+import ViewCp from '@/components/finditem/ViewCp';
 
 const FindItemPage = () => {
-  const { setPathName } = store();
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [findItemLists, setFindItemLists] = useState('');
   const [totalCount, setTotalCount] = useState('');
   const [company_name, setCompany_name] = useState('%');
   const [title, setTitle] = useState('%');
   const [contents, setContents] = useState('%');
-  let pathname = window.location.pathname;
+  const [itemIdx, setItemIdx] = useState('');
+  let query = new URL(window.location.href).search ? new URL(window.location.href).search.split('=')[1] : '';
+
   useEffect(() => {
-    setPathName(pathname);
-  }, [pathname]);
+    setItemIdx(query);
+  }, [query]);
 
   const makeFindItemLists = async () => {
     const lists = await axios.get(
@@ -30,7 +32,7 @@ const FindItemPage = () => {
   };
   useEffect(() => {
     makeFindItemLists();
-  }, [page, company_name, title, contents]);
+  }, [page, company_name, title, contents, query]);
 
   useEffect(() => {
     (async () => {
@@ -52,9 +54,14 @@ const FindItemPage = () => {
           <br />
           등록된 글은 6개월 이상이 경과된 경우 관리자에 의해 삭제될 수 있으니 양해해 주시기 바랍니다.
         </Text>
-        <SearchCp setCompany_name={setCompany_name} setTitle={setTitle} setContents={setContents} />
-        <ListCp findItemLists={findItemLists} />
-        <PagerCp setPage={setPage} page={page} totalCount={totalCount} />
+        {!itemIdx && (
+          <>
+            <SearchCp setCompany_name={setCompany_name} setTitle={setTitle} setContents={setContents} />
+            <ListCp findItemLists={findItemLists} setItemIdx={setItemIdx} />
+            <PagerCp setPage={setPage} page={page} totalCount={totalCount} />
+          </>
+        )}
+        {itemIdx && <ViewCp itemIdx={itemIdx} />}
       </PageWrap>
     </PageWrapper>
   );
