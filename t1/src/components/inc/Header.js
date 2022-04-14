@@ -30,13 +30,15 @@ const Title = styled.div`
 
 const Header = () => {
   const [clientIp, setClientIp] = useState('');
-  const { setLoginUser, loginUser } = store();
+  const { isPathname, setLoginUser, loginUser } = store();
   useEffect(() => {
-    (async () => {
-      const rs = await axios.get('https://api.ipify.org?format=json');
-      setClientIp(rs.data.ip);
-    })();
-  }, []);
+    if (window.location.pathname !== '/manual') {
+      (async () => {
+        const rs = await axios.get('https://api.ipify.org?format=json');
+        setClientIp(rs.data.ip);
+      })();
+    }
+  }, [isPathname]);
   const clickLogOut = useCallback(() => {
     if (window.confirm('정말 로그아웃 하시겠습니까?')) {
       setLoginUser('');
@@ -51,7 +53,13 @@ const Header = () => {
             <Title mr={'20px'} onClick={bookmark}>
               즐겨찾기
             </Title>
-            <Title>이용안내</Title>
+            <Title
+              onClick={() => {
+                window.open('/manual', '_black', 'width=1300, height=720, top=100px');
+              }}
+            >
+              이용안내
+            </Title>
           </HeaderDiv>
           <HeaderDiv>
             {clientIp && (
