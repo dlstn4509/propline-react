@@ -28,7 +28,8 @@ const SubNav = styled.div`
     font-weight: bold;
     padding: 0px 4px 0px 3px;
   }
-  &.active {
+  &.active,
+  :hover {
     font-weight: bold;
   }
 `;

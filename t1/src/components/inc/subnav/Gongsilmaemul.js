@@ -21,7 +21,8 @@ const SubNav = styled.div`
   margin-right: 25px;
   font-size: 13px;
   color: #464d50;
-  &.active {
+  &.active,
+  :hover {
     font-weight: bold;
   }
 `;
