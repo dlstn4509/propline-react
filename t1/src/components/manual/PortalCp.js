@@ -17,7 +17,7 @@ const listType = {
 const PortalCp = ({ choiceList, setChoiceList }) => {
   return (
     <MainWrapper>
-      <TitleWrap>포탈 이용안내 {choiceList}</TitleWrap>
+      <TitleWrap>포탈 이용안내</TitleWrap>
       <ContentsWrap>
         <IconWrap>
           <FaHome

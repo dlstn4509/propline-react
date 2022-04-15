@@ -22,7 +22,7 @@ const SaleInfoCp = ({ setChoiceList }) => {
           <FaAngleDoubleRight style={{ margin: '0 10px' }} />
           <span>매매정보 조회하기</span>
         </IconWrap>
-        <img src={process.env.REACT_APP_URL + 'img/img_1201.jpg'} alt="" />
+        <img src={process.env.REACT_APP_URL + 'img/img_1401.jpg'} alt="" />
       </ContentsWrap>
     </MainWrapper>
   );

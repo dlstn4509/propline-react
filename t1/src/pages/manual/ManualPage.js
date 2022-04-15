@@ -32,7 +32,9 @@ const ManualPage = () => {
         setChoiceList={setChoiceList}
         choiceList={choiceList}
       />
-      {choiceList === 'main' && <MainCp />}
+      {choiceList === 'main' && (
+        <MainCp setChoiceList={setChoiceList} setChoiceListWrap={setChoiceListWrap} />
+      )}
       {choiceList === 'about' && <AboutCp />}
       {choiceListWrap === 'portal' && <PortalCp choiceList={choiceList} setChoiceList={setChoiceList} />}
       {choiceListWrap === 'gongsilMamul' && <GongsilMamulCp setChoiceList={setChoiceList} />}
