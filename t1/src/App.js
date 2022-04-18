@@ -48,7 +48,6 @@ import MobileappPage from '@/pages/serviceGuide/MobileappPage';
 import CardPage from '@/pages/myPayment/CardPage';
 import ExtraPaymentPage from '@/pages/myPayment/ExtraPaymentPage';
 import GPointPage from '@/pages/myPayment/GPointPage';
-import RequestSalePage from '@/pages/myPayment/RequestSalePage';
 
 /***************** other *****************/
 import MainPage from '@/pages/MainPage';
@@ -56,6 +55,7 @@ import LoginPage from '@/pages/LoginPage';
 import SignUpPage from '@/pages/SignUpPage';
 import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
+import RequestSalePage from '@/pages/RequestSalePage';
 
 import ManualPage from '@/pages/manual/ManualPage';
 

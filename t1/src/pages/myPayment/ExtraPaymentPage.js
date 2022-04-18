@@ -8,7 +8,7 @@ import PaymentMethodCp from '@/components/card/PaymentMethodCp';
 import AmountCp from '@/components/extraPayment/AmountCp';
 import ApplicantInfoCp from '@/components/extraPayment/ApplicantInfoCp';
 import PaymentBtnCp from '@/components/extraPayment/PaymentBtnCp';
-import AggrePrivacyCp from '@/components/businessSignUp/AggrePrivacyCp';
+import AgreePrivacyCp from '@/components/businessSignUp/AgreePrivacyCp';
 
 const ExtraPaymentPage = () => {
   return (
@@ -20,7 +20,7 @@ const ExtraPaymentPage = () => {
         <AmountCp />
         <ApplicantInfoCp />
         <PaymentBtnCp />
-        <AggrePrivacyCp />
+        <AgreePrivacyCp />
       </PageWrap>
     </PageWrapper>
   );

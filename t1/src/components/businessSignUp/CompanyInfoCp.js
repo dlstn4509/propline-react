@@ -113,6 +113,7 @@ const CompanyInfoCp = () => {
           },
         };
         let rs = await axios(config);
+        console.log(rs);
         setPostCode(data.zonecode);
         setJibunAddress(data.jibunAddress);
         setRoadAddress(

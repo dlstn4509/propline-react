@@ -6,7 +6,7 @@ import store from '@/store/store';
 import TableCp from '@/components/inquiry/TableCp';
 import EditorCp from '@/components/inquiry/EditorCp';
 import BtnCp from '@/components/inquiry/BtnCp';
-import AggrePrivacyCp from '@/components/businessSignUp/AggrePrivacyCp';
+import AgreePrivacyCp from '@/components/businessSignUp/AgreePrivacyCp';
 
 const InquiryForm = styled.form`
   font-size: 13px;
@@ -27,7 +27,7 @@ const InquiryPage = () => {
           <TableCp />
           <EditorCp />
           <BtnCp />
-          <AggrePrivacyCp />
+          <AgreePrivacyCp />
         </InquiryForm>
       </PageWrap>
     </PageWrapper>

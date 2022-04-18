@@ -8,6 +8,7 @@ let store = (set) => ({
   isTypename: '',
   isPageY: '',
   isQuickMenuY: 3,
+  isAgreePrivacy: false,
   setIsUser: () => set((state) => ({ isUser: !state.isUser })),
   setLoginUser: (user) => set((state) => ({ loginUser: user })),
   setQuickMenuTop: (y) => set((state) => ({ quickMenuTop: state.quickMenuTop + y })),
@@ -16,6 +17,7 @@ let store = (set) => ({
   setPageY: (pageY) => set((state) => ({ isPageY: pageY })),
   setQuickMenuY: (num) =>
     set((state) => ({ isQuickMenuY: state.isQuickMenuY >= 0 ? state.isQuickMenuY + num : 3 })),
+  setAgreePrivacy: (bool) => set((state) => ({ isAgreePrivacy: bool })),
 });
 
 store = create(devtools(store));

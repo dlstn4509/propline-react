@@ -54,12 +54,22 @@ const Header = () => {
               즐겨찾기
             </Title>
             <Title
+              mr={'20px'}
               onClick={() => {
                 window.open('/manual', '_black', 'width=1300, height=720, top=100px');
               }}
             >
               이용안내
             </Title>
+            {!loginUser.midx && (
+              <Title
+                onClick={() => {
+                  window.open('https://www.gongsilclub.com/manage');
+                }}
+              >
+                매물관리 바로가기
+              </Title>
+            )}
           </HeaderDiv>
           <HeaderDiv>
             {clientIp && (

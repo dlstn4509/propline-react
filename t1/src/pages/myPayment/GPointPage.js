@@ -9,7 +9,7 @@ import GPointInfoCp from '@/components/gpoint/GPointInfoCp';
 import AmountCp from '@/components/extraPayment/AmountCp';
 import ApplicantInfoCp from '@/components/extraPayment/ApplicantInfoCp';
 import PaymentBtnCp from '@/components/extraPayment/PaymentBtnCp';
-import AggrePrivacyCp from '@/components/businessSignUp/AggrePrivacyCp';
+import AgreePrivacyCp from '@/components/businessSignUp/AgreePrivacyCp';
 
 const GPointPage = () => {
   return (
@@ -22,7 +22,7 @@ const GPointPage = () => {
         <AmountCp />
         <ApplicantInfoCp />
         <PaymentBtnCp />
-        <AggrePrivacyCp />
+        <AgreePrivacyCp />
       </PageWrap>
     </PageWrapper>
   );

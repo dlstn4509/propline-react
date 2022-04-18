@@ -77,6 +77,7 @@ const Input = styled.input`
   height: 35px;
   border: 1px solid #dae1e7;
   margin: 0 6px;
+  margin-left: ${(props) => props.ml};
   :focus {
     border: 2px solid #000;
   }
@@ -108,9 +109,12 @@ const ThumbImg = styled.img`
 `;
 
 const SaleInfoCp = ({ requestKind, setRequestKind }) => {
-  const [commission, setCommissionType] = useState('commission');
   const [thumbImgArr, setThumbImgArr] = useState([]);
+  const [commissionType, setCommissionType] = useState('commission'); // commission, input, other
+  const [inputVal, setInputVal] = useState('');
+  const [isMountain, setIsMountain] = useState(0);
   const changeCommissionType = (e) => {
+    setInputVal('');
     setCommissionType(e.target.value);
     document.querySelectorAll('.inputText').forEach((v) => (v.value = ''));
   };
@@ -128,6 +132,9 @@ const SaleInfoCp = ({ requestKind, setRequestKind }) => {
       : e.target.parentNode.previousSibling.src;
     setThumbImgArr(thumbImgArr.filter((v) => v !== srcTag));
   };
+  const inputChange = (e) => {
+    setInputVal(e.target.value);
+  };
   return (
     <SaleInfoWrapper>
       <Title>매물정보</Title>
@@ -140,59 +147,71 @@ const SaleInfoCp = ({ requestKind, setRequestKind }) => {
             <Td>
               <RequestKind
                 onClick={() => {
-                  setRequestKind(!requestKind);
+                  setRequestKind(1);
                 }}
-                className={requestKind ? '' : 'active'}
+                className={requestKind === 1 ? 'active' : ''}
               >
                 부동산내놓기
-                {!requestKind && <FaCheck />}
+                {requestKind === 1 && <FaCheck />}
               </RequestKind>
               <RequestKind
                 onClick={() => {
-                  setRequestKind(!requestKind);
+                  setRequestKind(2);
                 }}
-                className={!requestKind ? '' : 'active'}
+                className={requestKind === 2 ? 'active' : ''}
               >
                 부동산구하기
-                {requestKind && <FaCheck />}
+                {requestKind === 2 && <FaCheck />}
               </RequestKind>
             </Td>
           </Tr>
-          {!requestKind && (
+          {requestKind === 1 && (
             <Tr>
               <TdTitle>
                 중개수수료<span>*</span>
               </TdTitle>
               <td style={{ padding: '10px 16px' }}>
+                <input type="hidden" name="commission" value={inputVal} />
                 <FlexDiv mb={'10px'}>
                   <RadioInput
                     type="radio"
-                    id="commission"
-                    name="commission"
-                    value="commission"
+                    name="commissionType"
+                    value="법정수수료"
                     onChange={changeCommissionType}
                     defaultChecked
                   />
                   <Label htmlFor="commission">법정수수료 지급</Label>
+
                   <RadioInput
                     type="radio"
-                    id="input"
-                    name="commission"
+                    name="commissionType"
                     value="input"
                     onChange={changeCommissionType}
                   />
                   <Label htmlFor="input">
-                    <input type="text" className="inputText" readOnly={commission !== 'input'} /> 만
+                    <input
+                      type="text"
+                      className="inputText"
+                      readOnly={commissionType !== 'input'}
+                      onChange={inputChange}
+                    />
+                    만
                   </Label>
+
                   <RadioInput
                     type="radio"
-                    id="other"
-                    name="commission"
+                    name="commissionType"
                     value="other"
                     onChange={changeCommissionType}
                   />
                   <Label htmlFor="other">
-                    기타 <input type="text" className="inputText" readOnly={commission !== 'other'} />
+                    기타
+                    <input
+                      type="text"
+                      className="inputText"
+                      readOnly={commissionType !== 'other'}
+                      onChange={inputChange}
+                    />
                   </Label>
                 </FlexDiv>
                 <FlexDiv color={color.blue}>
@@ -208,41 +227,56 @@ const SaleInfoCp = ({ requestKind, setRequestKind }) => {
               매물종류<span>*</span>
             </TdTitle>
             <Td>
-              <Select name="" id="" width={'160px'}>
+              <Select name="item_kind" width={'160px'}>
                 <option value="">-선택-</option>
-                <option value="">원룸</option>
-                <option value="">다가구</option>
-                <option value="">다세대</option>
-                <option value="">사무실</option>
-                <option value="">상가</option>
-                <option value="">아파트</option>
-                <option value="">오피스텔</option>
-                <option value="">건물</option>
-                <option value="">토지</option>
-                <option value="">기타</option>
+                <option value="원룸">원룸</option>
+                <option value="다가구">다가구</option>
+                <option value="다세대">다세대</option>
+                <option value="사무실">사무실</option>
+                <option value="상가">상가</option>
+                <option value="아파트">아파트</option>
+                <option value="오피스텔">오피스텔</option>
+                <option value="건물">건물</option>
+                <option value="토지">토지</option>
+                <option value="기타">기타</option>
               </Select>
             </Td>
           </Tr>
-          {!requestKind && (
+          {requestKind === 1 && (
             <Tr>
               <TdTitle>
                 매물주소<span>*</span>
               </TdTitle>
               <td style={{ padding: '10px 16px' }}>
                 <FlexDiv mb={'6px'}>
-                  <Select name="" id="" width={'120px'}>
+                  {/* <Select name="sido" id="" width={'120px'}>
                     <option value="">시/도</option>
                   </Select>
-                  <Select name="" id="" width={'120px'}>
+                  <Select name="sigungu" id="" width={'120px'}>
                     <option value="">시/군/구</option>
                   </Select>
-                  <Select name="" id="" width={'120px'}>
+                  <Select name="eupmyeondong" id="" width={'120px'}>
                     <option value="">읍/면/동</option>
-                  </Select>
-                  <FaCheckCircle style={{ fontSize: '20px', marginRight: '6px' }} />
+                  </Select> */}
+                  <Input type="text" name="sido" width={'115px'} ml={'0'} placeholder="시/도" />
+                  <Input type="text" name="sigungu" width={'115px'} placeholder="시/군/구" />
+                  <Input type="text" name="eupmyeondong" width={'115px'} placeholder="읍/면/동" />
+                  <Input type="text" name="ri" width={'115px'} placeholder="리" />
+                  <FaCheckCircle
+                    style={{
+                      fontSize: '20px',
+                      marginRight: '6px',
+                      color: `${isMountain === 1 ? '#3168ff' : ''}`,
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      setIsMountain(isMountain === 0 ? 1 : 0);
+                    }}
+                  />
                   산
-                  <Input type="text" width={'80px'} placeholder="본번지" /> -
-                  <Input type="text" width={'80px'} placeholder="부번지" />
+                  <Input type="text" name="land_no_m" width={'80px'} placeholder="본번지" /> -
+                  <Input type="text" name="land_no_s" width={'80px'} placeholder="부번지" />
+                  <input type="hidden" name="is_mountain" value={isMountain} />
                 </FlexDiv>
                 <FlexDiv>
                   <Input
@@ -250,36 +284,42 @@ const SaleInfoCp = ({ requestKind, setRequestKind }) => {
                     width={'370px'}
                     placeholder="상세 주소를 입력해주세요."
                     style={{ marginLeft: '0' }}
+                    name="detail_address"
                   />
                 </FlexDiv>
               </td>
             </Tr>
           )}
-          <Tr>
-            <TdTitle>
-              원하는 지역<span>*</span>
-            </TdTitle>
-            <td style={{ padding: '10px 16px' }}>
-              <FlexDiv mb={'6px'}>
-                <Select name="" id="" width={'120px'}>
-                  <option value="">시/도</option>
-                </Select>
-                <Select name="" id="" width={'120px'}>
-                  <option value="">시/군/구</option>
-                </Select>
-                <Select name="" id="" width={'120px'}>
-                  <option value="">읍/면/동</option>
-                </Select>
-              </FlexDiv>
-            </td>
-          </Tr>
+          {requestKind === 2 && (
+            <Tr>
+              <TdTitle>
+                원하는 지역<span>*</span>
+              </TdTitle>
+              <td style={{ padding: '10px 16px' }}>
+                <FlexDiv mb={'6px'}>
+                  {/* <Select name="sido" id="" width={'120px'}>
+                    <option value="">시/도</option>
+                  </Select>
+                  <Select name="sigungu" id="" width={'120px'}>
+                    <option value="">시/군/구</option>
+                  </Select>
+                  <Select name="eupmyeondong" id="" width={'120px'}>
+                    <option value="">읍/면/동</option>
+                  </Select> */}
+                  <Input type="text" name="sido" width={'115px'} ml={'0'} placeholder="시/도" />
+                  <Input type="text" name="sigungu" width={'115px'} placeholder="시/군/구" />
+                  <Input type="text" name="eupmyeondong" width={'115px'} placeholder="읍/면/동" />
+                </FlexDiv>
+              </td>
+            </Tr>
+          )}
           <Tr>
             <TdTitle>전달사항</TdTitle>
             <Td>
-              <textarea name="" id="" cols="30" rows="10" style={{ height: '75px' }}></textarea>
+              <textarea name="memo" cols="30" rows="10" style={{ height: '75px' }}></textarea>
             </Td>
           </Tr>
-          {!requestKind && (
+          {requestKind === 1 && (
             <Tr>
               <TdTitle>사진</TdTitle>
               <td style={{ padding: '10px 16px', fontSize: '12px', color: '#888f91' }}>

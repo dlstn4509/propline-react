@@ -29,20 +29,21 @@ const SubTitle = styled.div`
 `;
 
 const NaverAdCp = () => {
-  const [check, setCheck] = useState(false);
+  const [isNaverAd, setIsNaverAd] = useState(2); // 1 요청 , 2 안요청
   return (
     <NaverAdWrapper>
+      <input type="hidden" name="is_want_naverad" value={isNaverAd} />
       <Title>네이버 부동산 광고</Title>
       <NaverAdWrap>
         <SubTitle>네이버부동산 광고요청</SubTitle>
         <div
           style={{ cursor: 'pointer' }}
           onClick={() => {
-            setCheck(!check);
+            setIsNaverAd(isNaverAd === 1 ? 2 : 1);
           }}
         >
-          {!check && <FaRegSquare />}
-          {check && <FaCheckSquare />}
+          {isNaverAd === 2 && <FaRegSquare />}
+          {isNaverAd === 1 && <FaCheckSquare />}
           광고를 원합니다.
         </div>
         <div style={{ fontSize: '12px', color: '#888f91' }}>

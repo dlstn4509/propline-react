@@ -6,7 +6,7 @@ import NormalSignUpInfoCp from '@/components/normalSignUp/NormalSignUpInfoCp';
 import MemberTypeCp from '@/components/normalSignUp/MemberTypeCp';
 import MembershipInfoCp from '@/components/normalSignUp/MembershipInfoCp';
 import BillInfoCp from '@/components/normalSignUp/BillInfoCp';
-import AggrePrivacyCp from '../components/businessSignUp/AggrePrivacyCp';
+import AgreePrivacyCp from '../components/businessSignUp/AgreePrivacyCp';
 
 const BusinessSignUpCpForm = styled.form`
   width: 1000px;
@@ -40,7 +40,7 @@ const NormalSignUpPage = () => {
         <MemberTypeCp />
         <MembershipInfoCp />
         <BillInfoCp />
-        <AggrePrivacyCp />
+        <AgreePrivacyCp />
         <BtnWrap>
           <BtnSubmit bgc={'#888f91'} type="button">
             <Link to="/signup">이전페이지</Link>

@@ -1,11 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 import TermsOfUseCp from './TermsOfUseCp';
 import PrivacyStatementCp from './PrivacyStatementCp';
 
-const AggrePrivacyWrap = styled.div`
+const AgreePrivacyWrap = styled.div`
   margin-top: 60px;
   padding-bottom: 40px;
   border-bottom: 1px solid #464d50;
@@ -38,7 +39,8 @@ const SubTitle = styled.div`
   margin-left: 10px;
 `;
 
-const AggrePrivacyCp = () => {
+const AgreePrivacyCp = () => {
+  const { setAgreePrivacy } = store();
   const checkBigOn = process.env.REACT_APP_URL + 'img/checkbox_02_on.png';
   const checkBigOff = process.env.REACT_APP_URL + 'img/checkbox_02_off.png';
   const checkSmallOn = process.env.REACT_APP_URL + 'img/checkbox_01_on.png';
@@ -83,8 +85,15 @@ const AggrePrivacyCp = () => {
       }
     }
   }, [checkAll, checkBigOff, checkBigOn, checkLeft, checkRight, checkSmallOn, checkSmallOff]);
+  useEffect(() => {
+    if (checkAll === checkBigOff) {
+      setAgreePrivacy(false);
+    } else {
+      setAgreePrivacy(true);
+    }
+  }, [checkAll]);
   return (
-    <AggrePrivacyWrap>
+    <AgreePrivacyWrap>
       <FlexDiv style={{ marginBottom: '30px' }}>
         <img src={checkAll} alt="" onClick={clickCheckAll} />
         <CheckText>이용약관 및 개인정보 취급방침 전체 동의</CheckText>
@@ -112,8 +121,8 @@ const AggrePrivacyCp = () => {
           <PrivacyStatementCp />
         </TextWrap>
       </FlexDiv>
-    </AggrePrivacyWrap>
+    </AgreePrivacyWrap>
   );
 };
 
-export default React.memo(AggrePrivacyCp);
+export default React.memo(AgreePrivacyCp);

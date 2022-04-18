@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import BusinessSignUpInfoCp from '@/components/businessSignUp/BusinessSignUpInfoCp';
 import MembershipInfoCp from '@/components/businessSignUp/MembershipInfoCp';
 import CompanyInfoCp from '@/components/businessSignUp/CompanyInfoCp';
-import AggrePrivacyCp from '../components/businessSignUp/AggrePrivacyCp';
+import AgreePrivacyCp from '../components/businessSignUp/AgreePrivacyCp';
 
 const BtnWrap = styled.div`
   display: flex;
@@ -57,7 +57,7 @@ const BusinessSignUpPage = () => {
           <BusinessSignUpInfoCp />
           <MembershipInfoCp checkAll={checkAll} />
           <CompanyInfoCp />
-          <AggrePrivacyCp />
+          <AgreePrivacyCp />
           <BtnWrap>
             <BtnSubmit bgc={'#888f91'} type="button">
               <Link to="/signup">이전페이지</Link>
