@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
-import axios from 'axios';
 
 const ViewWrap = styled.div`
   margin-bottom: 100px;

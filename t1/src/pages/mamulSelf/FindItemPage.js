@@ -5,10 +5,10 @@ import axios from 'axios';
 
 import SearchCp from '@/components/finditem/SearchCp';
 import ListCp from '@/components/finditem/ListCp';
-import PagerCp from '@/components/finditem/PagerCp';
 import ViewCp from '@/components/finditem/ViewCp';
 import FormCp from '@/components/finditem/FormCp';
 import UpdateCp from '@/components/finditem/UpdateCp';
+import PagerCp from '@/components/inc/PagerCp';
 
 const FindItemPage = () => {
   const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaRegCheckSquare, FaSearch } from 'react-icons/fa';
@@ -34,8 +34,7 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const SearchCp = () => {
-  const [checkBox, setCheckBox] = useState(false);
+const SearchCp = ({ isRequest, setIsRequest, setItem_kind, setSearchTxt }) => {
   const optionArr = [
     '매물종류',
     '원룸',
@@ -49,10 +48,22 @@ const SearchCp = () => {
     '토지',
     '기타',
   ];
+  const inputRef = useRef();
+  const onChange = (e) => {
+    e.target.value === '매물종류' ? setItem_kind('%') : setItem_kind(e.target.value);
+  };
+  const searchBtn = () => {
+    setSearchTxt(inputRef.current.value);
+  };
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      searchBtn();
+    }
+  };
   return (
     <SearchWrap>
       <SelectWrap>
-        <Select name="" id="">
+        <Select name="" id="" onChange={onChange}>
           {optionArr.map((v, i) => (
             <option key={i} value={v}>
               {v}
@@ -62,10 +73,10 @@ const SearchCp = () => {
         <div
           style={{ display: 'flex', cursor: 'pointer' }}
           onClick={() => {
-            setCheckBox(!checkBox);
+            setIsRequest(!isRequest);
           }}
         >
-          {checkBox ? (
+          {isRequest ? (
             <FaRegCheckSquare style={{ fontSize: '20px', marginRight: '5px' }} />
           ) : (
             <FaRegSquare style={{ fontSize: '20px', marginRight: '5px' }} />
@@ -75,9 +86,10 @@ const SearchCp = () => {
         </div>
       </SelectWrap>
       <InputWrap>
-        <Input placeholder="전달사항(내용)" />
+        <Input placeholder="전달사항(내용)" ref={inputRef} onKeyPress={onKeyPress} />
         <FaSearch
           style={{ position: 'absolute', right: '10', top: '11', fontSize: '15px', color: `${color.blue}` }}
+          onClick={searchBtn}
         />
       </InputWrap>
     </SearchWrap>
