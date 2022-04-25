@@ -120,6 +120,7 @@ const ViewCp = ({ list }) => {
     );
     setPhoneNum(data);
   };
+
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(
@@ -189,11 +190,13 @@ const ViewCp = ({ list }) => {
         <ReadingCompanyWrap>
           <div className="sub-title">연락처 열람</div>
           <ul className="ul">
-            <li className="li">
-              <div className="num">3</div>
-              <div>(주)마이다스부동산중개법인</div>
-              <div className="date"> 2022-02-11 오후 2:21:01</div>
-            </li>
+            {readingCompany.map((v, i) => (
+              <li className="li">
+                <div className="num">{i + 1}</div>
+                <div>{v.company_name}</div>
+                <div className="date">{v.reg_date}</div>
+              </li>
+            ))}
           </ul>
         </ReadingCompanyWrap>
       )}

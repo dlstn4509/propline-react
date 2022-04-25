@@ -79,6 +79,7 @@ const RequestPage = () => {
               setIsRequest={setIsRequest}
               setItem_kind={setItem_kind}
               setSearchTxt={setSearchTxt}
+              setPage={setPage}
             />
             <ListCp lists={lists} setViewIdx={setViewIdx} />
             <PagerCp setPage={setPage} page={page} totalCount={totalCount} />

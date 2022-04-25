@@ -34,7 +34,7 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const SearchCp = ({ isRequest, setIsRequest, setItem_kind, setSearchTxt }) => {
+const SearchCp = ({ isRequest, setIsRequest, setItem_kind, setSearchTxt, setPage }) => {
   const optionArr = [
     '매물종류',
     '원룸',
@@ -54,6 +54,7 @@ const SearchCp = ({ isRequest, setIsRequest, setItem_kind, setSearchTxt }) => {
   };
   const searchBtn = () => {
     setSearchTxt(inputRef.current.value);
+    setPage(1);
   };
   const onKeyPress = (e) => {
     if (e.key === 'Enter') {

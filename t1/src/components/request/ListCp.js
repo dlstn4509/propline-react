@@ -79,7 +79,7 @@ const ListCp = ({ lists, setViewIdx }) => {
               {v.requestLimitDate && <Span>의뢰중</Span>}
               {!v.requestLimitDate && <Span bg={'#888f91'}>기간만료</Span>}
             </td>
-            <td>2</td>
+            <td>{v.readingCompanyCount}</td>
           </tr>
         ))}
       </tbody>
