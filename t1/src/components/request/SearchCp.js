@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaRegSquare, FaRegCheckSquare, FaSearch } from 'react-icons/fa';
@@ -49,18 +49,18 @@ const SearchCp = ({ isRequest, setIsRequest, setItem_kind, setSearchTxt, setPage
     '기타',
   ];
   const inputRef = useRef();
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     e.target.value === '매물종류' ? setItem_kind('%') : setItem_kind(e.target.value);
-  };
-  const searchBtn = () => {
+  }, []);
+  const searchBtn = useCallback(() => {
     setSearchTxt(inputRef.current.value);
     setPage(1);
-  };
-  const onKeyPress = (e) => {
+  }, []);
+  const onKeyPress = useCallback((e) => {
     if (e.key === 'Enter') {
       searchBtn();
     }
-  };
+  }, []);
   return (
     <SearchWrap>
       <SelectWrap>

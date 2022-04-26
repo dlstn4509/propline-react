@@ -39,6 +39,19 @@ export const Button02 = styled(Link)`
   position: absolute;
   right: 0px;
 `;
+export const Button03 = styled.div`
+  width: 65px;
+  height: 35px;
+  line-height: 35px;
+  background-color: ${(props) => props.bg || '#888f91'};
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-right: ${(props) => props.mr};
+  cursor: pointer;
+`;
 export const PageWrapper = styled.div`
   width: 100%;
   display: flex;

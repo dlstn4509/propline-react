@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TableWrap = styled.table`
   height: 45px;
@@ -10,7 +10,7 @@ const TableWrap = styled.table`
   color: #464d50;
   border-top: 1px solid #dae1e7;
   margin-bottom: 50px;
-  span {
+  .span {
     width: 36px;
     height: 18px;
     line-height: 18px;
@@ -38,7 +38,14 @@ const TableWrap = styled.table`
   }
 `;
 
-const ListCp = () => {
+const ListsCp = ({ lists, page, totalCount, setViewIdx }) => {
+  const navigate = useNavigate();
+  const listClick = useCallback((e) => {
+    let idx = e.target.dataset['idx'];
+    setViewIdx(idx);
+    navigate(`/notice?idx=${idx}`);
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <TableWrap>
       <thead>
@@ -50,23 +57,23 @@ const ListCp = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <span>중요</span>
-          </td>
-          <td style={{ color: 'red', fontWeight: 'bold' }}>[주식회사 프롭라인] 사명 변경 안내</td>
-          <td>2022-03-30</td>
-          <td>5</td>
-        </tr>
-        <tr>
-          <td>72</td>
-          <td>2022년 3월 14일(월) 시스템 점검 안내</td>
-          <td>2022-03-30</td>
-          <td>5</td>
-        </tr>
+        {lists.map((v, i) => (
+          <tr key={i}>
+            <td>
+              {v.is_top_rank === 1 ? <span className="span">중요</span> : totalCount - i - (page - 1) * 20}
+            </td>
+            <td style={{ color: `${v.title_font_color}`, fontWeight: `${v.title_font_weight ? 600 : ''}` }}>
+              <span data-idx={v.idx} onClick={listClick} style={{ cursor: 'pointer' }}>
+                {v.title}
+              </span>
+            </td>
+            <td>{v.reg_date}</td>
+            <td>{v.hit}</td>
+          </tr>
+        ))}
       </tbody>
     </TableWrap>
   );
 };
 
-export default React.memo(ListCp);
+export default React.memo(ListsCp);

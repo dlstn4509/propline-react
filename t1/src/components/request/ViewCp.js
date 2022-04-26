@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -111,7 +111,7 @@ const ViewCp = ({ list }) => {
       data ? setPhoneNum(data) : setPhoneNum('');
     })();
   }, [list]);
-  const checkPhoneNum = async () => {
+  const checkPhoneNum = useCallback(async () => {
     let idx = list.idx;
     let midx = loginUser.midx;
     let cidx = loginUser.cidx;
@@ -119,7 +119,7 @@ const ViewCp = ({ list }) => {
       process.env.REACT_APP_URL_API + `request/checkphonenum?idx=${idx}&midx=${midx}&cidx=${cidx}`
     );
     setPhoneNum(data);
-  };
+  }, [list.idx, loginUser.midx, loginUser.cidx]);
 
   useEffect(() => {
     (async () => {
@@ -170,20 +170,6 @@ const ViewCp = ({ list }) => {
           <Button color={'#888f91'} to="/request" style={{ color: '#fff' }}>
             목록
           </Button>
-          {/* {loginUser.midx === list.reg_midx && (
-            <>
-              <Button color={'green'} to={`/finditem?type=update`} style={{ color: '#fff' }}>
-                수정
-              </Button>
-              <form action={process.env.REACT_APP_URL_API + 'request'} method="POST">
-                <input type="hidden" name="_method" value="DELETE" />
-                <input type="hidden" name="idx" value={list.idx} />
-                <DeleteButton type="button" onClick={clickDelete}>
-                  삭제
-                </DeleteButton>
-              </form>
-            </>
-          )} */}
         </ButtonWrap>
       </DateWrap>
       {readingCompany.length > 0 && (
@@ -191,7 +177,7 @@ const ViewCp = ({ list }) => {
           <div className="sub-title">연락처 열람</div>
           <ul className="ul">
             {readingCompany.map((v, i) => (
-              <li className="li">
+              <li key={i} className="li">
                 <div className="num">{i + 1}</div>
                 <div>{v.company_name}</div>
                 <div className="date">{v.reg_date}</div>

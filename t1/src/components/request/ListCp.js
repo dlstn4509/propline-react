@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -37,12 +37,13 @@ const Span = styled.span`
 
 const ListCp = ({ lists, setViewIdx }) => {
   const navigate = useNavigate();
-  const listClick = (e) => {
+  const listClick = useCallback((e) => {
     let idx = e.target.dataset['idx'];
     setViewIdx(idx);
     navigate(`/request?idx=${idx}`);
     window.scrollTo(0, 0);
-  };
+  }, []);
+
   return (
     <TableWrap>
       <thead>
