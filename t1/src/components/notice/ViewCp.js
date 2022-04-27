@@ -53,7 +53,10 @@ const BtnWrap = styled(FlexDiv)`
 const ViewCp = ({ list }) => {
   const navigate = useNavigate();
   const deleteList = async () => {
-    await axios.delete(process.env.REACT_APP_URL_API + `notice?idx=${list.idx}`);
+    const { data } = await axios.delete(process.env.REACT_APP_URL_API + `notice?idx=${list.idx}`);
+    if (data.affectedRows === 1) {
+      navigate(`/notice`);
+    }
   };
   return (
     <ViewCpWrap>
@@ -120,7 +123,15 @@ const ViewCp = ({ list }) => {
           <div className="writer">{list.company_name}</div>
         </FlexDiv>
         <FlexDiv>
-          <Button mr={'10px'}>수정</Button>
+          <Button
+            mr={'10px'}
+            onClick={() => {
+              navigate(`/notice?type=update`);
+              window.scrollTo(0, 0);
+            }}
+          >
+            수정
+          </Button>
           <Button mr={'10px'} onClick={deleteList}>
             삭제
           </Button>
@@ -133,7 +144,15 @@ const ViewCp = ({ list }) => {
           >
             목록
           </Button03>
-          <Button03 bg={`${color.blue}`}>쓰기</Button03>
+          <Button03
+            bg={`${color.blue}`}
+            onClick={() => {
+              navigate(`/notice?type=form`);
+              window.scrollTo(0, 0);
+            }}
+          >
+            등록
+          </Button03>
         </FlexDiv>
       </BtnWrap>
     </ViewCpWrap>

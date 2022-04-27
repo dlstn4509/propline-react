@@ -8,6 +8,7 @@ import SearchCp from '@/components/notice/SearchCp';
 import ListsCp from '@/components/notice/ListsCp';
 import FormCp from '@/components/notice/FormCp';
 import ViewCp from '@/components/notice/ViewCp';
+import UpdateCp from '@/components/notice/UpdateCp';
 import PagerCp from '@/components/inc/PagerCp';
 
 const NoticeWrap = styled.div`
@@ -84,6 +85,7 @@ const NoticePage = () => {
         )}
         {typeName === 'form' && <FormCp />}
         {viewIdx && <ViewCp list={list} />}
+        {typeName === 'update' && <UpdateCp list={list} />}
       </PageWrap>
     </PageWrapper>
   );
