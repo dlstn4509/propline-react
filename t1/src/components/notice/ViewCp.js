@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { FlexDiv, Button, Button03, color } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import store from '@/store/store';
 
 const ViewCpWrap = styled.div`
   font-size: 13px;
@@ -52,6 +53,7 @@ const BtnWrap = styled(FlexDiv)`
 
 const ViewCp = ({ list }) => {
   const navigate = useNavigate();
+  const { loginUser } = store();
   const deleteList = async () => {
     const { data } = await axios.delete(process.env.REACT_APP_URL_API + `notice?idx=${list.idx}`);
     if (data.affectedRows === 1) {
@@ -123,18 +125,22 @@ const ViewCp = ({ list }) => {
           <div className="writer">{list.company_name}</div>
         </FlexDiv>
         <FlexDiv>
-          <Button
-            mr={'10px'}
-            onClick={() => {
-              navigate(`/notice?type=update`);
-              window.scrollTo(0, 0);
-            }}
-          >
-            수정
-          </Button>
-          <Button mr={'10px'} onClick={deleteList}>
-            삭제
-          </Button>
+          {loginUser.midx === list.reg_midx && (
+            <>
+              <Button
+                mr={'10px'}
+                onClick={() => {
+                  navigate(`/notice?type=update`);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                수정
+              </Button>
+              <Button mr={'10px'} onClick={deleteList}>
+                삭제
+              </Button>
+            </>
+          )}
           <Button03
             mr={'10px'}
             onClick={() => {

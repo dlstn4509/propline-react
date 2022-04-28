@@ -3,6 +3,7 @@ import styled, { color, FlexDiv } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import store from '@/store/store';
+import axios from 'axios';
 
 import EditorCp from '@/components/inquiry/EditorCp';
 
@@ -78,8 +79,17 @@ const Btn = styled.button`
   color: #ffffff;
   margin-right: ${(props) => props.mr};
 `;
-const ThumbDiv = styled.div`
-  width: 70px;
+const ThumbDiv = styled(FlexDiv)`
+  .btn-delete {
+    background-color: red;
+    color: #fff;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .img-wrap {
+    width: 70px;
+    margin-right: 10px;
+  }
   img {
     max-width: 100%;
   }
@@ -100,6 +110,13 @@ const UpdateCp = ({ list }) => {
   };
   const inputFileChange = (e) => {
     e.target.previousSibling.remove();
+  };
+  const removeImgBtn = async (e) => {
+    let col = e.target.dataset['col'];
+    if (window.confirm('정말 삭제 하시겠습니까? (되돌릴 수 없습니다.)')) {
+      e.target.parentNode.remove();
+      await axios.get(process.env.REACT_APP_URL_API + `notice/deleteimg?idx=${list.idx}&col=${col}`);
+    }
   };
   return (
     <FromWrap>
@@ -211,7 +228,12 @@ const UpdateCp = ({ list }) => {
                 </FlexDiv>
                 {list.photo1FilePath && (
                   <ThumbDiv>
-                    <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo1FilePath}`} alt="" />
+                    <div className="img-wrap">
+                      <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo1FilePath}`} alt="" />
+                    </div>
+                    <div className="btn-delete" onClick={removeImgBtn} data-col="photo1">
+                      삭제
+                    </div>
                   </ThumbDiv>
                 )}
                 <Textarea name="contents1" cols="30" rows="10" defaultValue={list.contents1}></Textarea>
@@ -237,10 +259,15 @@ const UpdateCp = ({ list }) => {
                 </FlexDiv>
                 {list.photo2FilePath && (
                   <ThumbDiv>
-                    <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo2FilePath}`} alt="" />
+                    <div className="img-wrap">
+                      <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo2FilePath}`} alt="" />
+                    </div>
+                    <div className="btn-delete" onClick={removeImgBtn} data-col="photo2">
+                      삭제
+                    </div>
                   </ThumbDiv>
                 )}
-                <Textarea name="contents2" cols="30" rows="10"></Textarea>
+                <Textarea name="contents2" cols="30" rows="10" defaultValue={list.contents2}></Textarea>
               </Td>
             </Tr>
             <Tr>
@@ -263,10 +290,15 @@ const UpdateCp = ({ list }) => {
                 </FlexDiv>
                 {list.photo3FilePath && (
                   <ThumbDiv>
-                    <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo3FilePath}`} alt="" />
+                    <div className="img-wrap">
+                      <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo3FilePath}`} alt="" />
+                    </div>
+                    <div className="btn-delete" onClick={removeImgBtn} data-col="photo3">
+                      삭제
+                    </div>
                   </ThumbDiv>
                 )}
-                <Textarea name="contents3" cols="30" rows="10"></Textarea>
+                <Textarea name="contents3" cols="30" rows="10" defaultValue={list.contents3}></Textarea>
               </Td>
             </Tr>
             <Tr>
@@ -289,10 +321,15 @@ const UpdateCp = ({ list }) => {
                 </FlexDiv>
                 {list.photo4FilePath && (
                   <ThumbDiv>
-                    <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo4FilePath}`} alt="" />
+                    <div className="img-wrap">
+                      <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo4FilePath}`} alt="" />
+                    </div>
+                    <div className="btn-delete" onClick={removeImgBtn} data-col="photo4">
+                      삭제
+                    </div>
                   </ThumbDiv>
                 )}
-                <Textarea name="contents4" cols="30" rows="10"></Textarea>
+                <Textarea name="contents4" cols="30" rows="10" defaultValue={list.contents4}></Textarea>
               </Td>
             </Tr>
             <Tr>
@@ -315,10 +352,15 @@ const UpdateCp = ({ list }) => {
                 </FlexDiv>
                 {list.photo5FilePath && (
                   <ThumbDiv>
-                    <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo5FilePath}`} alt="" />
+                    <div className="img-wrap">
+                      <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo5FilePath}`} alt="" />
+                    </div>
+                    <div className="btn-delete" onClick={removeImgBtn} data-col="photo5">
+                      삭제
+                    </div>
                   </ThumbDiv>
                 )}
-                <Textarea name="contents5" cols="30" rows="10"></Textarea>
+                <Textarea name="contents5" cols="30" rows="10" defaultValue={list.contents5}></Textarea>
               </Td>
             </Tr>
             <Tr>
