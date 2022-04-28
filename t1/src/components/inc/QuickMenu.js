@@ -8,7 +8,8 @@ import { RiComputerFill } from 'react-icons/ri';
 const ContainerWrap = styled.div`
   width: 150px;
   position: absolute;
-  right: 150px;
+  /* right: 150px; */
+  left: 80%;
   position: fixed;
 `;
 const QuickMenuWrapper = styled.div`

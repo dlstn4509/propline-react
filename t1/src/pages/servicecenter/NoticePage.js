@@ -26,6 +26,8 @@ const NoticePage = () => {
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState('');
   const [viewIdx, setViewIdx] = useState('');
+  const [title, setTitle] = useState('%');
+  const [contents, setContents] = useState('%');
 
   let pathname = window.location.pathname;
   useEffect(() => {
@@ -46,10 +48,12 @@ const NoticePage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(process.env.REACT_APP_URL_API + `notice?page=${page}`);
+      const { data } = await axios.get(
+        process.env.REACT_APP_URL_API + `notice?page=${page}&title=${title}&contents=${contents}`
+      );
       setLists(data);
     })();
-  }, [page, idx]);
+  }, [page, idx, title, contents]);
 
   useEffect(() => {
     (async () => {
@@ -72,7 +76,7 @@ const NoticePage = () => {
       <PageWrap style={{ position: 'relative' }}>
         <NoticeWrap>
           <Title pt={'0'}>공지사항</Title>
-          {!typeName && <SearchCp />}
+          {!typeName && <SearchCp setTitle={setTitle} setContents={setContents} setPage={setPage} />}
         </NoticeWrap>
         {!typeName && (
           <div style={{ position: 'relative' }}>
