@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { PageWrapper, PageWrap, FlexDiv, color } from '@/style';
 import { Link } from 'react-router-dom';
 import { FaAngleUp, FaStar } from 'react-icons/fa';
 import { SiNaver, SiKakaotalk } from 'react-icons/si';
 import { RiComputerFill } from 'react-icons/ri';
+import store from '@/store/store';
 
 const ContainerWrap = styled.div`
-  width: 150px;
   position: absolute;
-  /* right: 150px; */
-  left: 80%;
-  position: fixed;
+  margin: 0px 0px 0px 1025px;
 `;
 const QuickMenuWrapper = styled.div`
   width: 100%;
@@ -46,11 +44,11 @@ const IconsText = styled.div`
 `;
 
 const QuickMenu = () => {
+  const { isQuickMenuY } = store();
   return (
     <PageWrapper>
-      <PageWrap style={{ position: 'relative' }}>
-        <ContainerWrap>
-          {/* <ContainerWrap style={{ paddingTop: `${isQuickMenuY}%` }}> */}
+      <PageWrap>
+        <ContainerWrap style={{ paddingTop: `${isQuickMenuY}%` }}>
           <QuickMenuWrapper>
             <TitleWrap>
               <div>빠른메뉴</div>

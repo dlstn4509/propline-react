@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import store from '@/store/store';
 import axios from 'axios';
@@ -60,11 +60,21 @@ import RequestSalePage from '@/pages/RequestSalePage';
 import ManualPage from '@/pages/manual/ManualPage';
 
 const App = () => {
-  const { isPathname, setPathName, setLoginUser } = store();
+  const { isPathname, setPathName, setQuickMenuY, setLoginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
   }, [pathname]);
+  useEffect(() => {
+    let body = document.querySelector('body');
+    body.addEventListener('wheel', (e) => {
+      if (e.deltaY > 0) {
+        setQuickMenuY(7.3);
+      } else {
+        setQuickMenuY(-7.3);
+      }
+    });
+  }, []);
   useEffect(() => {
     (async () => {
       await axios
