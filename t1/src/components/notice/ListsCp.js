@@ -62,7 +62,12 @@ const ListsCp = ({ lists, page, totalCount, setViewIdx }) => {
             <td>
               {v.is_top_rank === 1 ? <span className="span">중요</span> : totalCount - i - (page - 1) * 20}
             </td>
-            <td style={{ color: `${v.title_font_color}`, fontWeight: `${v.title_font_weight ? 600 : ''}` }}>
+            <td
+              style={{
+                color: `${v.title_font_color}`,
+                fontWeight: `${v.title_font_weight === 'bold' ? 600 : 400}`,
+              }}
+            >
               <span data-idx={v.idx} onClick={listClick} style={{ cursor: 'pointer' }}>
                 {v.title}
               </span>
