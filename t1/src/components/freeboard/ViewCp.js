@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { FlexDiv, Button, Button03, color } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -52,9 +52,10 @@ const BtnWrap = styled(FlexDiv)`
   }
 `;
 
-const ViewCp = ({ list, setLikeNum, likeNum }) => {
+const ViewCp = ({ list }) => {
   const navigate = useNavigate();
   const { loginUser } = store();
+  const [isLike, setIsLike] = useState(false);
   const deleteList = async () => {
     const { data } = await axios.delete(process.env.REACT_APP_URL_API + `freeboard?idx=${list.idx}`);
     if (data.affectedRows === 1) {
@@ -74,14 +75,20 @@ const ViewCp = ({ list, setLikeNum, likeNum }) => {
         <Title>{list.title}</Title>
         <FlexDiv>
           <div
-            style={{ marginRight: '10px', color: 'red', fontSize: '16px', cursor: 'pointer' }}
+            style={{
+              marginRight: '10px',
+              color: `${isLike ? 'red' : 'black'}`,
+              fontSize: '16px',
+              cursor: 'pointer',
+            }}
             onClick={() => {
               likeList(list.idx);
+              setIsLike(!isLike);
             }}
           >
             추천 <AiFillLike />
           </div>
-          <div>{list.hit}</div>
+          <div>조회수 : {list.hit}</div>
         </FlexDiv>
       </TitleWrap>
       <ContentWrap>
