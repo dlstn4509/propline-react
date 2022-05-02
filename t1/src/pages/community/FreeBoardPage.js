@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled, { Title, Text, PageWrapper, PageWrap, color, Button02 } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import store from '@/store/store';
 import axios from 'axios';
 
-import SearchCp from '@/components/finditem/SearchCp';
+import SearchCp from '@/components/freeboard/SearchCp';
 import ListCp from '@/components/freeboard/ListCp';
 import FormCp from '@/components/freeboard/FormCp';
 import ViewCp from '@/components/freeboard/ViewCp';
@@ -19,7 +19,11 @@ const FreeBoardPage = () => {
   const [lists, setLists] = useState('');
   const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
+  const [member_id, setMember_id] = useState('%');
+  const [title, setTitle] = useState('%');
+  const [contents, setContents] = useState('%');
   const [totalCount, setTotalCount] = useState('');
+  const [likeNum, setLikeNum] = useState('');
 
   let pathname = window.location.pathname;
   useEffect(() => {
@@ -43,10 +47,13 @@ const FreeBoardPage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(process.env.REACT_APP_URL_API + `freeboard?page=${page}`);
+      const { data } = await axios.get(
+        process.env.REACT_APP_URL_API +
+          `freeboard?page=${page}&member_id=${member_id}&title=${title}&contents=${contents}`
+      );
       setLists(data);
     })();
-  }, [page]);
+  }, [page, idx, member_id, title, contents]);
 
   useEffect(() => {
     if (viewIdx) {
@@ -57,7 +64,7 @@ const FreeBoardPage = () => {
     } else if (typeName !== 'update') {
       setList([]);
     }
-  }, [viewIdx, typeName]);
+  }, [viewIdx, typeName, likeNum]);
 
   useEffect(() => {
     (async () => {
@@ -79,16 +86,21 @@ const FreeBoardPage = () => {
           등록된 게시물에 의해 발생되는 모든 문제에 대한 민ㆍ형사상의 법적 책임은 게시물 등록자에게 있습니다.
         </Text>
         {!viewIdx && !typeName && lists && (
-          <>
-            <SearchCp />
+          <div style={{ position: 'relative' }}>
+            <SearchCp
+              setMember_id={setMember_id}
+              setTitle={setTitle}
+              setContents={setContents}
+              setPage={setPage}
+            />
             <ListCp lists={lists} setViewIdx={setViewIdx} page={page} totalCount={totalCount} />
             <PagerCp setPage={setPage} page={page} totalCount={totalCount} />
-            <Button02 to="/freeboard?type=form" style={{ color: '#fff', bottom: '-10px' }}>
+            <Button02 to="/freeboard?type=form" style={{ color: '#fff', bottom: '0px' }}>
               등록
             </Button02>
-          </>
+          </div>
         )}
-        {viewIdx && typeName !== 'form' && <ViewCp list={list} />}
+        {viewIdx && typeName !== 'form' && <ViewCp list={list} setLikeNum={setLikeNum} likeNum={likeNum} />}
         {typeName === 'form' && <FormCp list={list} />}
         {typeName === 'update' && list && <UpdateCp list={list} />}
       </PageWrap>

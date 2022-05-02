@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { FlexDiv, Button, Button03, color } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import store from '@/store/store';
+import { AiFillLike } from 'react-icons/ai';
 
 const ViewCpWrap = styled.div`
   font-size: 13px;
@@ -51,7 +52,7 @@ const BtnWrap = styled(FlexDiv)`
   }
 `;
 
-const ViewCp = ({ list }) => {
+const ViewCp = ({ list, setLikeNum, likeNum }) => {
   const navigate = useNavigate();
   const { loginUser } = store();
   const deleteList = async () => {
@@ -60,11 +61,28 @@ const ViewCp = ({ list }) => {
       navigate(`/freeboard`);
     }
   };
+  const likeList = async (idx) => {
+    const { data } = await axios.get(process.env.REACT_APP_URL_API + `freeboard/like?idx=${idx}`);
+  };
+  useEffect(() => {
+    likeList();
+  }, []);
+
   return (
     <ViewCpWrap>
       <TitleWrap>
         <Title>{list.title}</Title>
-        <div>{list.hit}</div>
+        <FlexDiv>
+          <div
+            style={{ marginRight: '10px', color: 'red', fontSize: '16px', cursor: 'pointer' }}
+            onClick={() => {
+              likeList(list.idx);
+            }}
+          >
+            추천 <AiFillLike />
+          </div>
+          <div>{list.hit}</div>
+        </FlexDiv>
       </TitleWrap>
       <ContentWrap>
         <div dangerouslySetInnerHTML={{ __html: list.contents }}></div>

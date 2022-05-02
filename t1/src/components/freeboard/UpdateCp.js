@@ -121,7 +121,7 @@ const UpdateCp = ({ list }) => {
   };
   const btSubmit = async (e) => {
     // const data = await e.target.form.submit();
-    console.log(e.target.form.value);
+    console.log(e.target.form.idx.value);
   };
   return (
     <FromWrap>
