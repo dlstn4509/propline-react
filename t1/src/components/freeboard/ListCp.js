@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import styled from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaLongArrowAltRight } from 'react-icons/fa';
 
 const TableWrap = styled.table`
   height: 45px;
@@ -77,21 +76,15 @@ const ListCp = ({ lists, setViewIdx, page, totalCount }) => {
             </td>
             <td
               style={{
-                paddingLeft: `${v.record_hdepth * 20}px`,
+                paddingLeft: `${v.record_hdepth * 15}px`,
                 color: `${v.title_font_color}`,
                 fontWeight: `${v.title_font_weight === 'bold' ? 600 : 400}`,
               }}
             >
-              {v.record_hdepth > 1 && (
-                <FaLongArrowAltRight
-                  style={{
-                    marginRight: '10px',
-                  }}
-                />
-              )}
+              {v.record_hdepth > 1 && <img src={process.env.REACT_APP_URL + 'img/re.gif'} alt="" />}
               <span data-idx={v.idx} onClick={listClick} style={{ cursor: 'pointer' }}>
                 {v.title}
-              </span>{' '}
+              </span>
               {v.isNew && <span className="new">N</span>}
             </td>
             <td>{v.member_id}</td>

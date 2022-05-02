@@ -70,31 +70,31 @@ const ViewCp = ({ list }) => {
         <div dangerouslySetInnerHTML={{ __html: list.contents }}></div>
         <div>
           {list.photo1FilePath && (
-            <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo1FilePath}`} alt="" />
+            <img src={process.env.REACT_APP_URL + `uploads/${list.photo1FilePath}`} alt="" />
           )}
         </div>
         <div dangerouslySetInnerHTML={{ __html: list.contents1 }}></div>
         <div>
           {list.photo2FilePath && (
-            <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo2FilePath}`} alt="" />
+            <img src={process.env.REACT_APP_URL + `uploads/${list.photo2FilePath}`} alt="" />
           )}
         </div>
         <div dangerouslySetInnerHTML={{ __html: list.contents2 }}></div>
         <div>
           {list.photo3FilePath && (
-            <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo3FilePath}`} alt="" />
+            <img src={process.env.REACT_APP_URL + `uploads/${list.photo3FilePath}`} alt="" />
           )}
         </div>
         <div dangerouslySetInnerHTML={{ __html: list.contents3 }}></div>
         <div>
           {list.photo4FilePath && (
-            <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo4FilePath}`} alt="" />
+            <img src={process.env.REACT_APP_URL + `uploads/${list.photo4FilePath}`} alt="" />
           )}
         </div>
         <div dangerouslySetInnerHTML={{ __html: list.contents4 }}></div>
         <div>
           {list.photo5FilePath && (
-            <img src={process.env.REACT_APP_URL + `uploads/notice/${list.photo5FilePath}`} alt="" />
+            <img src={process.env.REACT_APP_URL + `uploads/${list.photo5FilePath}`} alt="" />
           )}
         </div>
         <div dangerouslySetInnerHTML={{ __html: list.contents5 }}></div>
