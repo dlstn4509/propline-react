@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { PageWrapper, PageWrap, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';

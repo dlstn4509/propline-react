@@ -1,5 +1,7 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
+import axios from 'axios';
+
 let store = (set) => ({
   isUser: false,
   loginUser: {},
@@ -9,6 +11,7 @@ let store = (set) => ({
   isPageY: '',
   isQuickMenuY: 3,
   isAgreePrivacy: false,
+  isBanner: [],
   setIsUser: () => set((state) => ({ isUser: !state.isUser })),
   setLoginUser: (user) => set((state) => ({ loginUser: user })),
   setQuickMenuTop: (y) => set((state) => ({ quickMenuTop: state.quickMenuTop + y })),
@@ -18,6 +21,11 @@ let store = (set) => ({
   setQuickMenuY: (num) =>
     set((state) => ({ isQuickMenuY: state.isQuickMenuY >= 0 ? state.isQuickMenuY + num : 3 })),
   setAgreePrivacy: (bool) => set((state) => ({ isAgreePrivacy: bool })),
+  setBanner: async () => {
+    const { data } = await axios.get(`https://t1.propline.co.kr/api/banner`);
+    set((state) => ({ isBanner: data }));
+  },
+  // setBanner: () => set((state) => ({ isBanner: state.isBanner })),/
 });
 
 store = create(devtools(store));

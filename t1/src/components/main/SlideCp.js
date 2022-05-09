@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from '@/style';
+import store from '@/store/store';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y, Autoplay } from 'swiper';
 import 'swiper/css';
@@ -30,7 +31,11 @@ const SlideCpWrapper = styled.div`
 `;
 
 const SlideCp = () => {
+  const { isBanner } = store();
   const swiperRef = useRef(null);
+  const banner = isBanner.filter((v) => {
+    return v.area_code === '1';
+  });
   return (
     <SlideCpWrapper
       className="aaa"
@@ -46,21 +51,13 @@ const SlideCp = () => {
         autoplay={{ delay: 2000, disableOnInteraction: false }}
         pagination={{ clickable: true, color: '#ffffff' }}
       >
-        <SwiperSlide>
-          <div className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/slide01.jpg'} alt="" className="slideImg mw-100" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/slide02.jpg'} alt="" className="mw-100" />
-          </div>
-        </SwiperSlide>
-        <SwiperSlide>
-          <div className="slideImg">
-            <img src={process.env.REACT_APP_URL + 'img/slide03.jpg'} alt="" className="mw-100" />
-          </div>
-        </SwiperSlide>
+        {banner.map((v, i) => (
+          <SwiperSlide key={i}>
+            <a href={v.link_url} target={v.link_target === 2 ? '_blank' : ''} rel="noopener noreferrer">
+              <img src={process.env.REACT_APP_URL + v.bannerSrc} alt="" className="mw-100" />
+            </a>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </SlideCpWrapper>
   );

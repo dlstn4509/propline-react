@@ -56,11 +56,12 @@ import SignUpPage from '@/pages/SignUpPage';
 import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 import RequestSalePage from '@/pages/RequestSalePage';
+import BannerPage from '@/pages/BannerPage';
 
 import ManualPage from '@/pages/manual/ManualPage';
 
 const App = () => {
-  const { isPathname, setPathName, setQuickMenuY, setLoginUser } = store();
+  const { isPathname, setPathName, setQuickMenuY, setLoginUser, setBanner } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -84,6 +85,9 @@ const App = () => {
         })
         .catch((err) => console.log(err));
     })();
+  }, []);
+  useEffect(() => {
+    setBanner();
   }, []);
   return (
     <BrowserRouter>
@@ -128,6 +132,7 @@ const App = () => {
         <Route path="/paymenthistory" element={<CardPage />} />
         <Route path="/requestsale" element={<RequestSalePage />} />
         <Route path="/manual" element={<ManualPage />} />
+        <Route path="/banner" element={<BannerPage />} />
       </Routes>
       {isPathname !== '/manual' && (
         <>

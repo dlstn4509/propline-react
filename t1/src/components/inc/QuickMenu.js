@@ -44,7 +44,10 @@ const IconsText = styled.div`
 `;
 
 const QuickMenu = () => {
-  const { isQuickMenuY } = store();
+  const { isQuickMenuY, isBanner } = store();
+  const banner = isBanner.filter((v) => {
+    return v.area_code === '9';
+  });
   return (
     <PageWrapper>
       <PageWrap>
@@ -72,6 +75,13 @@ const QuickMenu = () => {
                 <IconsText>네이버 매물관리</IconsText>
               </Icons>
             </IconsWrap>
+            {banner.map((v, i) => (
+              <div key={i} style={{ marginTop: '10px' }}>
+                <a href={v.link_url} target={v.link_target === 2 ? '_blank' : ''} rel="noopener noreferrer">
+                  <img src={process.env.REACT_APP_URL + v.bannerSrc} alt="" className="mw-100" />
+                </a>
+              </div>
+            ))}
           </QuickMenuWrapper>
         </ContainerWrap>
       </PageWrap>
