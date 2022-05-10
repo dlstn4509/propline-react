@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { PageWrapper, PageWrap, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
@@ -16,6 +16,7 @@ import PrdListCp from '@/components/main/PrdListCp';
 import AccountCp from '@/components/main/AccountCp';
 import YouTubeBtnCp from '@/components/main/YouTubeBtnCp';
 import RegistryBuildingBtnCp from '@/components/main/RegistryBuildingBtnCp';
+import axios from 'axios';
 
 const MainPageWrap = styled(PageWrap)`
   display: flex;
@@ -34,6 +35,13 @@ const ListWrap = styled(FlexDiv)`
 
 const MainPage = () => {
   const { loginUser } = store();
+  const [notice, setNotice] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(process.env.REACT_APP_URL_API + 'main/notice');
+      setNotice(data);
+    })();
+  }, []);
   return (
     <PageWrapper style={{ paddingTop: '30px' }}>
       <MainPageWrap>
@@ -44,7 +52,7 @@ const MainPage = () => {
             <FreeMamulCp />
           </ListWrap>
           <ListWrap>
-            <NoticeCp />
+            <NoticeCp notice={notice} />
             <QuestionsCp />
           </ListWrap>
         </MainLeftWrap>

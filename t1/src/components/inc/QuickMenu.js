@@ -43,6 +43,11 @@ const IconsText = styled.div`
   letter-spacing: -0.06em;
 `;
 
+const Img = styled.img`
+  width: 100%;
+  cursor: ${(props) => (props ? 'pointer' : '')};
+`;
+
 const QuickMenu = () => {
   const { isQuickMenuY, isBanner } = store();
   const banner = isBanner.filter((v) => {
@@ -76,10 +81,26 @@ const QuickMenu = () => {
               </Icons>
             </IconsWrap>
             {banner.map((v, i) => (
-              <div key={i} style={{ marginTop: '10px' }}>
-                <a href={v.link_url} target={v.link_target === 2 ? '_blank' : ''} rel="noopener noreferrer">
-                  <img src={process.env.REACT_APP_URL + v.bannerSrc} alt="" className="mw-100" />
-                </a>
+              <div key={i} style={{ marginTop: '10px', width: '160px' }}>
+                {v.link_target === 3 && (
+                  <Img
+                    src={process.env.REACT_APP_URL + v.bannerSrc}
+                    alt=""
+                    cursor={true}
+                    onClick={() => {
+                      window.open(
+                        `${v.link_url}`,
+                        '_black',
+                        `top=100px, width=${v.window_width}, height=${v.window_height}`
+                      );
+                    }}
+                  />
+                )}
+                {v.link_target !== 3 && (
+                  <a href={v.link_url} target={v.link_target === 2 ? '_blank' : ''} rel="noopener noreferrer">
+                    <Img src={process.env.REACT_APP_URL + v.bannerSrc} alt="" />
+                  </a>
+                )}
               </div>
             ))}
           </QuickMenuWrapper>
@@ -90,3 +111,8 @@ const QuickMenu = () => {
 };
 
 export default React.memo(QuickMenu);
+
+/* onClick={() => {
+                window.open('/manual', '_black', 'width=1300, height=720, top=100px');
+              }}
+               */

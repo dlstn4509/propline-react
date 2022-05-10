@@ -1,14 +1,4 @@
-import React from 'react';
-import {
-  TableWrap,
-  TableTheadTr,
-  TableListTitle,
-  TableListTitlePlus,
-  PlusSpan,
-  TableTbodyTr,
-  NoticeTbodyTd,
-  NoticeTbodyLink,
-} from '@/style/main';
+import React, { useEffect, useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -55,30 +45,21 @@ const List = styled.div`
   }
 `;
 
-const NoticeCp = () => {
+const NoticeCp = ({ notice }) => {
   return (
     <NoticeWrapper>
       <TitleWrap>
         <Title>공지사항</Title>
         <MoreText to="/main">더보기</MoreText>
       </TitleWrap>
-      <ListWrap>
-        <List className="active">
-          4월 5일(화) 사이트 장애 및 임시 점... <span>N</span>
-        </List>
-      </ListWrap>
-      <ListWrap>
-        <List>4월 5일(화) 사이트 장애 및 임시 점...</List>
-      </ListWrap>
-      <ListWrap>
-        <List>4월 5일(화) 사이트 장애 및 임시 점...</List>
-      </ListWrap>
-      <ListWrap>
-        <List>4월 5일(화) 사이트 장애 및 임시 점...</List>
-      </ListWrap>
-      <ListWrap>
-        <List>4월 5일(화) 사이트 장애 및 임시 점...</List>
-      </ListWrap>
+      {notice.map((v, i) => (
+        <ListWrap key={i}>
+          <List className="active">
+            {v.title}
+            {v.isNew && <span>N</span>}
+          </List>
+        </ListWrap>
+      ))}
     </NoticeWrapper>
   );
 };
