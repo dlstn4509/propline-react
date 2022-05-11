@@ -45,7 +45,7 @@ const IconsText = styled.div`
 
 const Img = styled.img`
   width: 100%;
-  cursor: ${(props) => props};
+  cursor: ${(props) => props.cursor};
 `;
 
 const QuickMenu = () => {

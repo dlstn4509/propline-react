@@ -10,6 +10,7 @@ import Navbar from '@/components/inc/Navbar';
 import FooterText from '@/components/inc/FooterText';
 import Footer from '@/components/inc/Footer';
 import QuickMenu from '@/components/inc/QuickMenu';
+import IsUser from '@/components/inc/IsUser';
 
 /***************** item *****************/
 import ItemPage from '@/pages/item/ItemPage';
@@ -61,7 +62,7 @@ import BannerPage from '@/pages/BannerPage';
 import ManualPage from '@/pages/manual/ManualPage';
 
 const App = () => {
-  const { isPathname, setPathName, setQuickMenuY, setLoginUser, setBanner } = store();
+  const { isPathname, setPathName, setQuickMenuY, setLoginUser, setBanner, loginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
@@ -106,7 +107,7 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/businesssignup" element={<BusinessSignUpPage />} />
         <Route path="/normalsignup" element={<NormalSignUpPage />} />
-        <Route path="/item" element={<ItemPage />} />
+        <Route path="/item" element={loginUser.midx ? <ItemPage /> : <IsUser />} />
         <Route path="/itempublic" element={<ItemPublicPage />} />
         <Route path="/saleinfo" element={<SaleInfoPage />} />
         <Route path="/finditem" element={<FindItemPage />} />
