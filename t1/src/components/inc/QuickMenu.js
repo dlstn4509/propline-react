@@ -45,7 +45,7 @@ const IconsText = styled.div`
 
 const Img = styled.img`
   width: 100%;
-  cursor: ${(props) => (props ? 'pointer' : '')};
+  cursor: ${(props) => props};
 `;
 
 const QuickMenu = () => {
@@ -86,7 +86,7 @@ const QuickMenu = () => {
                   <Img
                     src={process.env.REACT_APP_URL + v.bannerSrc}
                     alt=""
-                    cursor={true}
+                    cursor={'pointer'}
                     onClick={() => {
                       window.open(
                         `${v.link_url}`,

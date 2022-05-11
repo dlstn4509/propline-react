@@ -32,7 +32,6 @@ const SearchCp = ({ setMember_id, setTitle, setContents, setPage }) => {
   const [checkTitle, setCheckTitle] = useState(false);
   const [checkContent, setCheckContent] = useState(false);
   const clickSearch = useCallback(async () => {
-    console.log('asd');
     setPage(1);
     let searchValue = document.querySelector('.search').value;
     checkCompany_name ? setMember_id(searchValue) : setMember_id('%');

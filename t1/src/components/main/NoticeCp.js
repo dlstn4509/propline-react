@@ -41,7 +41,7 @@ const List = styled.div`
     background-color: #ffba31;
     border-radius: 3px;
     padding: 1px 4px;
-    margin-right: 4px;
+    margin-left: 6px;
   }
 `;
 
