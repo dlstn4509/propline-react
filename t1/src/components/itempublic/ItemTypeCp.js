@@ -1,9 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from '@/style';
 import { Link } from 'react-router-dom';
 
 import { FaThLarge, FaMapMarkedAlt, FaSearch } from 'react-icons/fa';
 
+const ItemTypeCpWrap = styled.div`
+  display: flex;
+  margin-bottom: 30px;
+`;
 const Type = styled.div`
   width: 135px;
   font-size: 20px;
@@ -36,36 +40,41 @@ const SearchTypeBar = styled.div`
   text-align: center;
 `;
 
-const ItemSearchTypeCp = () => {
-  const onClick = useCallback((e) => {
-    document.querySelector('.searchType').childNodes.forEach((v) => {
-      v.classList.remove('active');
-    });
-    let classList = e.target.parentNode.classList;
-    if (classList.value.includes('active')) {
-      classList.remove('active');
-    } else {
-      classList.add('active');
-    }
-  }, []);
+const ItemTypeCp = () => {
+  const [type, setType] = useState('seoul');
   return (
-    <>
-      <Type className="active" onClick={onClick}>
+    <ItemTypeCpWrap className="searchType">
+      <Type
+        className={type === 'seoul' ? 'active' : ''}
+        onClick={() => {
+          setType('seoul');
+        }}
+      >
         <TypeTxt>서울 블록지도</TypeTxt>
         <FaThLarge />
       </Type>
       <SearchTypeBar>|</SearchTypeBar>
-      <Type onClick={onClick}>
+      <Type
+        className={type === 'normal' ? 'active' : ''}
+        onClick={() => {
+          setType('normal');
+        }}
+      >
         <TypeTxt>일반지도</TypeTxt>
         <FaMapMarkedAlt />
       </Type>
       <SearchTypeBar>|</SearchTypeBar>
-      <Type onClick={onClick}>
+      <Type
+        className={type === 'search' ? 'active' : ''}
+        onClick={() => {
+          setType('search');
+        }}
+      >
         <TypeTxt>주소검색</TypeTxt>
         <FaSearch />
       </Type>
-    </>
+    </ItemTypeCpWrap>
   );
 };
 
-export default React.memo(ItemSearchTypeCp);
+export default React.memo(ItemTypeCp);

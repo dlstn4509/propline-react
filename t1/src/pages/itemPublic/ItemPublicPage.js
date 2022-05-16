@@ -3,7 +3,7 @@ import styled, { Title, Button, PageWrapper, PageWrap, color } from '@/style';
 import { Link } from 'react-router-dom';
 import store from '@/store/store';
 
-import ItemPublicTypeCp from '@/components/itempublic/ItemPublicTypeCp';
+import ItemTypeCp from '@/components/itempublic/ItemTypeCp';
 import SearchPublicAllCp from '@/components/itempublic/SearchPublicAllCp';
 import SearchPublicMyCp from '@/components/itempublic/SearchPublicMyCp';
 import MyItemCp from '@/components/item/MyItemCp';
@@ -41,7 +41,7 @@ const ItemPublicPage = () => {
         </TitleWrap>
         {typename === 'all' && (
           <>
-            <ItemPublicTypeCp />
+            <ItemTypeCp />
             <SearchPublicAllCp />
           </>
         )}

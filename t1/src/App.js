@@ -107,7 +107,8 @@ const App = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/businesssignup" element={<BusinessSignUpPage />} />
         <Route path="/normalsignup" element={<NormalSignUpPage />} />
-        <Route path="/item" element={loginUser.midx ? <ItemPage /> : <IsUser />} />
+        <Route path="/item" element={<ItemPage />} />
+        {/* <Route path="/item" element={loginUser.midx ? <ItemPage /> : <IsUser />} /> */}
         <Route path="/itempublic" element={<ItemPublicPage />} />
         <Route path="/saleinfo" element={<SaleInfoPage />} />
         <Route path="/finditem" element={<FindItemPage />} />

@@ -3,6 +3,7 @@ import styled, { Title, PageWrapper, PageWrap } from '@/style';
 import store from '@/store/store';
 
 import ItemTypeCp from '@/components/item/ItemTypeCp';
+import MapCp from '@/components/item/MapCp';
 import SearchAllCp from '@/components/item/SearchAllCp';
 import SearchNormalCp from '@/components/item/SearchNormalCp';
 import AllTabCp from '@/components/item/AllTabCp';
@@ -26,6 +27,7 @@ const ItemPage = () => {
       <PageWrap>
         <Title>공실매물</Title>
         <ItemTypeCp />
+        <MapCp />
         {typename === 'all' && <SearchAllCp />}
         {typename === 'normal' && <SearchNormalCp />}
         <AllTabCp />

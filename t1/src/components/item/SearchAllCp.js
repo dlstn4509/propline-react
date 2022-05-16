@@ -3,14 +3,15 @@ import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
 import SearchDetailCp from './SearchDetailCp';
-import MapCp from './MapCp';
 import TotalCountCp from './TotalCountCp';
 import SubCp from './SubCp';
 
 import { typeArr, yearArr, parkingNumArr, plusFilter } from './SearchArr';
 
 const SearchCpWrapper = styled.div`
-  border: 1px solid #2a55cc;
+  border-left: 1px solid #2a55cc;
+  border-right: 1px solid #2a55cc;
+  border-bottom: 1px solid #2a55cc;
   margin-bottom: 70px;
 `;
 const FilterWrapper = styled.div`
@@ -57,7 +58,6 @@ const SearchAllCp = () => {
   }, []);
   return (
     <SearchCpWrapper>
-      <MapCp />
       <FilterWrapper>
         <FilterWrap>
           <Title>임대구분</Title>
