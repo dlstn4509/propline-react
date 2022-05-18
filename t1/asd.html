@@ -1,0 +1,1343 @@
+<!-- #include virtual="/include/v4_dbconn.asp" -->
+<!-- #include virtual="/include/v4_function.asp" -->
+<%
+SkinPath = IMAGE_ROOT_URL & "/item"
+
+'//==========================================================================================
+'// 로그인 여부 체크
+'//==========================================================================================
+SESS_MIDX = Request.Cookies("GSCLUB_MIDX")
+If IsNull(SESS_MIDX) Then SESS_MIDX = "0"
+If IsEmpty(SESS_MIDX) Then SESS_MIDX = "0"
+If SESS_MIDX = "" Then SESS_MIDX = "0"
+SESS_MIDX = Int(SESS_MIDX)
+
+'//==========================================================================================
+'// 전달된 변수 및 필수입력사항 체크
+'//==========================================================================================
+MAPBLOCK_LEVEL      = Request.Cookies("MAPBLOCK_LEVEL")
+MAPBLOCK_CENTER_LAT = Request.Cookies("MAPBLOCK_CENTER_LAT")
+MAPBLOCK_CENTER_LNG = Request.Cookies("MAPBLOCK_CENTER_LNG")
+
+If MAPBLOCK_LEVEL = "" Then
+	MAPBLOCK_LEVEL      = "6"  '//== 500m
+	MAPBLOCK_CENTER_LAT = "37.51186845130406"
+	MAPBLOCK_CENTER_LNG = "127.03664683776347"
+Else
+
+End If
+
+'Response.Write MAPBLOCK_LEVEL & "<br />"
+'Response.Write MAPBLOCK_CENTER_LAT & "<br />"
+'Response.Write MAPBLOCK_CENTER_LNG & "<br />"
+
+mapBlockBorder = "3" '//블록두께
+
+mn = Request("mn")
+sw = Request("sw")
+
+a_SearchWord = Split(sw, "|")
+
+If UBound(a_SearchWord) < 66 Then
+	For i = UBound(a_SearchWord)+1 To 66
+	  sw = sw & "|"
+	Next
+	a_SearchWord = Split(sw, "|")
+End If
+
+sw_MapGubun             = a_SearchWord(8 )
+sw_AreaCode             = a_SearchWord(9 )
+
+If sw_SiGunGu = "" Then ' 강동구 / 강서구 / 양천구
+	Select Case sw_MapGubun
+		Case "0"  : sw_SiGunGu = "강남구"
+		Case "1"  : sw_SiGunGu = "서초구"
+		Case "2"  : sw_SiGunGu = "송파구"
+		Case "3"  : sw_SiGunGu = "강동구"
+		Case "4"  : sw_SiGunGu = "관악구"
+		Case "5"  : sw_SiGunGu = "구로구"
+		Case "6"  : sw_SiGunGu = "영등포구"
+		Case "7"  : sw_SiGunGu = "금천구"
+		Case "18" : sw_SiGunGu = "동작구"
+		Case Else : sw_SiGunGu = "강남구"
+	End Select
+End If
+
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Daum 지도 시작하기</title>
+<style type="text/css">
+<!--
+  body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,form,fieldset,p,button{margin:0px;padding:0px}
+  img,fieldset,iframe{border:0px none}
+
+  .station{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:400; color:#ffffff;border-radius:10px;background-color:#1BA885;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+  .station:hover{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:700; color:#ffffff;border-radius:10px;background-color:#1D7E7A;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+
+  .dongC{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:400; color:#3168ff;border-radius:10px;background-color:#ffffff;display : flex;align-items : center;justify-content : center;cursor:pointer;border:1px solid #3168ff;}
+  .dongC:hover{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:700; color:#ffffff;border-radius:10px;background-color:#3168ff;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+  .dongCOn{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:700; color:#ffffff;border-radius:10px;background-color:#3168ff;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+
+  .guC{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:400; color:#3168ff;border-radius:10px;background-color:#ffffff;display : flex;align-items : center;justify-content : center;cursor:pointer;border:1px solid #3168ff;}
+  .guC:hover{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:700; color:#ffffff;border-radius:10px;background-color:#3168ff;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+  .guCOn{padding:3px 5px 3px 5px;font-size:12px; font-family:Noto Sans KR; font-weight:700; color:#ffffff;border-radius:10px;background-color:#3168ff;display : flex;align-items : center;justify-content : center;cursor:pointer;}
+
+  #mcla{width:330px;height:27px;padding:0px 5px 0px 5px;border-radius:5px;display : flex;align-items : center;justify-content : center;background-color:#212b4a;background-color: rgba( 33, 43, 74, 0.80 )}
+  #mclat{font-size:13px; font-family:Noto Sans KR; font-weight:500;color:#ffffff;}
+  #mclat2{font-size:13px; font-family:Noto Sans KR; font-weight:700;color:#ffeb5a;}
+  #mcl{width:90px;height:20px;padding:0px 5px 0px 5px;border-radius:5px;display : flex;align-items : center;justify-content : center;border:1px solid #d5d5d5;background-color:#ffffff;cursor:pointer;}
+  #mclt{font-size:12px; font-family:Noto Sans KR; font-weight:400;color:#333333;}
+//-->
+</style>
+<script type="text/javascript" src="/include/jquery-1.9.0.min.js"></script>
+</head>
+<body>
+<%
+	Set DBCONN_GSC = server.CreateObject("ADODB.connection")
+	DBCONN_GSC.Open DBCONSTR_GSC
+%>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" height="100%">
+	<tr>
+		<td>
+			<div id="divTemp"><div>
+			<div id="divText"><div>
+			<div id="divMapLevelNotice" style="position:absolute;top:132px;left:364px;z-index:2;display:none;"><img src="/v4/images/design_map/main_map_popup01.jpg" usemap="#MAP_LEVEL_NOTICE" /></div>
+			<map name="MAP_LEVEL_NOTICE">
+			  <area shape="rect" coords="252,5,267,20" href="#" onclick="HideMapLevelNotice()" />
+			</map>
+			<map name="MAP_LEVEL_NOTICE">
+			  <area shape="rect" coords="252,5,267,20" href="#" onclick="HideMapLevelNotice()" />
+			</map>
+			<div id="map" style="width:100%px;height:409px;z-index:1;"></div>
+			<div id="divMapclean" style="position:absolute;margin-top:-35px;z-index:2;margin-left:652px;" onclick="cleanPolygon();">
+				<div id="mcla">
+					<div id="mclat">선택된 블록이 없습니다. 블록을 선택해주세요.</div>
+					<div id="mclg" style="display:none;align-items : center;justify-content : center;">
+						<div style="padding:0px 5px 0px 5px;color:#ffffff;">|</div>
+						<div id="mcl"><div><img src="/images/Rclean.png"/></div><div id="mclt">지도초기화</div></div>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%=KAKAO_JS_KEY%>&libraries=drawing"></script>
+<script type="text/javascript">
+<!--
+
+// 마우스 드래그 확인
+var dragging = 0;
+$(document).mousedown(function(event) {
+	dragging = 0;
+	ox = event.pageX;
+		$(document).mousemove(function(event){
+			nx = event.pageX;
+			if (ox != nx)
+			{
+				dragging = 1;
+			}
+			else{
+				dragging = 0;
+			}
+	});
+});
+
+// 마우스 프레임 밖으로 나가면 이벤트 중지
+$(document).mouseout(function(e) {
+    e = e ? e : window.event;
+    var from = e.relatedTarget || e.toElement;
+    if (!from || from.nodeName == "HTML") {
+        // stop your drag event here
+        // for now we can just use an alert
+		//alert(e.relatedTarget);
+    }
+});
+
+var polygonArray = [];
+var polygonArray2 = [];
+var temp = [];
+var tempName = []; //동이름
+var areas = [];
+var stations = [];
+var subwayArray = [];
+var dongs = [];
+var dongArray = [];
+var gus = [];
+var guArray = [];
+var sido = [];
+var sidoArray = [];
+
+<% '###################################################################################################################################################### %>
+
+// 1 = 20m / 2 = 30m / 3 = 50m / 4 = 100m / 5 = 250m / 6 = 500m / 7 = 1km / 8 = 2km / 9 = 4km
+var MapLevel = "<%=MAPBLOCK_LEVEL%>";
+var CenterLat = "<%=MAPBLOCK_CENTER_LAT%>" ;
+var CenterLng = "<%=MAPBLOCK_CENTER_LNG%>" ;
+//alert(MapLevel + " : " + CenterLat + " : " + CenterLng) ;
+var P1Lat = "" ;
+var P1Lng = "" ;sido
+var P2Lat = "" ;
+var P2Lng = "" ;
+
+var sw = "<%=sw%>" ;
+var sw_temp = "" ;
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+mapOption = {
+	center: new kakao.maps.LatLng(CenterLat, CenterLng), // 지도의 중심좌표
+	level: MapLevel, // 지도의 확대 레벨
+	disableDoubleClickZoom: true
+};
+
+//지도를 미리 생성
+var oMap = new kakao.maps.Map(mapContainer, mapOption);
+
+oMap.setMaxLevel(9); // 최대 레벨9
+
+var zoomControl = new kakao.maps.ZoomControl();
+oMap.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+oMap.setZoomable(false);
+
+//화면 변경시 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+kakao.maps.event.addListener(oMap, 'idle', function() {
+  mapReplaces(1);
+});
+
+kakao.maps.event.addListener(oMap, 'zoom_changed', function() {
+	var MapLevel = oMap.getLevel() ;
+
+	if (MapLevel == 6) {drawSubway();} 
+	else if (MapLevel >= 7){cleanSubway();} //지하철 유무
+
+	if (MapLevel == 7) {drawDong();}
+	else if (MapLevel >= 8) {cleanDong();} // 동유무
+
+	if (MapLevel == 8) {drawGu();}
+	else if (MapLevel <= 7) {cleanGu();} // 구유무
+});
+
+function SaveMapInfo() {
+  MapLevel = oMap.getLevel() ;
+  CenterLat = oMap.getCenter().getLat() ;
+  CenterLng = oMap.getCenter().getLng() ;
+  var URL = "./item/ajax_set_cookie_map3.asp" ;
+  var Params = { MapLevel:MapLevel, CenterLat:CenterLat, CenterLng:CenterLng } ;
+  $.post(URL, Params, function(ResultValue) {
+		//alert(ResultValue) ;
+  });
+
+  parent.document.formItemSearch.sw_MapLevel.value = MapLevel ;
+  parent.document.formItemSearch.sw_MapCenterLat.value = CenterLat ;
+  parent.document.formItemSearch.sw_MapCenterLng.value = CenterLng ;
+}
+
+function HideMapLevelNotice() {
+	$("#divMapLevelNotice").hide();
+}
+
+function mapReplaces(Gubun){
+	var MapLevel = oMap.getLevel() ;
+
+	//1*1000은 1초 (시간지정)
+	if (MapLevel > 9) {oMap.setLevel(9) ;$("#divMapLevelNotice").show() ;setTimeout("HideMapLevelNotice()", 3*1000);}else{SaveMapInfo();}
+	// 레벨에 따라 지하철유무
+}
+
+<% '###################################################################################################################################################### %>
+///////////////////////////////////////////////////////페이지로딩후////////////////////////////////////////////////////////////////////////
+$(document).ready(function(){
+	var MapLevel = oMap.getLevel() ;
+	// 블럭 불러오기
+	var Qjfxprtmxm = "블럭";
+	var URL = "./item/ajax_blockMap.asp" ;
+	var mapCode = "";
+	var Params = { Sido:Qjfxprtmxm } ;
+	$.post(URL, Params, function(ResultValue) {
+		//alert(ResultValue);
+		if (ResultValue.length > 0 && ResultValue.indexOf("_") > 0) {
+			var a_ResultValue = ResultValue.split('_');
+			 for (i = 0; i < a_ResultValue.length; i++) {
+				var a_ResultValue2 = a_ResultValue[i].split('^');
+				 //좌표코드 s
+				var a_ResultValue3 = a_ResultValue2[2].split('|');
+				var newPath = [];
+					for (iii = 1; iii < a_ResultValue3.length; iii++) {
+							var arrvalue = a_ResultValue3[iii].split(",");
+							//if (a_ResultValue2[0] == 556){alert(a_ResultValue3[iii]);}
+							newPath.push(new daum.maps.LatLng(eval(arrvalue[0]),eval(arrvalue[1])))
+					}
+				// 좌표코드 e
+				var newRow = {
+					index : ""+a_ResultValue2[0]+"",
+					name : ""+a_ResultValue2[1]+"",
+					path : [newPath]
+				}
+				areas.push(newRow);
+			 }
+		}
+		drawPolygon(); //블럭생성
+	});
+
+	if (MapLevel < 7) {drawSubway();}else{cleanSubway();} // 첫로딩시
+	if (MapLevel < 8) {drawDong();}else{cleanDong();} // 첫로딩시
+	if (MapLevel > 7) {drawGu();}else{cleanGu();} // 첫로딩시
+	mapReplaces(0) ;
+});
+///////////////////////////////////////////////////////페이지로딩후//////////////////////////////////////////////////////////////////////////////
+
+// 블럭마커 모두 삭제
+function cleanPolygon(){
+	for (var i = 0; i < polygonArray2.length; i++) {
+		polygonArray2[i].setMap(null);
+	}
+	polygonArray2 = [];
+	temp = [];
+	tempName = [];
+	parent.document.getElementById("sw_AreaCode").value = "";
+	$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+	document.getElementById("mclg").style.display="none";
+
+	parent.document.getElementById("mclaDong").style.display="none";
+
+	//$(".dongC").removeClass('dongCOn');
+	//$(".guC").removeClass('guCOn');
+}
+
+// 지하철마커 모두 삭제
+function cleanSubway(){
+  for (var i = 0; i < subwayArray.length; i++) {
+		subwayArray[i].setMap(null);
+	}
+}
+
+// 동마커 모두 삭제
+function cleanDong(){
+  for (var i = 0; i < dongArray.length; i++) {
+		dongArray[i].setMap(null);
+	}
+}
+
+// 구마커 모두 삭제
+function cleanGu(){
+  for (var i = 0; i < guArray.length; i++) {
+		guArray[i].setMap(null);
+	}
+}
+
+//////////////////////////////////////////////////// 서울테두리 s  /////////////////////////////////////////////////////////////////////
+
+// 시테두리 불러오기
+var Qjfxprtmxm = "시";
+var URL = "./item/ajax_blockSido.asp" ;
+var mapCode = "";
+var Params = { Sido:Qjfxprtmxm } ;
+$.post(URL, Params, function(ResultValue) {
+	if (ResultValue.length > 0) {
+		var a_ResultValue = ResultValue.split('_');
+		 //좌표코드 s
+			var newPath = [];
+			for (iii = 1; iii < a_ResultValue.length; iii++) {
+					var arrvalue = a_ResultValue[iii].split(",");
+					newPath.push(new daum.maps.LatLng(eval(arrvalue[1]),eval(arrvalue[0])))
+			}
+		// 좌표코드 e
+		var newRow = {
+			index : "1",
+			name : "서울특별시",
+			path : [newPath]
+		}
+		sido.push(newRow);
+	}
+
+	$.each(sido, function (index, obj) {
+		var polygon = new kakao.maps.Polygon({
+		  path : obj.path,
+		  fillColor: 'transparent', // 채움 색
+		  fillOpacity: 0.3, // 채움 불투명도
+		  strokeWeight: <%=mapBlockBorder%>, // 선의 두께 
+		  strokeColor: '#3D5AFE', // 선 색
+		  strokeOpacity: 1, // 선 투명도
+		  strokeStyle: 'solid' // 선 스타일
+		}); 
+		sidoArray.push(polygon);
+	});
+	
+	//alert(sidoArray);
+	sidoArray[0].setMap(oMap);
+});
+
+//////////////////////////////////////////////////// 서울테두리 e /////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////// 구 생성s /////////////////////////////////////////////////////////////////////////
+
+function drawGu(){
+	//처음에만 블럭호출 이후 subwayArray만 온오프
+	if (gus.length == 0)
+	{
+		// 지하철 불러오기
+		var Qjfxprtmxm = "구";
+		var URL = "./item/ajax_blockGu.asp" ;
+		var mapCode = "";
+		var Params = { Sido:Qjfxprtmxm } ;
+		$.post(URL, Params, function(ResultValue) {
+			if (ResultValue.length > 0 && ResultValue.indexOf("_") > 0) {
+				var a_ResultValue = ResultValue.split('_');
+				 for (i = 0; i < a_ResultValue.length; i++) {
+					var a_ResultValue2 = a_ResultValue[i].split('^');
+					var newRow = {
+						index : ""+a_ResultValue2[0]+"",
+						name : ""+a_ResultValue2[1]+"",
+						lat : a_ResultValue2[2],
+						lng : a_ResultValue2[3],
+						content : "<div class=guC onMouseUp=guclick(this) data-gu="+a_ResultValue2[4]+"><div>"+a_ResultValue2[1]+"</div></div>"
+					}
+					gus.push(newRow);
+				 }
+			}
+			cleanGu();
+			$.each(gus, function (index, obj) {
+			  var position = new kakao.maps.LatLng(obj.lat, obj.lng);
+			  var content = obj.content;
+			  var customOverlay = new kakao.maps.CustomOverlay({
+				  position: position,
+				  content: content
+			  });
+			  customOverlay.setMap(oMap);
+			  guArray.push(customOverlay);
+			});
+		});
+	}
+	else
+	{
+		for (var i = 0; i < guArray.length; i++) {
+			guArray[i].setMap(oMap);
+		}	
+	}
+}
+
+function guclick(obj){
+	if (dragging == 0)
+	{
+		clickGu(obj);
+	}
+}
+
+function clickGu(element){
+
+	/*
+	if ($(element).hasClass('guCOn')){
+		$(element).removeClass('guCOn');
+	}
+	else{
+		$(element).addClass('guCOn');
+	}
+	*/
+
+	var dataArr = [$(element).data('gu')];
+	var gu = $(element).data('gu').toString();
+	var cnt = 0;
+
+	if (gu.indexOf(',') >= 0) {
+		dataArr = $(element).data('gu').split(",");
+	}
+
+	for (var i = 0; i < polygonArray2.length; i++) {
+		polygonArray2[i].setMap(null);
+	}
+
+	$.each(areas, function (index, obj) {
+		var click_polygon = new daum.maps.Polygon({
+			path : obj.path,
+			fillColor: '#3D5AFE', // 채움 색
+			fillOpacity: 0.6, // 채움 불투명도
+			strokeWeight: <%=mapBlockBorder%>, // 선의 두께
+			strokeColor: '#3D5AFE', // 선 색
+			strokeOpacity: 1, // 선 투명도
+			strokeStyle: 'solid', // 선 스타일
+			zIndex: obj.index
+		});
+
+    //선택된 역의 지정한 index 체크
+	if (gu.indexOf(',') >= 0) {
+       //if (!dataArr.includes(obj.index)) {return true;}
+       if (dataArr.indexOf(obj.index) < 0) {return true;}
+    } else {
+      if (dataArr != obj.index) return true;
+    }
+
+		// 이미 선택된 index 체크
+		if (temp.indexOf(obj.index) > -1) {
+			cnt++;
+			return true;
+		}
+
+		temp.push(obj.index);
+		polygonArray2.push(click_polygon);
+		/// 동별갯수표시
+		var B_newRow = {
+			B_name : obj.name,
+			B_cnt : 1,
+			B_index : obj.index
+		}
+		tempName.push(B_newRow);
+
+
+		var latlng = "";
+		for (var i = 0; i < temp.length; i++) {
+			latlng += temp[i] + ',';
+		}
+		if (latlng.substr(latlng.length - 1) == ',') {
+			latlng = latlng.slice(0, -1);
+		}
+
+		parent.document.getElementById("sw_AreaCode").value = latlng;
+		$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+		document.getElementById("mclg").style.display="flex";
+
+
+		daum.maps.event.addListener(click_polygon, 'click', function (mouseEvent) {
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+			//중복된 index 체크
+			temp.splice(temp.indexOf(obj.index), 1);
+			polygonArray2.splice(polygonArray2.indexOf(click_polygon), 1);
+			//폴리곤 그리기
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+			tempName.splice(tempName.indexOf(B_newRow), 1);
+			mclgShow(); // 전광판실행
+
+		});
+
+	});
+
+	//alert(dataArr.length+'_'+cnt);
+	if (dataArr.length == cnt) {
+
+		$.each(areas, function (index, obj) {
+
+			if (gu.indexOf(',') != -1) {
+				//if (!dataArr.includes(obj.index)) {return true;}
+				if (dataArr.indexOf(obj.index) < 0) {return true;}
+			} else {
+				if (dataArr != obj.index) return true;
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				if (polygonArray2[i].getZIndex() == obj.index) {
+					temp.splice(temp.indexOf(obj.index), 1);
+					polygonArray2.splice(i, 1);
+				}
+			}
+
+			// 동관련 array 검색후 삭제 
+			for (var i = 0; i < tempName.length; i++) {
+				if (tempName[i].B_index == obj.index){
+					tempName.splice(i, 1);
+				}
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+		});
+
+	}
+	else
+	{
+		for (var i = 0; i < polygonArray2.length; i++) {
+			polygonArray2[i].setMap(oMap);
+		}
+	}
+
+	mclgShow(); // 전광판실행
+}
+
+//////////////////////////////////////////////////// 구 생성e /////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////// 동 생성s /////////////////////////////////////////////////////////////////////////
+
+function drawDong(){
+	//처음에만 블럭호출 이후 subwayArray만 온오프
+	if (dongs.length == 0)
+	{
+		// 지하철 불러오기
+		var Qjfxprtmxm = "동";
+		var URL = "./item/ajax_blockDong.asp" ;
+		var mapCode = "";
+		var Params = { Sido:Qjfxprtmxm } ;
+		$.post(URL, Params, function(ResultValue) {
+			if (ResultValue.length > 0 && ResultValue.indexOf("_") > 0) {
+				var a_ResultValue = ResultValue.split('_');
+				 for (i = 0; i < a_ResultValue.length; i++) {
+					var a_ResultValue2 = a_ResultValue[i].split('^');
+					var newRow = {
+						index : ""+a_ResultValue2[0]+"",
+						name : ""+a_ResultValue2[1]+"",
+						lat : a_ResultValue2[2],
+						lng : a_ResultValue2[3],
+						content : "<div class=dongC onMouseUp=Dongclick(this) data-dong="+a_ResultValue2[4]+"><div>"+a_ResultValue2[1]+"</div></div>"
+					}
+					dongs.push(newRow);
+				 }
+			}
+			cleanDong();
+			$.each(dongs, function (index, obj) {
+			  var position = new kakao.maps.LatLng(obj.lat, obj.lng);
+			  var content = obj.content;
+			  var customOverlay = new kakao.maps.CustomOverlay({
+				  position: position,
+				  content: content
+			  });
+			  customOverlay.setMap(oMap);
+			  dongArray.push(customOverlay);
+			});
+		});
+	}
+	else
+	{
+		for (var i = 0; i < dongArray.length; i++) {
+			dongArray[i].setMap(oMap);
+		}	
+	}
+}
+
+function Dongclick(obj){
+	if (dragging == 0)
+	{
+		clickDong(obj);
+	}
+}
+
+function clickDong(element){
+
+	//alert($(Element).hasClass('dongCOn'));
+	/*
+	if ($(element).hasClass('dongCOn')){
+		$(element).removeClass('dongCOn');
+	}
+	else{
+		$(element).addClass('dongCOn');
+	}
+	*/
+
+	var dataArr = [$(element).data('dong')];
+	var dong = $(element).data('dong').toString();
+	var cnt = 0;
+
+	//alert(dataArr);
+
+	if (dong.indexOf(',') >= 0) {
+		dataArr = $(element).data('dong').split(",");
+	}
+
+	for (var i = 0; i < polygonArray2.length; i++) {
+		polygonArray2[i].setMap(null);
+	}
+
+	$.each(areas, function (index, obj) {
+		var click_polygon = new daum.maps.Polygon({
+			path : obj.path,
+			fillColor: '#3D5AFE', // 채움 색
+			fillOpacity: 0.6, // 채움 불투명도
+			strokeWeight: <%=mapBlockBorder%>, // 선의 두께
+			strokeColor: '#3D5AFE', // 선 색
+			strokeOpacity: 1, // 선 투명도
+			strokeStyle: 'solid', // 선 스타일
+			zIndex: obj.index
+		});
+
+    //선택된 역의 지정한 index 체크
+	if (dong.indexOf(',') >= 0) {
+       //if (!dataArr.includes(obj.index)) {return true;}
+       if (dataArr.indexOf(obj.index) < 0) {return true;}
+    } else {
+      if (dataArr != obj.index) return true;
+    }
+
+		// 이미 선택된 index 체크
+		if (temp.indexOf(obj.index) > -1) {
+			cnt++;
+			return true;
+		}
+
+		temp.push(obj.index);
+		polygonArray2.push(click_polygon);
+
+
+		var latlng = "";
+		for (var i = 0; i < temp.length; i++) {
+			latlng += temp[i] + ',';
+		}
+		if (latlng.substr(latlng.length - 1) == ',') {
+			latlng = latlng.slice(0, -1);
+		}
+
+		parent.document.getElementById("sw_AreaCode").value = latlng;
+		$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+		document.getElementById("mclg").style.display="flex";
+
+		/// 동별갯수표시
+		var B_newRow = {
+			B_name : obj.name,
+			B_cnt : 1,
+			B_index : obj.index
+		}
+		tempName.push(B_newRow);
+
+		daum.maps.event.addListener(click_polygon, 'click', function (mouseEvent) {
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+			//중복된 index 체크
+			temp.splice(temp.indexOf(obj.index), 1);
+			polygonArray2.splice(polygonArray2.indexOf(click_polygon), 1);
+			//폴리곤 그리기
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+			tempName.splice(tempName.indexOf(B_newRow), 1);
+			mclgShow(); // 전광판실행
+
+		});
+
+	});
+
+	//alert(dataArr.length+'_'+cnt);
+	if (dataArr.length == cnt) {
+
+		$.each(areas, function (index, obj) {
+
+			if (dong.indexOf(',') != -1) {
+				//if (!dataArr.includes(obj.index)) {return true;}
+				if (dataArr.indexOf(obj.index) < 0) {return true;}
+			} else {
+				if (dataArr != obj.index) return true;
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				if (polygonArray2[i].getZIndex() == obj.index) {
+					temp.splice(temp.indexOf(obj.index), 1);
+					polygonArray2.splice(i, 1);
+				}
+			}
+
+			// 동관련 array 검색후 삭제 
+			for (var i = 0; i < tempName.length; i++) {
+				if (tempName[i].B_index == obj.index){
+					tempName.splice(i, 1);
+				}
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+		});
+
+	}
+	else
+	{
+		for (var i = 0; i < polygonArray2.length; i++) {
+			polygonArray2[i].setMap(oMap);
+		}
+	}
+
+	mclgShow(); // 전광판실행
+}
+
+//////////////////////////////////////////////////// 동 생성e /////////////////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////// 블럭 생성s /////////////////////////////////////////////////////////////////////////
+
+function drawPolygon(){
+	for (var i = 0; i < polygonArray.length; i++) {
+		polygonArray[i].setMap(null);
+	}
+
+	polygonArray = [];
+	polygonArray2 = [];
+
+	var mouseoverOption = {
+		fillColor: '#3D5AFE',
+	};
+	var mouseoutOption = {
+		fillColor: 'transparent',
+	};
+
+	// 블럭배열루프 s
+	$.each(areas, function (index, obj) {
+
+		var polygon = new kakao.maps.Polygon({
+			path : obj.path,
+			fillColor: 'transparent', // 채움 색
+			fillOpacity: 0.3, // 채움 불투명도
+			strokeWeight: <%=mapBlockBorder%>, // 선의 두께
+			strokeColor: 'transparent', // 선 색
+			strokeOpacity: 0, // 선 투명도
+			strokeStyle: 'solid' // 선 스타일
+		});
+
+		var click_polygon =  new kakao.maps.Polygon({
+			path : obj.path,
+			fillColor: '#3D5AFE', // 채움 색
+			fillOpacity: 0.6, // 채움 불투명도
+			strokeWeight: <%=mapBlockBorder%>, // 선의 두께
+			strokeColor: '#3D5AFE', // 선 색
+			strokeOpacity: 1, // 선 투명도
+			strokeStyle: 'solid', // 선 스타일
+			zIndex: obj.index
+		});
+
+		/// 동별갯수표시
+		var B_newRow = {
+			B_name : obj.name,
+			B_cnt : 1,
+			B_index : obj.index
+		}
+
+		polygonArray.push(polygon);
+
+	//sw_AreaCode request 찍어주기 s
+	<%
+		If sw_AreaCode <> "" then
+			sw_AreaCode_arr = split(sw_AreaCode&",",",")
+			For i = 0 to UBound(sw_AreaCode_arr)
+			If sw_AreaCode_arr(i) <> "" Then
+	%>
+		if (obj.index == <%=sw_AreaCode_arr(i)%>)
+		{
+			temp.push(obj.index);
+			polygonArray2.push(click_polygon);
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+		}
+		<%
+			End If
+			Next
+		%>
+		$("#mclat").html('총 <span id="mclat2"><%=UBound(sw_AreaCode_arr)%>개</span>의 블록이 선택되었습니다.');
+		document.getElementById("mclg").style.display="flex";
+	<%
+		End If
+	%>
+	//sw_AreaCode request 찍어주기 e
+
+		// 블럭마우스오버이벤트
+		daum.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
+			polygon.setOptions(mouseoverOption);
+		});
+
+		// 블럭마우스아웃이벤트
+		daum.maps.event.addListener(polygon, 'mouseout', function () {
+			polygon.setOptions(mouseoutOption);
+		});
+
+		// 블럭마우스클릭On이벤트
+		daum.maps.event.addListener(polygon, 'click', function (mouseEvent) {
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+
+			temp.push(obj.index);
+			polygonArray2.push(click_polygon);
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+			document.getElementById("mclg").style.display="flex";
+
+			tempName.push(B_newRow);
+			mclgShow(); // 전광판실행
+			
+
+			//클릭 시 해당 index 영역 그리기
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+		});
+
+		// 블럭마우스클릭Off이벤트
+		daum.maps.event.addListener(click_polygon, 'click', function (mouseEvent) {
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+			//해당 index 삭제
+			temp.splice(temp.indexOf(obj.index), 1);
+			polygonArray2.splice(polygonArray2.indexOf(click_polygon), 1);
+			tempName.splice(tempName.indexOf(B_newRow), 1);
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+			mclgShow(); // 전광판실행
+		});
+	});
+
+	// 블럭배열루프 e
+
+	// 블럭 그려주기
+	for (var i = 0; i < polygonArray.length; i++) {
+		polygonArray[i].setMap(oMap);
+	}
+}
+
+//////////////////////////////////////////////////// 블럭 생성e /////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////// 지하철 생성s /////////////////////////////////////////////////////////////////////////
+
+function drawSubway(){
+	//처음에만 블럭호출 이후 subwayArray만 온오프
+	if (stations.length == 0)
+	{
+		// 지하철 불러오기
+		var Qjfxprtmxm = "지하철";
+		var URL = "./item/ajax_blockSubway.asp" ;
+		var mapCode = "";
+		var Params = { Sido:Qjfxprtmxm } ;
+		$.post(URL, Params, function(ResultValue) {
+			if (ResultValue.length > 0 && ResultValue.indexOf("_") > 0) {
+				var a_ResultValue = ResultValue.split('_');
+				 for (i = 0; i < a_ResultValue.length; i++) {
+					var a_ResultValue2 = a_ResultValue[i].split('^');
+					var newRow = {
+						index : ""+a_ResultValue2[0]+"",
+						name : ""+a_ResultValue2[2]+"",
+						lat : a_ResultValue2[3],
+						lng : a_ResultValue2[4],
+						content : "<div class=station onMouseUp=Stationclick(this) data-station="+a_ResultValue2[5]+"><div style=padding-top:3px;padding-right:3px;><img src=/images/subway_img.png></div><div style=color:#ffffff;font-size:12px;>"+a_ResultValue2[2]+"역</div></div>"
+					}
+					stations.push(newRow);
+				 }
+			}
+			cleanSubway();
+			$.each(stations, function (index, obj) {
+			  var position = new kakao.maps.LatLng(obj.lat, obj.lng);
+			  var content = obj.content;
+			  var customOverlay = new kakao.maps.CustomOverlay({
+				  position: position,
+				  content: content
+			  });
+			  customOverlay.setMap(oMap);
+			  subwayArray.push(customOverlay);
+			});
+		});
+	}
+	else
+	{
+		for (var i = 0; i < subwayArray.length; i++) {
+			subwayArray[i].setMap(oMap);
+		}	
+	}
+}
+
+function Stationclick(obj){
+	if (dragging == 0)
+	{
+		clickStation(obj);
+	}
+}
+
+// 지하철 클릭시 이벤트
+function clickStation(element){
+	var dataArr = [$(element).data('station')];
+	var station = $(element).data('station').toString();
+	var cnt = 0;
+
+	if (station.indexOf(',') >= 0) {
+		dataArr = $(element).data('station').split(",");
+	}
+
+	for (var i = 0; i < polygonArray2.length; i++) {
+		polygonArray2[i].setMap(null);
+	}
+
+	$.each(areas, function (index, obj) {
+		var click_polygon = new daum.maps.Polygon({
+			path : obj.path,
+			fillColor: '#3D5AFE', // 채움 색
+			fillOpacity: 0.6, // 채움 불투명도
+			strokeWeight: <%=mapBlockBorder%>, // 선의 두께
+			strokeColor: '#3D5AFE', // 선 색
+			strokeOpacity: 1, // 선 투명도
+			strokeStyle: 'solid', // 선 스타일
+			zIndex: obj.index
+		});
+
+		/// 동별갯수표시
+		var B_newRow = {
+			B_name : obj.name,
+			B_cnt : 1,
+			B_index : obj.index
+		}
+
+    //선택된 역의 지정한 index 체크
+	if (station.indexOf(',') >= 0) {
+       //if (!dataArr.includes(obj.index)) {return true;}
+       if (dataArr.indexOf(obj.index) < 0) {return true;}
+    } else {
+      if (dataArr != obj.index) return true;
+    }
+
+		// 이미 선택된 index 체크
+		if (temp.indexOf(obj.index) > -1) {
+			cnt++;
+			//alert(obj.index);
+			return true;
+		}
+
+
+		temp.push(obj.index);
+		polygonArray2.push(click_polygon);
+		
+		var latlng = "";
+		for (var i = 0; i < temp.length; i++) {
+			latlng += temp[i] + ',';
+		}
+		if (latlng.substr(latlng.length - 1) == ',') {
+			latlng = latlng.slice(0, -1);
+		}
+
+		//alert(latlng);
+
+		parent.document.getElementById("sw_AreaCode").value = latlng;
+		$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+		document.getElementById("mclg").style.display="flex";
+
+		tempName.push(B_newRow);
+
+		daum.maps.event.addListener(click_polygon, 'click', function (mouseEvent) {
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+			//중복된 index 체크
+			temp.splice(temp.indexOf(obj.index), 1);
+			polygonArray2.splice(polygonArray2.indexOf(click_polygon), 1);
+			//폴리곤 그리기
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+			tempName.splice(tempName.indexOf(B_newRow), 1);
+			mclgShow(); // 전광판실행
+
+		});
+
+	});
+
+	//alert(cnt);
+
+	//alert(dataArr.length+'_'+cnt);
+	if (dataArr.length == cnt) {
+
+		$.each(areas, function (index, obj) {
+
+			if (station.indexOf(',') != -1) {
+				//if (!dataArr.includes(obj.index)) {return true;}
+				if (dataArr.indexOf(obj.index) < 0) {return true;}
+			} else {
+				if (dataArr != obj.index) return true;
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				if (polygonArray2[i].getZIndex() == obj.index) {
+					temp.splice(temp.indexOf(obj.index), 1);
+					polygonArray2.splice(i, 1);
+					//alert(tempName.indexOf(obj.index)+'_'+temp.indexOf(obj.index));
+				}
+			}
+			// 동관련 array 검색후 삭제 
+			for (var i = 0; i < tempName.length; i++) {
+				if (tempName[i].B_index == obj.index){
+					tempName.splice(i, 1);
+				}
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+
+		});
+
+	}
+	else
+	{
+		for (var i = 0; i < polygonArray2.length; i++) {
+			polygonArray2[i].setMap(oMap);
+		}
+	}
+
+	mclgShow(); // 전광판실행
+
+}
+
+
+//////////////////////////////////////////////////// 지하철 생성e /////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////// 전광판 리셋s ////////////////////////////////////////////////////////////////////////
+function mclgShow(){	
+
+	var result = [];
+	tempName.reduce(function(res, value) {
+	if (!res[value.B_name]) {
+		res[value.B_name] = { B_name: value.B_name, B_cnt: 0, B_index : '' };
+		result.push(res[value.B_name])
+	}
+		res[value.B_name].B_index += '|'+value.B_index;
+		res[value.B_name].B_cnt += value.B_cnt;
+		return res;
+	}, {});
+	
+	parent.document.getElementById("mclaDong").style.display="none";
+	if (result.length > 0)
+	{
+		parent.document.getElementById("mclaDong").style.display="flex";
+		var mclaDongt = "";
+		var mclaB_index = "";
+		$.each(result, function (index, obj) {
+			var mclaDongName = obj.B_name.split("|")[1];
+			mclaB_index = obj.B_index.substring(1);
+			mclaDongt = mclaDongt+" <div class=mclaDongs><span style=color:#5b5b5b;font-size:11px;>"+mclaDongName+"</span><span style=color:#3168ff;font-size:11px;>"+obj.B_cnt+"개</span><span style=cursor:pointer; onclick=iframe_BlockOut('"+mclaB_index+"')><img src=/images/close-line3.png style=padding-left:3px;></span></div>" 
+			//alert(obj.B_cnt+'_'+obj.B_index+'_'+obj.B_name);
+		});
+
+		$("#mclaDong",parent.document).html(mclaDongt); 
+	}
+}
+
+function mclgBlockOut(Dongobj){
+		
+		var dataArr = [Dongobj];
+		var cnt = 0;
+		var Dongobj = Dongobj.toString();
+
+		if (Dongobj.indexOf('|') >= 0) {
+			dataArr = Dongobj.split("|");
+		}
+		else{
+			dataArr = Dongobj;
+		}
+		//alert(Dongobj+"_"+dataArr);
+
+		for (var i = 0; i < polygonArray2.length; i++) {
+			polygonArray2[i].setMap(null);
+		}
+		
+		$.each(areas, function (index, obj) {
+
+			if (Dongobj.indexOf('|') != -1) {
+				if (dataArr.indexOf(obj.index) < 0) {return true;}
+			} else {
+				if (dataArr != obj.index) return true;
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(null);
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				if (polygonArray2[i].getZIndex() == obj.index) {
+					temp.splice(temp.indexOf(obj.index), 1);
+					polygonArray2.splice(i, 1);
+				}
+			}
+
+			// 동관련 array 검색후 삭제 
+			for (var i = 0; i < tempName.length; i++) {
+				if (tempName[i].B_index == obj.index){
+					tempName.splice(i, 1);
+				}
+			}
+
+			for (var i = 0; i < polygonArray2.length; i++) {
+				polygonArray2[i].setMap(oMap);
+			}
+
+			var latlng = "";
+			for (var i = 0; i < temp.length; i++) {
+				latlng += temp[i] + ',';
+			}
+			if (latlng.substr(latlng.length - 1) == ',') {
+				latlng = latlng.slice(0, -1);
+			}
+			parent.document.getElementById("sw_AreaCode").value = latlng;
+			if (temp.length == 0)
+			{
+				$("#mclat").html('선택된 블록이 없습니다. 블록을 선택해주세요.');
+				document.getElementById("mclg").style.display="none";
+			}
+			else{
+				$("#mclat").html('총 <span id="mclat2">'+temp.length+'개</span>의 블록이 선택되었습니다.');
+				document.getElementById("mclg").style.display="flex";
+			}
+			
+				mclgShow(); // 전광판실행
+
+		});
+}
+
+////////////////////////////////////////////////// 전광판 리셋e /////////////////////////////////////////////////////////////////////////////
+//-->
+</script>
+<%
+	DBCONN_GSC.close
+	Set DBCONN_GSC = Nothing
+%>
+</body>
+</html>

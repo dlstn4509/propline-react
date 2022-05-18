@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const MapCpWrapper = styled.div`
   .blockName {
@@ -28,9 +29,92 @@ const MapCpWrap = styled.div`
   border-right: 1px solid #2a55cc;
 `;
 
-const MapCp = ({ setEupmyeondong, eupmyeondong, setMapBlock, mapBlock, labelName }) => {
+const MapCp = ({ mapBlock, labelName }) => {
   const [map, setMap] = useState('');
-  const [choiceBlock, setChoiceBlock] = useState([]);
+  const [blockCodeArr, setBlockCodeArr] = useState([]);
+  let insuArr = [];
+
+  const fillColor = (path) => {
+    console.log(path);
+    let polygon = new kakao.maps.Polygon({
+      map: map, // 다각형을 표시할 지도 객체
+      path: path,
+      strokeWeight: 2,
+      strokeColor: '#004c80',
+      strokeOpacity: 0.8,
+      fillColor: 'red',
+      fillOpacity: 0.1,
+    });
+    polygon.setMap(map);
+  };
+  // const fillColor = (path) => {
+  //   console.log(path);
+  //   let polygon = new kakao.maps.Polygon({
+  //     map: map, // 다각형을 표시할 지도 객체
+  //     path: path,
+  //     strokeWeight: 2,
+  //     strokeColor: '#004c80',
+  //     strokeOpacity: 0.8,
+  //     fillColor: 'red',
+  //     fillOpacity: 0.1,
+  //   });
+  //   polygon.setMap(map);
+  // };
+
+  // const removeColor = (path) => {
+  //   console.log(path);
+  //   let polygon = new kakao.maps.Polygon({
+  //     map: map, // 다각형을 표시할 지도 객체
+  //     path: path,
+  //     strokeWeight: 2,
+  //     strokeColor: '#004c80',
+  //     strokeOpacity: 0.8,
+  //     fillColor: 'blue',
+  //     fillOpacity: 1,
+  //   });
+  //   polygon.setMap(map);
+  // };
+
+  const displayArea = (area) => {
+    let path = [];
+    for (let v of area.latlng_list) {
+      path.push(new kakao.maps.LatLng(v[0], v[1]));
+    }
+    let polygon = new kakao.maps.Polygon({
+      map: map, // 다각형을 표시할 지도 객체
+      path: path,
+      strokeWeight: 2,
+      strokeColor: 'none',
+      strokeOpacity: 0.8,
+      fillColor: '#fff',
+      fillOpacity: 0.01,
+      zIndex: 1,
+    });
+    kakao.maps.event.addListener(polygon, 'mouseover', () => {
+      polygon.setOptions({ strokeColor: 'red' });
+    });
+    kakao.maps.event.addListener(polygon, 'mouseout', () => {
+      polygon.setOptions({ strokeColor: 'none' });
+      if (!blockCodeArr.includes(area.blockcode)) {
+      }
+    });
+
+    kakao.maps.event.addListener(polygon, 'click', () => {
+      if (!blockCodeArr.includes(area.blockcode)) {
+        polygon.setOptions({ fillColor: 'red' });
+        polygon.setOptions({ fillOpacity: 1 });
+        setBlockCodeArr((blockCodeArr) => [...blockCodeArr, area.blockcode]);
+      } else {
+        // polygon.setOptions({ fillColor: '#fff' });
+        // polygon.setOptions({ fillOpacity: 0.01 });
+        // polygon.setOptions({ zIndex: 2 });
+
+        polygon.setMap(null);
+        setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== area.blockcode));
+      }
+    });
+    polygon.setMap(map);
+  };
 
   // 초기 맵 세팅
   useEffect(() => {
@@ -44,57 +128,11 @@ const MapCp = ({ setEupmyeondong, eupmyeondong, setMapBlock, mapBlock, labelName
 
   // 블럭
   useEffect(() => {
-    for (let i = 0; i < mapBlock.length; i++) {
-      let polygonPath = [];
-      for (let v of mapBlock[i].latlng_list) {
-        polygonPath.push(new kakao.maps.LatLng(v[0], v[1]));
-      }
-      let polygon = new kakao.maps.Polygon({
-        path: polygonPath,
-        strokeWeight: 3, // 선의 두께입니다
-        strokeColor: 'blue', // 선의 색깔입니다
-        strokeStyle: 'solid', // 선의 스타일입니다
-        fillColor: '#fff', // 채우기 색깔입니다
-        strokeOpacity: 0.5, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        fillOpacity: 0.5, // 채우기 불투명도 입니다
-      });
-      kakao.maps.event.addListener(polygon, 'mouseout', () => {
-        // polygon.setMap(null);
-        console.log('mouseout');
-        polygon.setOptions({ fillColor: 'none' });
-      });
-      // kakao.maps.event.addListener(polygon, 'mousemove', () => {
-      //   console.log('mousemove');
-      //   // polygon.setMap(null);
-      //   polygon.setOptions({ fillColor: 'blue' });
-      // });
-      kakao.maps.event.addListener(polygon, 'mouseover', () => {
-        console.log('mouseover');
-        // polygon.setMap(null);
-        polygon.setOptions({ fillColor: 'blue' });
-      });
-      polygon.setMap(map);
+    for (var i = 0; i < mapBlock.length; i++) {
+      displayArea(mapBlock[i]);
     }
-  }, [map, mapBlock]);
-
+  }, [map, mapBlock, blockCodeArr]);
   // 라벨
-  useEffect(() => {
-    for (let v of labelName) {
-      let content = document.createElement('div');
-      content.innerText = `${v.eupmyeondong}`;
-      content.className = 'blockName';
-      // content.addEventListener('click', (e) => {
-      //   setEupmyeondong(e.target.innerHTML);
-      // });
-
-      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
-      let customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-      });
-      customOverlay.setMap(map);
-    }
-  }, [map, labelName]);
 
   return (
     <MapCpWrapper>

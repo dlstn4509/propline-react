@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const MapCpWrapper = styled.div`
   .blockName {
@@ -28,9 +29,9 @@ const MapCpWrap = styled.div`
   border-right: 1px solid #2a55cc;
 `;
 
-const MapCp = ({ setEupmyeondong, eupmyeondong, setMapBlock, mapBlock, labelName }) => {
+const MapCp = ({ mapBlock, labelName }) => {
   const [map, setMap] = useState('');
-  const [choiceBlock, setChoiceBlock] = useState([]);
+  const [blockCodeList, setBlockCodeList] = useState([]);
 
   // 초기 맵 세팅
   useEffect(() => {
@@ -44,36 +45,90 @@ const MapCp = ({ setEupmyeondong, eupmyeondong, setMapBlock, mapBlock, labelName
 
   // 블럭
   useEffect(() => {
-    // let polygonPath = [];
-    // for (let v of mapBlock) {
-    //   polygonPath.push(new kakao.maps.LatLng(v[0], v[1]));
-    // }
-    const displayArea = (area) => {
-      for (let i = 0; i < area.length; i++) {
-        let polygon = new kakao.maps.Polygon({
-          path: new kakao.maps.LatLng(area[i][0], area[i][1]), // 그려질 다각형의 좌표 배열입니다
-          strokeWeight: 3, // 선의 두께입니다
-          strokeColor: '#39DE2A', // 선의 색깔입니다
-          strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-          strokeStyle: 'solid', // 선의 스타일입니다
-          fillColor: '#A2FF99', // 채우기 색깔입니다
-          fillOpacity: 0.7, // 채우기 불투명도 입니다
-        });
-        // console.log(polygon);
-        // polygon.setMap(map);
+    for (let i = 0; i < mapBlock.length; i++) {
+      let polygonPath = [];
+      let arr = [];
+      for (let v of mapBlock[i].latlng_list) {
+        arr.push(new kakao.maps.LatLng(v[0], v[1]));
       }
-    };
-    for (let i = 1; i < mapBlock.length; i++) {
-      displayArea(mapBlock[i]);
-    }
+      polygonPath.push({ name: `${mapBlock[i].blockcode}`, path: arr });
 
+      let polygon = new kakao.maps.Polygon({
+        path: polygonPath[0].path,
+        strokeWeight: 0, // 선의 두께입니다
+        fillColor: 'blue', // 채우기 색깔입니다
+        fillOpacity: 0.0001, // 채우기 불투명도 입니다
+      });
+      kakao.maps.event.addListener(polygon, 'mouseout', () => {
+        polygon.setOptions({ strokeWeight: 0 });
+      });
+      kakao.maps.event.addListener(polygon, 'mouseover', () => {
+        polygon.setOptions({ strokeColor: 'blue' });
+        polygon.setOptions({ strokeWeight: 3 });
+      });
+      // eslint-disable-next-line no-loop-func
+      kakao.maps.event.addListener(polygon, 'click', () => {
+        let blockCode = polygonPath[0].name;
+        if (blockCodeList.includes(blockCode)) {
+          polygon.setOptions({ fillColor: 'blue' });
+          polygon.setOptions({ fillOpacity: 0.0001 });
+          setBlockCodeList((blockCodeList) =>
+            blockCodeList.filter((v) => {
+              return v !== blockCode;
+            })
+          );
+        } else {
+          polygon.setOptions({ fillColor: 'blue' });
+          polygon.setOptions({ fillOpacity: 0.1 });
+          setBlockCodeList((blockCodeList) => [...blockCodeList, polygonPath[0].name]);
+        }
+      });
+      polygon.setMap(map);
+    }
+  }, [map, mapBlock, blockCodeList]);
+
+  // 라벨
+  useEffect(() => {
     for (let v of labelName) {
       let content = document.createElement('div');
       content.innerText = `${v.eupmyeondong}`;
       content.className = 'blockName';
-      content.addEventListener('click', (e) => {
-        setEupmyeondong(e.target.innerHTML);
-      });
+      content.id = `${v.blockcode_list}`;
+      // content.addEventListener('click', async (e) => {
+      //   let blockCodeQuery = [];
+      //   for (let vv of e.target.id.split(',')) {
+      //     if (!blockCodeList.includes(vv)) {
+      //       blockCodeQuery.push(vv);
+      //     }
+      //   }
+      //   const { data } = await axios.get(
+      //     process.env.REACT_APP_URL_API +
+      //       `item/blockcode?blockcode=${blockCodeQuery.length ? blockCodeQuery.join(',') : e.target.id}`
+      //   );
+      //   for (let v of data) {
+      //     let blockcode_latlng = [];
+      //     for (let vv of v) {
+      //       blockcode_latlng.push(new kakao.maps.LatLng(vv[0], vv[1]));
+      //     }
+      //     console.log(blockcode_latlng);
+      //     console.log(blockCodeQuery.length);
+      //     let polygon = new kakao.maps.Polygon({
+      //       path: blockcode_latlng,
+      //       strokeWeight: 0, // 선의 두께입니다
+      //       fillColor: 'blue', // 채우기 색깔입니다
+      //       fillOpacity: 0.3, // 채우기 불투명도 입니다
+      //     });
+      //     // polygon.setMap(map);
+      //     if (blockCodeQuery.length > 0) {
+      //       polygon.setMap(map);
+      //     } else {
+      //       polygon.setMap(map);
+      //       console.log('a');
+      //       polygon.setOptions({ fillOpacity: 0.0001 });
+      //     }
+      //   }
+      // });
+
       let position = new kakao.maps.LatLng(v.latitude, v.longitude);
       let customOverlay = new kakao.maps.CustomOverlay({
         position: position,
@@ -81,27 +136,7 @@ const MapCp = ({ setEupmyeondong, eupmyeondong, setMapBlock, mapBlock, labelName
       });
       customOverlay.setMap(map);
     }
-  }, [map, mapBlock, labelName]);
-
-  // 라벨
-  // useEffect(() => {
-  //   for (let v of labelName) {
-  //     let content = document.createElement('div');
-  //     content.innerText = `${v.eupmyeondong}`;
-  //     content.className = 'blockName';
-  //     content.addEventListener('click', (e) => {
-  //       // setEupmyeondong(e.target.innerHTML);
-  //       // polygon.setMap(map);
-  //     });
-
-  //     let position = new kakao.maps.LatLng(v.latitude, v.longitude);
-  //     let customOverlay = new kakao.maps.CustomOverlay({
-  //       position: position,
-  //       content: content,
-  //     });
-  //     customOverlay.setMap(map);
-  //   }
-  // }, [map, labelName]);
+  }, [map, labelName, blockCodeList]);
 
   return (
     <MapCpWrapper>

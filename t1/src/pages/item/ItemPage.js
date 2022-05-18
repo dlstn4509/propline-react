@@ -21,7 +21,6 @@ const ItemPage = () => {
   const { setTypename } = store();
   const [mapBlock, setMapBlock] = useState([]);
   const [labelName, setLabelName] = useState([]);
-  const [eupmyeondong, setEupmyeondong] = useState('');
 
   let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
@@ -47,13 +46,7 @@ const ItemPage = () => {
       <PageWrap>
         <Title>공실매물</Title>
         <ItemTypeCp />
-        <MapCp
-          eupmyeondong={eupmyeondong}
-          setEupmyeondong={setEupmyeondong}
-          setMapBlock={setMapBlock}
-          mapBlock={mapBlock}
-          labelName={labelName}
-        />
+        <MapCp mapBlock={mapBlock} labelName={labelName} />
         {typename === 'all' && <SearchAllCp />}
         {typename === 'normal' && <SearchNormalCp />}
         <AllTabCp />
