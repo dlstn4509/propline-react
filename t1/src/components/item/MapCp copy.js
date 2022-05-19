@@ -94,40 +94,41 @@ const MapCp = ({ mapBlock, labelName }) => {
       content.innerText = `${v.eupmyeondong}`;
       content.className = 'blockName';
       content.id = `${v.blockcode_list}`;
-      // content.addEventListener('click', async (e) => {
-      //   let blockCodeQuery = [];
-      //   for (let vv of e.target.id.split(',')) {
-      //     if (!blockCodeList.includes(vv)) {
-      //       blockCodeQuery.push(vv);
-      //     }
-      //   }
-      //   const { data } = await axios.get(
-      //     process.env.REACT_APP_URL_API +
-      //       `item/blockcode?blockcode=${blockCodeQuery.length ? blockCodeQuery.join(',') : e.target.id}`
-      //   );
-      //   for (let v of data) {
-      //     let blockcode_latlng = [];
-      //     for (let vv of v) {
-      //       blockcode_latlng.push(new kakao.maps.LatLng(vv[0], vv[1]));
-      //     }
-      //     console.log(blockcode_latlng);
-      //     console.log(blockCodeQuery.length);
-      //     let polygon = new kakao.maps.Polygon({
-      //       path: blockcode_latlng,
-      //       strokeWeight: 0, // 선의 두께입니다
-      //       fillColor: 'blue', // 채우기 색깔입니다
-      //       fillOpacity: 0.3, // 채우기 불투명도 입니다
-      //     });
-      //     // polygon.setMap(map);
-      //     if (blockCodeQuery.length > 0) {
-      //       polygon.setMap(map);
-      //     } else {
-      //       polygon.setMap(map);
-      //       console.log('a');
-      //       polygon.setOptions({ fillOpacity: 0.0001 });
-      //     }
-      //   }
-      // });
+
+      content.addEventListener('click', async (e) => {
+        let blockCodeQuery = [];
+        for (let vv of e.target.id.split(',')) {
+          if (!blockCodeList.includes(vv)) {
+            blockCodeQuery.push(vv);
+          }
+        }
+        const { data } = await axios.get(
+          process.env.REACT_APP_URL_API +
+            `item/blockcode?blockcode=${blockCodeQuery.length ? blockCodeQuery.join(',') : e.target.id}`
+        );
+        for (let v of data) {
+          let blockcode_latlng = [];
+          for (let vv of v) {
+            blockcode_latlng.push(new kakao.maps.LatLng(vv[0], vv[1]));
+          }
+          console.log(blockcode_latlng);
+          console.log(blockCodeQuery.length);
+          let polygon = new kakao.maps.Polygon({
+            path: blockcode_latlng,
+            strokeWeight: 0, // 선의 두께입니다
+            fillColor: 'blue', // 채우기 색깔입니다
+            fillOpacity: 0.3, // 채우기 불투명도 입니다
+          });
+          // polygon.setMap(map);
+          if (blockCodeQuery.length > 0) {
+            polygon.setMap(map);
+          } else {
+            polygon.setMap(map);
+            console.log('a');
+            polygon.setOptions({ fillOpacity: 0.0001 });
+          }
+        }
+      });
 
       let position = new kakao.maps.LatLng(v.latitude, v.longitude);
       let customOverlay = new kakao.maps.CustomOverlay({
