@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import FaSubway from 'react-icons/fa';
 
 const MapCpWrapper = styled.div`
   .blockName {
-    display: inline-block;
     font-size: 14px;
+    display: inline-block;
     color: #3168ff;
     border: 1px solid #3168ff;
     border-radius: 10px;
@@ -20,17 +21,39 @@ const MapCpWrapper = styled.div`
       background-color: #3168ff;
     }
   }
+  .subwayName {
+    display: flex;
+    justify-content: center;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: #77ab56;
+    cursor: pointer;
+    width: auto;
+    border: 1px solid #77ab56;
+    border-radius: 10px;
+    padding: 0 10px 0 6px;
+    :hover {
+      background-color: #447744;
+    }
+    .imgWrap {
+      width: 20px;
+      margin-right: 4px;
+      img {
+        max-width: 100%;
+      }
+    }
+  }
 `;
 const MapCpWrap = styled.div`
-  /* height: 600px; */
-  height: 409px;
+  height: 1000px;
+  /* height: 409px; */
   border-bottom: 1px solid #dae1e7;
   border-top: 1px solid #2a55cc;
   border-left: 1px solid #2a55cc;
   border-right: 1px solid #2a55cc;
 `;
 
-const MapCp = ({ mapBlock, labelName }) => {
+const MapCp = ({ mapBlock, labelName, subwayList }) => {
   const [map, setMap] = useState('');
   const [blockCodeArr, setBlockCodeArr] = useState([]);
   const [click_polygonArr, setClick_polygonArr] = useState([]);
@@ -144,12 +167,10 @@ const MapCp = ({ mapBlock, labelName }) => {
 
   // 라벨
   useEffect(() => {
-    let content = '';
     for (let v of labelName) {
-      content = document.createElement('div');
+      let content = document.createElement('div');
       content.innerText = `${v.eupmyeondong}`;
       content.className = 'blockName';
-      content.id = `${v.blockcode_list}`;
       let position = new kakao.maps.LatLng(v.latitude, v.longitude);
       let customOverlay = new kakao.maps.CustomOverlay({
         position: position,
@@ -163,6 +184,31 @@ const MapCp = ({ mapBlock, labelName }) => {
       });
     }
   }, [labelName, click_polygonArr]);
+
+  // 지하철
+  useEffect(() => {
+    for (let v of subwayList) {
+      let content = document.createElement('div');
+      content.className = 'subwayName';
+      content.innerHTML = `
+        <div class="imgWrap">
+          <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
+        </div>
+        <div>${v.station}</div>
+      `;
+      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
+      let customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content,
+      });
+      customOverlay.setMap(map);
+
+      // 지하철 클릭
+      content.addEventListener('click', async () => {
+        clickLabel(v.blockcode_list);
+      });
+    }
+  }, [subwayList, click_polygonArr]);
 
   return (
     <MapCpWrapper>

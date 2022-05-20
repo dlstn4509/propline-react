@@ -21,6 +21,7 @@ const ItemPage = () => {
   const { setTypename } = store();
   const [mapBlock, setMapBlock] = useState([]);
   const [labelName, setLabelName] = useState([]);
+  const [subwayList, setSubwayList] = useState([]);
 
   let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
@@ -41,12 +42,19 @@ const ItemPage = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/subway`);
+      setSubwayList(data);
+    })();
+  }, []);
+
   return (
     <ItemPageWrapper>
       <PageWrap>
         <Title>공실매물</Title>
         <ItemTypeCp />
-        <MapCp mapBlock={mapBlock} labelName={labelName} />
+        <MapCp mapBlock={mapBlock} labelName={labelName} subwayList={subwayList} />
         {typename === 'all' && <SearchAllCp />}
         {typename === 'normal' && <SearchNormalCp />}
         <AllTabCp />
