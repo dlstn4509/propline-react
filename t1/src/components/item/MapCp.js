@@ -1,9 +1,10 @@
 /*global kakao*/
 import React, { useState, useEffect } from 'react';
-import styled, { color } from '@/style';
+import styled, { color, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import FaSubway from 'react-icons/fa';
+import { IoMdClose } from 'react-icons/io';
 
 const MapCpWrapper = styled.div`
   .blockName {
@@ -45,27 +46,75 @@ const MapCpWrapper = styled.div`
   }
 `;
 const MapCpWrap = styled.div`
-  height: 1000px;
-  /* height: 409px; */
+  /* height: 1000px; */
+  height: 409px;
   border-bottom: 1px solid #dae1e7;
   border-top: 1px solid #2a55cc;
   border-left: 1px solid #2a55cc;
   border-right: 1px solid #2a55cc;
+`;
+const EupmyeondongWrapper = styled(FlexDiv)`
+  padding: 5px 0;
+  align-items: center;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-left: 1px solid #2a55cc;
+  border-right: 1px solid #2a55cc;
+  span {
+    color: ${color.blue};
+    margin: 0 4px;
+  }
+`;
+const EupmyeondongWrap = styled(FlexDiv)`
+  align-items: center;
+  margin-right: 10px;
 `;
 
 const MapCp = ({ mapBlock, labelName, subwayList }) => {
   const [map, setMap] = useState('');
   const [blockCodeArr, setBlockCodeArr] = useState([]);
   const [click_polygonArr, setClick_polygonArr] = useState([]);
+  const [eupmyeondongLength, setEupmyeondongLength] = useState([]);
+
+  // eupmyeondongLength 계산
+  const countEupmyeondongLength = (eupmyeondong, blockcode) => {
+    let arr = eupmyeondongLength;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].eupmyeondong === eupmyeondong) {
+        arr[i].count += 1;
+        arr[i].blockcode.push(blockcode);
+        setEupmyeondongLength(arr);
+        return true;
+      }
+    }
+    arr.push({ eupmyeondong: eupmyeondong, count: 1, blockcode: [blockcode] });
+    setEupmyeondongLength(arr);
+  };
 
   // polygon 지우기
-  const polygonClick = (blockcode, click_polygon) => {
+  const polygonClick = (blockcode, click_polygon, eupmyeondong) => {
     click_polygon.setMap(null);
     setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== blockcode));
+
+    // eupmyeondongLength 지우기
+    for (let i = 0; i < eupmyeondongLength.length; i++) {
+      if (eupmyeondongLength[i].eupmyeondong === eupmyeondong) {
+        if (eupmyeondongLength[i].count > 1) {
+          eupmyeondongLength[i].count -= 1;
+          eupmyeondongLength[i].blockcode.filter((v) => v !== blockcode);
+        } else {
+          setEupmyeondongLength((eupmyeondongLength) =>
+            eupmyeondongLength.filter((v) => {
+              return v.eupmyeondong !== eupmyeondong;
+            })
+          );
+        }
+      }
+    }
   };
 
   // polygon 색 채우기
-  const mapClick = (blockcode, path) => {
+  const mapClick = (blockcode, path, eupmyeondong) => {
     let click_polygon = new kakao.maps.Polygon({
       map: map,
       path: path,
@@ -76,10 +125,11 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       fillOpacity: 0.3,
       zIndex: 2,
     });
-    setBlockCodeArr((blockCodeArr) => [...blockCodeArr, blockcode]);
     kakao.maps.event.addListener(click_polygon, 'click', () => {
-      polygonClick(blockcode, click_polygon);
+      polygonClick(blockcode, click_polygon, eupmyeondong);
     });
+    countEupmyeondongLength(eupmyeondong, blockcode);
+    setBlockCodeArr((blockCodeArr) => [...blockCodeArr, blockcode]);
     setClick_polygonArr((click_polygonArr) => [...click_polygonArr, { blockcode, click_polygon }]);
   };
 
@@ -105,9 +155,8 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       polygon.setOptions({ fillColor: '#fff' });
       polygon.setOptions({ fillOpacity: 0.0001 });
     });
-
     kakao.maps.event.addListener(polygon, 'click', () => {
-      mapClick(area.blockcode, path);
+      mapClick(area.blockcode, path, area.eupmyeondong);
     });
     polygon.setMap(map);
   };
@@ -128,7 +177,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       if (isAllFillPolygon) {
         for (let v of click_polygonArr) {
           if (v.blockcode === clickLabel.blockcode) {
-            polygonClick(clickLabel.blockcode, v.click_polygon);
+            polygonClick(clickLabel.blockcode, v.click_polygon, clickLabel.eupmyeondong);
             setClick_polygonArr((click_polygonArr) =>
               click_polygonArr.filter((v) => {
                 return v.blockcode !== clickLabel.blockcode;
@@ -142,7 +191,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
           for (let vv of clickLabel.path) {
             label_latlng.push(new kakao.maps.LatLng(vv[0], vv[1]));
           }
-          mapClick(clickLabel.blockcode, label_latlng);
+          mapClick(clickLabel.blockcode, label_latlng, clickLabel.eupmyeondong);
         }
       }
     }
@@ -163,7 +212,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     for (var i = 0; i < mapBlock.length; i++) {
       displayArea(mapBlock[i]);
     }
-  }, [mapBlock]);
+  }, [mapBlock, eupmyeondongLength]);
 
   // 라벨
   useEffect(() => {
@@ -179,11 +228,11 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       customOverlay.setMap(map);
 
       // 라벨 클릭
-      content.addEventListener('click', async () => {
+      content.addEventListener('click', () => {
         clickLabel(v.blockcode_list);
       });
     }
-  }, [labelName, click_polygonArr]);
+  }, [labelName, click_polygonArr, eupmyeondongLength]);
 
   // 지하철
   useEffect(() => {
@@ -204,15 +253,47 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       customOverlay.setMap(map);
 
       // 지하철 클릭
-      content.addEventListener('click', async () => {
+      content.addEventListener('click', () => {
         clickLabel(v.blockcode_list);
       });
     }
-  }, [subwayList, click_polygonArr]);
+  }, [subwayList, click_polygonArr, eupmyeondongLength]);
+
+  const removeeUpmyeondong = (e) => {
+    let blockcode = e.target.dataset.blockcode
+      ? e.target.dataset.blockcode
+      : e.target.parentNode.dataset.blockcode;
+    let eupmyeondong = e.target.dataset.eupmyeondong
+      ? e.target.dataset.eupmyeondong
+      : e.target.parentNode.dataset.eupmyeondong;
+    let blockcodeArr = blockcode.split(',');
+    console.log(blockcode);
+    console.log(eupmyeondong);
+    console.log(blockcodeArr);
+    setEupmyeondongLength((eupmyeondongLength) =>
+      eupmyeondongLength.filter((v) => {
+        return v.eupmyeondong !== eupmyeondong;
+      })
+    );
+  };
 
   return (
     <MapCpWrapper>
       <MapCpWrap id="map"></MapCpWrap>
+      <EupmyeondongWrapper>
+        {eupmyeondongLength.map((v, i) => (
+          <EupmyeondongWrap key={i}>
+            {v.eupmyeondong}
+            <span>{v.count}개</span>
+            <IoMdClose
+              style={{ cursor: 'pointer' }}
+              data-blockcode={[v.blockcode]}
+              data-eupmyeondong={v.eupmyeondong}
+              onClick={removeeUpmyeondong}
+            />
+          </EupmyeondongWrap>
+        ))}
+      </EupmyeondongWrapper>
     </MapCpWrapper>
   );
 };
