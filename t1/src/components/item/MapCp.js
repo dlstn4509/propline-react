@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import styled, { color, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import FaSubway from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import { GrPowerReset } from 'react-icons/gr';
 
@@ -106,11 +105,14 @@ const MapCleanWrap = styled(FlexDiv)`
   }
 `;
 
-const MapCp = ({ mapBlock, labelName, subwayList }) => {
+const MapCp = ({ mapBlock, dongList, subwayList }) => {
   const [map, setMap] = useState('');
   const [blockCodeArr, setBlockCodeArr] = useState([]);
   const [click_polygonArr, setClick_polygonArr] = useState([]);
   const [eupmyeondongLength, setEupmyeondongLength] = useState([]);
+  const [subwayArr, setSubwayArr] = useState([]);
+  const [mapZoomLevel, setMapZoomLevel] = useState(6);
+  const [subwayLabel, setSubwayLabel] = useState([]);
 
   // eupmyeondongLength 계산
   const countEupmyeondongLength = (eupmyeondong, blockcode) => {
@@ -223,6 +225,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     }
     if (isAllFillPolygon) {
       for (let clickLabel of data) {
+        console.time('if');
         for (let v of click_polygonArr) {
           if (v.blockcode === clickLabel.blockcode) {
             v.click_polygon.setMap(null);
@@ -234,6 +237,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
             setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== clickLabel.blockcode));
           }
         }
+        console.timeEnd('if');
       }
       setEupmyeondongLength((setEupmyeondongLength) =>
         setEupmyeondongLength.filter((v) => {
@@ -247,7 +251,9 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
           for (let v of clickLabel.path) {
             label_latlng.push(new kakao.maps.LatLng(v[0], v[1]));
           }
+          console.time('else');
           mapClick(clickLabel.blockcode, label_latlng, clickLabel.eupmyeondong);
+          console.timeEnd('else');
         }
       }
     }
@@ -261,19 +267,29 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       // center: new kakao.maps.LatLng(37.575019439683764, 127.16396595688873),
       level: 6,
     };
-    setMap(new kakao.maps.Map(container, options));
+    let map = new kakao.maps.Map(container, options);
+    let zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    map.setZoomable(false);
+    map.setMaxLevel(9);
+    kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      // 지도의 현재 레벨을 얻어옵니다
+      setMapZoomLevel(map.getLevel());
+    });
+    setMap(map);
   }, []);
 
   // 블럭
   useEffect(() => {
-    for (var i = 0; i < mapBlock.length; i++) {
+    for (let i = 0; i < mapBlock.length; i++) {
       displayArea(mapBlock[i]);
     }
-  }, [mapBlock, eupmyeondongLength]);
+  }, [mapBlock]);
+  // }, [mapBlock, eupmyeondongLength]);
 
   // 라벨
   useEffect(() => {
-    for (let v of labelName) {
+    for (let v of dongList) {
       let content = document.createElement('div');
       content.innerText = `${v.eupmyeondong}`;
       content.className = 'blockName';
@@ -289,34 +305,48 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
         clickLabel(v.blockcode_list);
       });
     }
-  }, [labelName, eupmyeondongLength]);
-  // }, [labelName, click_polygonArr, eupmyeondongLength]);
+    // }, [dongList, eupmyeondongLength]);
+  }, [dongList, click_polygonArr, eupmyeondongLength]);
 
-  // 지하철
+  // 지하철 customOverlay 만들기
   useEffect(() => {
     for (let v of subwayList) {
+      console.log('aa');
       let content = document.createElement('div');
       content.className = 'subwayName';
       content.innerHTML = `
-        <div class="imgWrap">
-          <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
-        </div>
-        <div>${v.station}</div>
-      `;
+          <div class="imgWrap">
+            <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
+          </div>
+          <div>${v.station}</div>
+        `;
       let position = new kakao.maps.LatLng(v.latitude, v.longitude);
       let customOverlay = new kakao.maps.CustomOverlay({
         position: position,
         content: content,
       });
-      customOverlay.setMap(map);
 
       // 지하철 클릭
       content.addEventListener('click', () => {
         clickLabel(v.blockcode_list);
       });
+      setSubwayArr((subwayArr) => [...subwayArr, customOverlay]);
     }
-  }, [subwayList, click_polygonArr, eupmyeondongLength]);
+  }, [subwayList]);
+  // }, [subwayList, click_polygonArr, eupmyeondongLength]);
 
+  // mapZoomLevel에 따른 지하철 표시 or 지우기
+  useEffect(() => {
+    for (let v of subwayArr) {
+      if (mapZoomLevel <= 6) {
+        v.setMap(map);
+      } else {
+        v.setMap(null);
+      }
+    }
+  }, [subwayArr, mapZoomLevel]);
+
+  // upmyeondong x버튼
   const removeeUpmyeondong = (e) => {
     let blockcode = e.target.dataset.blockcode
       ? e.target.dataset.blockcode
@@ -337,6 +367,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     }
   };
 
+  // 지도 초기화 버튼
   const resetBtnClick = () => {
     for (let v of click_polygonArr) {
       v.click_polygon.setMap(null);
