@@ -99,15 +99,19 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     // eupmyeondongLength 지우기
     for (let i = 0; i < eupmyeondongLength.length; i++) {
       if (eupmyeondongLength[i].eupmyeondong === eupmyeondong) {
+        setEupmyeondongLength((eupmyeondongLength) =>
+          eupmyeondongLength.filter((v) => {
+            return v.eupmyeondong !== eupmyeondong;
+          })
+        );
         if (eupmyeondongLength[i].count > 1) {
-          eupmyeondongLength[i].count -= 1;
-          eupmyeondongLength[i].blockcode.filter((v) => v !== blockcode);
-        } else {
-          setEupmyeondongLength((eupmyeondongLength) =>
-            eupmyeondongLength.filter((v) => {
-              return v.eupmyeondong !== eupmyeondong;
-            })
-          );
+          let arr = eupmyeondongLength[i].blockcode.filter((v) => v !== blockcode);
+          eupmyeondongLength[i] = {
+            blockcode: arr,
+            count: eupmyeondongLength[i].count - 1,
+            eupmyeondong: eupmyeondong,
+          };
+          setEupmyeondongLength((setEupmyeondongLength) => [...setEupmyeondongLength, eupmyeondongLength[i]]);
         }
       }
     }
@@ -267,14 +271,16 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       ? e.target.dataset.eupmyeondong
       : e.target.parentNode.dataset.eupmyeondong;
     let blockcodeArr = blockcode.split(',');
-    console.log(blockcode);
-    console.log(eupmyeondong);
-    console.log(blockcodeArr);
     setEupmyeondongLength((eupmyeondongLength) =>
       eupmyeondongLength.filter((v) => {
         return v.eupmyeondong !== eupmyeondong;
       })
     );
+    for (let v of click_polygonArr) {
+      if (blockcodeArr.includes(String(v.blockcode))) {
+        polygonClick(v.blockcode, v.click_polygon, eupmyeondong);
+      }
+    }
   };
 
   return (
@@ -284,7 +290,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
         {eupmyeondongLength.map((v, i) => (
           <EupmyeondongWrap key={i}>
             {v.eupmyeondong}
-            <span>{v.count}개</span>
+            <span>{v.blockcode.length}개</span>
             <IoMdClose
               style={{ cursor: 'pointer' }}
               data-blockcode={[v.blockcode]}
