@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import FaSubway from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
+import { GrPowerReset } from 'react-icons/gr';
 
 const MapCpWrapper = styled.div`
+  position: relative;
   .blockName {
     font-size: 14px;
     display: inline-block;
@@ -70,6 +72,40 @@ const EupmyeondongWrap = styled(FlexDiv)`
   margin-right: 10px;
 `;
 
+const MapCleanWrap = styled(FlexDiv)`
+  position: absolute;
+  top: 370px;
+  right: 10px;
+  z-index: 999;
+  width: 330px;
+  height: 27px;
+  padding: 0px 5px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(33, 43, 74, 0.8);
+  color: #fff;
+  font-size: 13px;
+  span {
+    color: #ffeb5a;
+  }
+  .resetBtnWrap {
+    font-size: 12px;
+    color: #333333;
+    width: 90px;
+    height: 20px;
+    padding: 0px 5px;
+    border-radius: 5px;
+    border: 1px solid #d5d5d5;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-left: 10px;
+    button {
+      margin-left: 4px;
+    }
+  }
+`;
+
 const MapCp = ({ mapBlock, labelName, subwayList }) => {
   const [map, setMap] = useState('');
   const [blockCodeArr, setBlockCodeArr] = useState([]);
@@ -95,6 +131,13 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
   const polygonClick = (blockcode, click_polygon, eupmyeondong) => {
     click_polygon.setMap(null);
     setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== blockcode));
+
+    // click_polygonArr 지우기
+    setClick_polygonArr((click_polygonArr) =>
+      click_polygonArr.filter((v) => {
+        return v.blockcode !== blockcode;
+      })
+    );
 
     // eupmyeondongLength 지우기
     for (let i = 0; i < eupmyeondongLength.length; i++) {
@@ -127,7 +170,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
       strokeOpacity: 0.8,
       fillColor: 'blue',
       fillOpacity: 0.3,
-      zIndex: 2,
+      zIndex: 3,
     });
     kakao.maps.event.addListener(click_polygon, 'click', () => {
       polygonClick(blockcode, click_polygon, eupmyeondong);
@@ -170,6 +213,7 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     const { data } = await axios.get(
       process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${blockcode_list}`
     );
+
     let isAllFillPolygon = true; // 라벨의 모든 blockcode 가 채워져 있는지 유무
     for (let clickLabel of data) {
       if (!blockCodeArr.includes(clickLabel.blockcode)) {
@@ -177,23 +221,31 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
         break;
       }
     }
-    for (let clickLabel of data) {
-      if (isAllFillPolygon) {
+    if (isAllFillPolygon) {
+      for (let clickLabel of data) {
         for (let v of click_polygonArr) {
           if (v.blockcode === clickLabel.blockcode) {
-            polygonClick(clickLabel.blockcode, v.click_polygon, clickLabel.eupmyeondong);
+            v.click_polygon.setMap(null);
             setClick_polygonArr((click_polygonArr) =>
               click_polygonArr.filter((v) => {
                 return v.blockcode !== clickLabel.blockcode;
               })
             );
+            setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== clickLabel.blockcode));
           }
         }
-      } else {
+      }
+      setEupmyeondongLength((setEupmyeondongLength) =>
+        setEupmyeondongLength.filter((v) => {
+          return v.eupmyeondong !== data[0].eupmyeondong;
+        })
+      );
+    } else {
+      for (let clickLabel of data) {
         if (!blockCodeArr.includes(clickLabel.blockcode)) {
           let label_latlng = [];
-          for (let vv of clickLabel.path) {
-            label_latlng.push(new kakao.maps.LatLng(vv[0], vv[1]));
+          for (let v of clickLabel.path) {
+            label_latlng.push(new kakao.maps.LatLng(v[0], v[1]));
           }
           mapClick(clickLabel.blockcode, label_latlng, clickLabel.eupmyeondong);
         }
@@ -205,7 +257,8 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
   useEffect(() => {
     let container = document.getElementById('map');
     let options = {
-      center: new kakao.maps.LatLng(37.575019439683764, 127.16396595688873),
+      center: new kakao.maps.LatLng(37.49911, 127.065463),
+      // center: new kakao.maps.LatLng(37.575019439683764, 127.16396595688873),
       level: 6,
     };
     setMap(new kakao.maps.Map(container, options));
@@ -236,7 +289,8 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
         clickLabel(v.blockcode_list);
       });
     }
-  }, [labelName, click_polygonArr, eupmyeondongLength]);
+  }, [labelName, eupmyeondongLength]);
+  // }, [labelName, click_polygonArr, eupmyeondongLength]);
 
   // 지하철
   useEffect(() => {
@@ -283,9 +337,35 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
     }
   };
 
+  const resetBtnClick = () => {
+    for (let v of click_polygonArr) {
+      v.click_polygon.setMap(null);
+    }
+    setClick_polygonArr([]);
+    setBlockCodeArr([]);
+    setEupmyeondongLength([]);
+  };
+
   return (
     <MapCpWrapper>
       <MapCpWrap id="map"></MapCpWrap>
+      {blockCodeArr.length === 0 && (
+        <MapCleanWrap>
+          <div>선택된 블륵이 없습니다. 블록을 선택해주세요.</div>
+        </MapCleanWrap>
+      )}
+      {blockCodeArr.length > 0 && (
+        <MapCleanWrap>
+          <div style={{ marginRight: '10px' }}>
+            총 <span>{blockCodeArr.length}개</span>의 블록이 선택되었습니다.
+          </div>
+          |
+          <div className="resetBtnWrap">
+            <GrPowerReset style={{ color: '#333333' }} />
+            <button onClick={resetBtnClick}>지도초기화</button>
+          </div>
+        </MapCleanWrap>
+      )}
       <EupmyeondongWrapper>
         {eupmyeondongLength.map((v, i) => (
           <EupmyeondongWrap key={i}>
@@ -305,3 +385,6 @@ const MapCp = ({ mapBlock, labelName, subwayList }) => {
 };
 
 export default React.memo(MapCp);
+
+// console.time('countEupmyeondongLength');
+// console.timeEnd('countEupmyeondongLength');
