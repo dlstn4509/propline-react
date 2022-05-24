@@ -108,12 +108,26 @@ const MapCleanWrap = styled(FlexDiv)`
 const MapCp = ({ mapBlock, dongList, subwayList }) => {
   const [map, setMap] = useState('');
   const [subwayArr, setSubwayArr] = useState([]);
-  const [blockArr, setBlockArr] = useState([]);
   const [blockCodeArr, setBlockCodeArr] = useState([]);
   const [click_polygonArr, setClick_polygonArr] = useState([]);
   const [eupmyeondongLength, setEupmyeondongLength] = useState([]);
   const [mapZoomLevel, setMapZoomLevel] = useState(6);
   const [subwayLabel, setSubwayLabel] = useState([]);
+
+  // eupmyeondongLength 계산
+  const countEupmyeondongLength = (eupmyeondong, blockcode) => {
+    let arr = eupmyeondongLength;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i].eupmyeondong === eupmyeondong) {
+        arr[i].count += 1;
+        arr[i].blockcode.push(blockcode);
+        setEupmyeondongLength(arr);
+        return true;
+      }
+    }
+    arr.push({ eupmyeondong: eupmyeondong, count: 1, blockcode: [blockcode] });
+    setEupmyeondongLength(arr);
+  };
 
   // polygon 지우기
   const polygonClick = (blockcode, click_polygon, eupmyeondong) => {
@@ -128,7 +142,6 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
     );
 
     // eupmyeondongLength 지우기
-    console.log(eupmyeondongLength.length);
     for (let i = 0; i < eupmyeondongLength.length; i++) {
       if (eupmyeondongLength[i].eupmyeondong === eupmyeondong) {
         setEupmyeondongLength((eupmyeondongLength) =>
@@ -162,18 +175,41 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
       zIndex: 3,
     });
     kakao.maps.event.addListener(click_polygon, 'click', () => {
-      // polygonClick(blockcode, click_polygon, eupmyeondong);
-      click_polygon.setMap(null);
-      setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== blockcode));
+      polygonClick(blockcode, click_polygon, eupmyeondong);
     });
+    countEupmyeondongLength(eupmyeondong, blockcode);
     setBlockCodeArr((blockCodeArr) => [...blockCodeArr, blockcode]);
-    console.log(click_polygonArr);
-    setClick_polygonArr((click_polygonArr) => [
-      ...click_polygonArr,
-      { eupmyeondong: eupmyeondong, count: { blockcode: [blockcode], click_polygon: [click_polygon] } },
-    ]);
+    setClick_polygonArr((click_polygonArr) => [...click_polygonArr, { blockcode, click_polygon }]);
   };
-  useEffect(() => {}, []);
+
+  // 모든 polygon 그리기
+  const displayArea = (area) => {
+    console.log('모든 polygon 그리기');
+    let path = [];
+    for (let v of area.latlng_list) {
+      path.push(new kakao.maps.LatLng(v[0], v[1]));
+    }
+    let polygon = new kakao.maps.Polygon({
+      map: map,
+      path: path,
+      strokeColor: 'none',
+      fillColor: '#fff',
+      fillOpacity: 0.00001,
+      zIndex: 1,
+    });
+    kakao.maps.event.addListener(polygon, 'mouseover', () => {
+      polygon.setOptions({ fillColor: 'blue' });
+      polygon.setOptions({ fillOpacity: 0.1 });
+    });
+    kakao.maps.event.addListener(polygon, 'mouseout', () => {
+      polygon.setOptions({ fillColor: '#fff' });
+      polygon.setOptions({ fillOpacity: 0.0001 });
+    });
+    kakao.maps.event.addListener(polygon, 'click', () => {
+      mapClick(area.blockcode, path, area.eupmyeondong);
+    });
+    polygon.setMap(map);
+  };
 
   // 라벨 클릭
   const clickLabel = async (blockcode_list) => {
@@ -234,105 +270,19 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
     map.setZoomable(false);
     map.setMaxLevel(9);
     kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      // 지도의 현재 레벨을 얻어옵니다
       setMapZoomLevel(map.getLevel());
     });
     setMap(map);
   }, []);
 
-  // 모든 블럭 state에 담기 : blockArr
+  // 블럭
   useEffect(() => {
-    let polygonList = [];
     for (let i = 0; i < mapBlock.length; i++) {
-      console.log('모든 블럭 그리기');
-      let path = [];
-      for (let v of mapBlock[i].latlng_list) {
-        path.push(new kakao.maps.LatLng(v[0], v[1]));
-      }
-      let polygon = new kakao.maps.Polygon({
-        map: map,
-        path: path,
-        strokeColor: 'none',
-        fillColor: '#fff',
-        fillOpacity: 0.00001,
-        zIndex: 1,
-      });
-      polygonList.push({
-        polygon,
-        path,
-        eupmyeondong: mapBlock[i].eupmyeondong,
-        blockcode: mapBlock[i].blockcode,
-      });
+      displayArea(mapBlock[i]);
     }
-    setBlockArr(polygonList);
-  }, [map, mapBlock]);
-
-  // 모든 블럭 지도에 뿌리기, 이벤트 포함
-  useEffect(() => {
-    for (let v of blockArr) {
-      kakao.maps.event.addListener(v.polygon, 'mouseover', () => {
-        v.polygon.setOptions({ fillColor: 'blue' });
-        v.polygon.setOptions({ fillOpacity: 0.1 });
-      });
-      kakao.maps.event.addListener(v.polygon, 'mouseout', () => {
-        v.polygon.setOptions({ fillColor: '#fff' });
-        v.polygon.setOptions({ fillOpacity: 0.0001 });
-      });
-      kakao.maps.event.addListener(v.polygon, 'click', () => {
-        setBlockCodeArr((blockCodeArr) => [
-          ...blockCodeArr,
-          { blockcode: v.blockcode, eupmyeondong: v.eupmyeondong },
-        ]);
-        let click_polygon = new kakao.maps.Polygon({
-          map: map,
-          path: v.path,
-          strokeWeight: 2,
-          strokeColor: 'blue',
-          strokeOpacity: 0.8,
-          fillColor: 'blue',
-          fillOpacity: 0.3,
-          zIndex: 2,
-        });
-        setClick_polygonArr((click_polygonArr) => [
-          ...click_polygonArr,
-          { blockcode: v.blockcode, click_polygon: click_polygon, eupmyeondong: v.eupmyeondong },
-        ]);
-      });
-      v.polygon.setMap(map);
-    }
-  }, [blockArr]);
-
-  // click_polygonArr click이벤트 (지우기)
-  useEffect(() => {
-    for (let v of click_polygonArr) {
-      kakao.maps.event.addListener(v.click_polygon, 'click', () => {
-        // polygonClick(blockcode, click_polygon, eupmyeondong);
-        v.click_polygon.setMap(null);
-        setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((vv) => vv !== v.blockcode));
-        setClick_polygonArr((click_polygonArr) =>
-          click_polygonArr.filter((vv) => vv.click_polygon !== v.click_polygon)
-        );
-      });
-    }
-  }, [click_polygonArr]);
-
-  // EupmyeondongLength 정리
-  useEffect(() => {
-    let arr = blockCodeArr;
-    let resultArr = [];
-    for (let v of arr) {
-      let isDuplication = true;
-      for (let vv of resultArr) {
-        if (vv.eupmyeondong === v.eupmyeondong) {
-          vv.count += 1;
-          isDuplication = false;
-        }
-      }
-      if (isDuplication) {
-        resultArr.push({ eupmyeondong: v.eupmyeondong, count: 1 });
-      }
-    }
-    setEupmyeondongLength(resultArr);
-  }, [blockCodeArr]);
+  }, [mapBlock]);
+  // }, [mapBlock, eupmyeondongLength]);
 
   // 라벨
   useEffect(() => {
@@ -353,8 +303,8 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
         clickLabel(v.blockcode_list);
       });
     }
-  }, [dongList]);
-  // }, [dongList, click_polygonArr, eupmyeondongLength]);
+    // }, [dongList, eupmyeondongLength]);
+  }, [dongList, click_polygonArr, eupmyeondongLength]);
 
   // 지하철 customOverlay 만들기
   useEffect(() => {
@@ -380,8 +330,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
       });
       setSubwayArr((subwayArr) => [...subwayArr, customOverlay]);
     }
-  }, [subwayList]);
-  // }, [subwayList, click_polygonArr, eupmyeondongLength]);
+  }, [subwayList, click_polygonArr, eupmyeondongLength]);
 
   // mapZoomLevel에 따른 지하철 표시 or 지우기
   useEffect(() => {
@@ -449,7 +398,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
         {eupmyeondongLength.map((v, i) => (
           <EupmyeondongWrap key={i}>
             {v.eupmyeondong}
-            <span>{v.count}개</span>
+            <span>{v.blockcode.length}개</span>
             <IoMdClose
               style={{ cursor: 'pointer' }}
               data-blockcode={[v.blockcode]}
