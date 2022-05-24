@@ -1,5 +1,5 @@
 /*global kakao*/
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled, { color, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -107,118 +107,16 @@ const MapCleanWrap = styled(FlexDiv)`
 
 const MapCp = ({ mapBlock, dongList, subwayList }) => {
   const [map, setMap] = useState('');
-  const [subwayArr, setSubwayArr] = useState([]);
   const [blockArr, setBlockArr] = useState([]);
-  const [blockCodeArr, setBlockCodeArr] = useState([]);
+  const [dongArr, setDongArr] = useState([]);
+  const [dongLabelArr, setDongLabelArr] = useState([]);
+  const [subwayArr, setSubwayArr] = useState([]);
+  const [subwayLabel, setSubwayLabel] = useState([]); // 6
+
+  const [blockCodeArr, setBlockCodeArr] = useState([]); // 7
   const [click_polygonArr, setClick_polygonArr] = useState([]);
   const [eupmyeondongLength, setEupmyeondongLength] = useState([]);
   const [mapZoomLevel, setMapZoomLevel] = useState(6);
-  const [subwayLabel, setSubwayLabel] = useState([]);
-
-  // polygon 지우기
-  const polygonClick = (blockcode, click_polygon, eupmyeondong) => {
-    click_polygon.setMap(null);
-    setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== blockcode));
-
-    // click_polygonArr 지우기
-    setClick_polygonArr((click_polygonArr) =>
-      click_polygonArr.filter((v) => {
-        return v.blockcode !== blockcode;
-      })
-    );
-
-    // eupmyeondongLength 지우기
-    console.log(eupmyeondongLength.length);
-    for (let i = 0; i < eupmyeondongLength.length; i++) {
-      if (eupmyeondongLength[i].eupmyeondong === eupmyeondong) {
-        setEupmyeondongLength((eupmyeondongLength) =>
-          eupmyeondongLength.filter((v) => {
-            return v.eupmyeondong !== eupmyeondong;
-          })
-        );
-        if (eupmyeondongLength[i].count > 1) {
-          let arr = eupmyeondongLength[i].blockcode.filter((v) => v !== blockcode);
-          eupmyeondongLength[i] = {
-            blockcode: arr,
-            count: eupmyeondongLength[i].count - 1,
-            eupmyeondong: eupmyeondong,
-          };
-          setEupmyeondongLength((setEupmyeondongLength) => [...setEupmyeondongLength, eupmyeondongLength[i]]);
-        }
-      }
-    }
-  };
-
-  // polygon 색 채우기
-  const mapClick = (blockcode, path, eupmyeondong) => {
-    let click_polygon = new kakao.maps.Polygon({
-      map: map,
-      path: path,
-      strokeWeight: 2,
-      strokeColor: 'blue',
-      strokeOpacity: 0.8,
-      fillColor: 'blue',
-      fillOpacity: 0.3,
-      zIndex: 3,
-    });
-    kakao.maps.event.addListener(click_polygon, 'click', () => {
-      // polygonClick(blockcode, click_polygon, eupmyeondong);
-      click_polygon.setMap(null);
-      setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== blockcode));
-    });
-    setBlockCodeArr((blockCodeArr) => [...blockCodeArr, blockcode]);
-    console.log(click_polygonArr);
-    setClick_polygonArr((click_polygonArr) => [
-      ...click_polygonArr,
-      { eupmyeondong: eupmyeondong, count: { blockcode: [blockcode], click_polygon: [click_polygon] } },
-    ]);
-  };
-  useEffect(() => {}, []);
-
-  // 라벨 클릭
-  const clickLabel = async (blockcode_list) => {
-    const { data } = await axios.get(
-      process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${blockcode_list}`
-    );
-
-    let isAllFillPolygon = true; // 라벨의 모든 blockcode 가 채워져 있는지 유무
-    for (let clickLabel of data) {
-      if (!blockCodeArr.includes(clickLabel.blockcode)) {
-        isAllFillPolygon = false;
-        break;
-      }
-    }
-    if (isAllFillPolygon) {
-      for (let clickLabel of data) {
-        for (let v of click_polygonArr) {
-          if (v.blockcode === clickLabel.blockcode) {
-            v.click_polygon.setMap(null);
-            setClick_polygonArr((click_polygonArr) =>
-              click_polygonArr.filter((v) => {
-                return v.blockcode !== clickLabel.blockcode;
-              })
-            );
-            setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v !== clickLabel.blockcode));
-          }
-        }
-      }
-      setEupmyeondongLength((setEupmyeondongLength) =>
-        setEupmyeondongLength.filter((v) => {
-          return v.eupmyeondong !== data[0].eupmyeondong;
-        })
-      );
-    } else {
-      for (let clickLabel of data) {
-        if (!blockCodeArr.includes(clickLabel.blockcode)) {
-          let label_latlng = [];
-          for (let v of clickLabel.path) {
-            label_latlng.push(new kakao.maps.LatLng(v[0], v[1]));
-          }
-          mapClick(clickLabel.blockcode, label_latlng, clickLabel.eupmyeondong);
-        }
-      }
-    }
-  };
 
   // 초기 맵 세팅
   useEffect(() => {
@@ -243,7 +141,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
   useEffect(() => {
     let polygonList = [];
     for (let i = 0; i < mapBlock.length; i++) {
-      console.log('모든 블럭 그리기');
+      console.log('모든 블럭 만들기');
       let path = [];
       for (let v of mapBlock[i].latlng_list) {
         path.push(new kakao.maps.LatLng(v[0], v[1]));
@@ -266,9 +164,10 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
     setBlockArr(polygonList);
   }, [map, mapBlock]);
 
-  // 모든 블럭 지도에 뿌리기, 이벤트 포함
+  // 모든 블럭 지도에 뿌리기
   useEffect(() => {
     for (let v of blockArr) {
+      console.log('모든 블럭 뿌리기');
       kakao.maps.event.addListener(v.polygon, 'mouseover', () => {
         v.polygon.setOptions({ fillColor: 'blue' });
         v.polygon.setOptions({ fillOpacity: 0.1 });
@@ -277,11 +176,8 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
         v.polygon.setOptions({ fillColor: '#fff' });
         v.polygon.setOptions({ fillOpacity: 0.0001 });
       });
+
       kakao.maps.event.addListener(v.polygon, 'click', () => {
-        setBlockCodeArr((blockCodeArr) => [
-          ...blockCodeArr,
-          { blockcode: v.blockcode, eupmyeondong: v.eupmyeondong },
-        ]);
         let click_polygon = new kakao.maps.Polygon({
           map: map,
           path: v.path,
@@ -296,6 +192,10 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
           ...click_polygonArr,
           { blockcode: v.blockcode, click_polygon: click_polygon, eupmyeondong: v.eupmyeondong },
         ]);
+        setBlockCodeArr((blockCodeArr) => [
+          ...blockCodeArr,
+          { blockcode: v.blockcode, eupmyeondong: v.eupmyeondong },
+        ]);
       });
       v.polygon.setMap(map);
     }
@@ -305,15 +205,157 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
   useEffect(() => {
     for (let v of click_polygonArr) {
       kakao.maps.event.addListener(v.click_polygon, 'click', () => {
-        // polygonClick(blockcode, click_polygon, eupmyeondong);
         v.click_polygon.setMap(null);
-        setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((vv) => vv !== v.blockcode));
+        setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((vv) => vv.blockcode !== v.blockcode));
         setClick_polygonArr((click_polygonArr) =>
           click_polygonArr.filter((vv) => vv.click_polygon !== v.click_polygon)
         );
       });
     }
   }, [click_polygonArr]);
+
+  // 동라벨 만들기
+  useEffect(() => {
+    let arr = [];
+    for (let v of dongList) {
+      console.log('동 라벨 만들어 뿌리기');
+      let content = document.createElement('div');
+      content.innerText = `${v.eupmyeondong}`;
+      content.className = 'blockName';
+      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
+      let customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content,
+      });
+      customOverlay.setMap(map);
+      arr.push({ customOverlay, content, blockcode_list: v.blockcode_list });
+    }
+    setDongArr(arr);
+  }, [dongList]);
+
+  useEffect(() => {
+    for (let v of dongArr) {
+      v.content.addEventListener('click', async () => {
+        let arr = [];
+        for (let v of blockCodeArr) {
+          arr.push(v.blockcode);
+        }
+        const { data } = await axios.get(
+          process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${v.blockcode_list}`
+        );
+        let isAllFillPolygon = false; // 라벨중 1개라도 차있는지 여부
+
+        for (let clickLabel of data) {
+          if (!arr.includes(clickLabel.blockcode)) {
+            isAllFillPolygon = true;
+            break;
+          }
+        }
+        if (isAllFillPolygon) {
+          // 1개라도 있으면
+        } else {
+          // 1개도 없으면
+          for (let clickLabel of data) {
+            if (!arr.includes(clickLabel.blockcode)) {
+              let label_latlng = [];
+              for (let v of clickLabel.path) {
+                label_latlng.push(new kakao.maps.LatLng(v[0], v[1]));
+              }
+              let click_polygon = new kakao.maps.Polygon({
+                map: map,
+                path: label_latlng,
+                strokeWeight: 2,
+                strokeColor: 'blue',
+                strokeOpacity: 0.8,
+                fillColor: 'blue',
+                fillOpacity: 0.3,
+                zIndex: 2,
+              });
+            }
+          }
+        }
+
+        // for (let vv of data) {
+        // }
+        // console.log(isAllFillPolygon);
+
+        // for (let clickLabel of data) {
+        //   let label_latlng = [];
+        //   for (let v of clickLabel.path) {
+        //     label_latlng.push(new kakao.maps.LatLng(v[0], v[1]));
+        //   }
+        //   let click_polygon = new kakao.maps.Polygon({
+        //     map: map,
+        //     path: label_latlng,
+        //     strokeWeight: 2,
+        //     strokeColor: 'blue',
+        //     strokeOpacity: 0.8,
+        //     fillColor: 'blue',
+        //     fillOpacity: 0.3,
+        //     zIndex: 2,
+        //   });
+        // }
+      });
+    }
+  }, [dongArr, blockCodeArr]);
+
+  // setBlockcode_list 만들기
+  // useEffect(() => {
+  //   let arr = dongArr;
+  //   let arrBlcock = blockCodeArr;
+  //   for (let v of arr) {
+  //     v.content.addEventListener('click', async (e) => {
+  //       const { data } = await axios.get(
+  //         process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${v.blockcode_list}`
+  //       );
+  //       let isAllFillPolygon = false; // 라벨중 1개라도 차있는지 여부
+
+  //       for (let clickLabel of data) {
+  //         console.log(arrBlcock);
+  // for (let vv of blockCodeArr) {
+  //   if (vv.blockcode === clickLabel.blockcode) {
+  //     console.log('있음');
+  //     isAllFillPolygon = true;
+  //     break;
+  //   }
+  //   console.log('isAllFillPolygon  =  ' + isAllFillPolygon);
+  // }
+  //       }
+  //     });
+  //   }
+  // }, [blockCodeArr]);
+
+  // 라벨클릭 setBlockcode_list 데이터 변하면
+  // useEffect(() => {
+  //   console.log('blockcode_list  =  ' + blockcode_list);
+  //   console.log('blockCodeArr  =  ' + blockCodeArr);
+
+  // if (isAllFillPolygon) {
+  //   console.log('if');
+  //   console.log(blockCodeArr.length > 0);
+  // } else {
+  //   console.log('else');
+  // for (let clickLabel of blockcode_list.data) {
+  //   if (blockCodeArr.length > 0) {
+  //   } else {
+  //     let label_latlng = [];
+  //     for (let path of clickLabel.path) {
+  //       label_latlng.push(new kakao.maps.LatLng(path[0], path[1]));
+  //     }
+  //     let click_polygon = new kakao.maps.Polygon({
+  //       map: map,
+  //       path: label_latlng,
+  //       strokeWeight: 2,
+  //       strokeColor: 'blue',
+  //       strokeOpacity: 0.8,
+  //       fillColor: 'blue',
+  //       fillOpacity: 0.3,
+  //       zIndex: 2,
+  //     });
+  //   }
+  // }
+  // }
+  // }, [blockcode_list, blockCodeArr]);
 
   // EupmyeondongLength 정리
   useEffect(() => {
@@ -334,86 +376,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
     setEupmyeondongLength(resultArr);
   }, [blockCodeArr]);
 
-  // 라벨
-  useEffect(() => {
-    for (let v of dongList) {
-      console.log('동라벨 그리기');
-      let content = document.createElement('div');
-      content.innerText = `${v.eupmyeondong}`;
-      content.className = 'blockName';
-      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
-      let customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-      });
-      customOverlay.setMap(map);
-
-      // 라벨 클릭
-      content.addEventListener('click', () => {
-        clickLabel(v.blockcode_list);
-      });
-    }
-  }, [dongList]);
-  // }, [dongList, click_polygonArr, eupmyeondongLength]);
-
-  // 지하철 customOverlay 만들기
-  useEffect(() => {
-    for (let v of subwayList) {
-      console.log('지하철 라벨 그리기');
-      let content = document.createElement('div');
-      content.className = 'subwayName';
-      content.innerHTML = `
-          <div class="imgWrap">
-            <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
-          </div>
-          <div>${v.station}</div>
-        `;
-      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
-      let customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-      });
-
-      // 지하철 클릭
-      content.addEventListener('click', () => {
-        clickLabel(v.blockcode_list);
-      });
-      setSubwayArr((subwayArr) => [...subwayArr, customOverlay]);
-    }
-  }, [subwayList]);
-  // }, [subwayList, click_polygonArr, eupmyeondongLength]);
-
-  // mapZoomLevel에 따른 지하철 표시 or 지우기
-  useEffect(() => {
-    for (let v of subwayArr) {
-      if (mapZoomLevel <= 6) {
-        v.setMap(map);
-      } else {
-        v.setMap(null);
-      }
-    }
-  }, [subwayArr, mapZoomLevel]);
-
-  // upmyeondong x버튼
-  const removeeUpmyeondong = (e) => {
-    let blockcode = e.target.dataset.blockcode
-      ? e.target.dataset.blockcode
-      : e.target.parentNode.dataset.blockcode;
-    let eupmyeondong = e.target.dataset.eupmyeondong
-      ? e.target.dataset.eupmyeondong
-      : e.target.parentNode.dataset.eupmyeondong;
-    let blockcodeArr = blockcode.split(',');
-    setEupmyeondongLength((eupmyeondongLength) =>
-      eupmyeondongLength.filter((v) => {
-        return v.eupmyeondong !== eupmyeondong;
-      })
-    );
-    for (let v of click_polygonArr) {
-      if (blockcodeArr.includes(String(v.blockcode))) {
-        polygonClick(v.blockcode, v.click_polygon, eupmyeondong);
-      }
-    }
-  };
+  /****************************************************/
 
   // 지도 초기화 버튼
   const resetBtnClick = () => {
@@ -454,7 +417,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
               style={{ cursor: 'pointer' }}
               data-blockcode={[v.blockcode]}
               data-eupmyeondong={v.eupmyeondong}
-              onClick={removeeUpmyeondong}
+              // onClick={removeeUpmyeondong}
             />
           </EupmyeondongWrap>
         ))}
