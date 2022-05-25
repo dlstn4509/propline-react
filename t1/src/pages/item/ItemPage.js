@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import ItemTypeCp from '@/components/item/ItemTypeCp';
 import MapCp from '@/components/item/MapCp';
+// import MapCp from '@/components/item/MapCp copy';
 import SearchAllCp from '@/components/item/SearchAllCp';
 import SearchNormalCp from '@/components/item/SearchNormalCp';
 import AllTabCp from '@/components/item/AllTabCp';
