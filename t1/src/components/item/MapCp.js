@@ -61,6 +61,7 @@ const EupmyeondongWrapper = styled(FlexDiv)`
   padding: 6px 10px;
   border-left: 1px solid #2a55cc;
   border-right: 1px solid #2a55cc;
+  flex-wrap: wrap;
   span {
     color: ${color.blue};
     margin: 0 4px;
@@ -105,21 +106,100 @@ const MapCleanWrap = styled(FlexDiv)`
   }
 `;
 
-const MapCp = ({ mapBlock, dongList, subwayList }) => {
+const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   const [map, setMap] = useState('');
   const [blockArr, setBlockArr] = useState([]); // 모든 block 만들어 담을 배열
   const [dongArr, setDongArr] = useState([]);
+  const [subwayArr, setSubwayArr] = useState([]);
+  const [guArr, setGuArr] = useState([]);
+
   const [plusBlockCodeArr, setPlusBlockCodeArr] = useState([]);
   const [minusBlockCodeArr, setMinusBlockCodeArr] = useState([]);
   const [clickLabelData, setClickLabelData] = useState([]); // label 클릭, axios data, 쓰고 바로 지움
-  const [subwayArr, setSubwayArr] = useState([]); // 7
-  const [subwayLabel, setSubwayLabel] = useState([]); // 8
-
   const [blockCodeArr, setBlockCodeArr] = useState([]); // 9
   const [click_polygonArr, setClick_polygonArr] = useState([]); // 색칠된 polygon
   const [eupmyeondongLength, setEupmyeondongLength] = useState([]); // 동, count
-
   const [mapZoomLevel, setMapZoomLevel] = useState(6);
+
+  // 동, 지하철, 구 라벨 만들기
+  const makeLabel = (list) => {
+    let arr = [];
+    for (let v of list) {
+      if (list === subwayList) {
+        console.log('라벨만들기 subwayList');
+      } else if (list === dongList) {
+        console.log('라벨만들기 dongList');
+      } else {
+        console.log('라벨만들기 guList');
+      }
+      let content = '';
+      if (list === subwayList) {
+        content = document.createElement('div');
+        content.className = 'subwayName';
+        content.innerHTML = `
+            <div class="imgWrap">
+              <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
+            </div>
+            <div>${v.station}</div>
+          `;
+      } else {
+        content = document.createElement('div');
+        content.innerText = `${v.eupmyeondong ? v.eupmyeondong : v.sigungu}`;
+        content.className = 'blockName';
+      }
+      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
+      let customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content,
+      });
+      customOverlay.setMap(map);
+      arr.push(customOverlay);
+
+      content.addEventListener('click', async () => {
+        const { data } = await axios.get(
+          process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${v.blockcode_list}`
+        );
+        setClickLabelData([data, v.blockcode_list.split(',')]);
+      });
+    }
+
+    if (list === subwayList) {
+      setSubwayArr(arr);
+    } else if (list === dongList) {
+      setDongArr(arr);
+    } else {
+      setGuArr(arr);
+    }
+  };
+
+  // 리스트 x 버튼
+  const removeeUpmyeondong = (e) => {
+    let eupmyeondong = e.target.dataset.eupmyeondong
+      ? e.target.dataset.eupmyeondong
+      : e.target.parentNode.dataset.eupmyeondong;
+    for (let v of click_polygonArr) {
+      if (v.eupmyeondong === eupmyeondong) {
+        v.click_polygon.setMap(null);
+      }
+    }
+    setBlockCodeArr((blockCodeArr) => blockCodeArr.filter((v) => v.eupmyeondong !== eupmyeondong));
+    setClick_polygonArr((click_polygonArr) =>
+      click_polygonArr.filter((v) => v.eupmyeondong !== eupmyeondong)
+    );
+    setEupmyeondongLength((eupmyeondongLength) =>
+      eupmyeondongLength.filter((v) => v.eupmyeondong !== eupmyeondong)
+    );
+  };
+
+  // 지도 초기화 버튼
+  const resetBtnClick = () => {
+    for (let v of click_polygonArr) {
+      v.click_polygon.setMap(null);
+    }
+    setClick_polygonArr([]);
+    setBlockCodeArr([]);
+    setEupmyeondongLength([]);
+  };
 
   // 초기 맵 세팅
   useEffect(() => {
@@ -219,29 +299,39 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
 
   // 동라벨 만들기
   useEffect(() => {
-    let arr = [];
-    for (let v of dongList) {
-      console.log('동 라벨 만들어 뿌리기');
-      let content = document.createElement('div');
-      content.innerText = `${v.eupmyeondong}`;
-      content.className = 'blockName';
-      let position = new kakao.maps.LatLng(v.latitude, v.longitude);
-      let customOverlay = new kakao.maps.CustomOverlay({
-        position: position,
-        content: content,
-      });
-      customOverlay.setMap(map);
-      arr.push({ customOverlay, content, blockcode_list: v.blockcode_list });
-
-      content.addEventListener('click', async () => {
-        const { data } = await axios.get(
-          process.env.REACT_APP_URL_API + `item/blockcode?blockcode=${v.blockcode_list}`
-        );
-        setClickLabelData([data, v.blockcode_list.split(',')]);
-      });
+    for (let v of dongArr) {
+      v.setMap(null);
+      resetBtnClick();
     }
-    setDongArr(arr);
-  }, [dongList]);
+    if (mapZoomLevel <= 7) {
+      makeLabel(dongList);
+      resetBtnClick();
+    }
+  }, [dongList, mapZoomLevel]);
+
+  // 지하철라벨 만들기
+  useEffect(() => {
+    for (let v of subwayArr) {
+      v.setMap(null);
+      resetBtnClick();
+    }
+    if (mapZoomLevel <= 6) {
+      makeLabel(subwayList);
+      resetBtnClick();
+    }
+  }, [subwayList, mapZoomLevel]);
+
+  // 구 라벨 만들기
+  useEffect(() => {
+    for (let v of guArr) {
+      v.setMap(null);
+      resetBtnClick();
+    }
+    if (mapZoomLevel > 7) {
+      makeLabel(guList);
+      resetBtnClick();
+    }
+  }, [guList, mapZoomLevel]);
 
   // 라벨 클릭
   useEffect(() => {
@@ -260,7 +350,6 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
 
     if (clickLabelData[1] && duplicationCnt !== clickLabelData[1].length) {
       // 1개라도 있으면
-      console.log('if');
       let clickLabelArr = [];
       for (let clickLabel of clickLabelData[0]) {
         if (!arr.includes(clickLabel.blockcode)) {
@@ -353,15 +442,27 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
     setEupmyeondongLength(resultArr);
   }, [blockCodeArr]);
 
-  // 지도 초기화 버튼
-  const resetBtnClick = () => {
-    for (let v of click_polygonArr) {
-      v.click_polygon.setMap(null);
+  useEffect(() => {
+    if (seoulLine.length > 0) {
+      console.log('seoulLine 만듬');
+      let path = [];
+      for (let v of seoulLine) {
+        path.push(new kakao.maps.LatLng(v[1], v[0]));
+      }
+
+      let polygon = new kakao.maps.Polygon({
+        map: map,
+        path: path,
+        strokeColor: 'blue',
+        strokeWeight: 2,
+        strokeOpacity: 0.8,
+        fillColor: '#fff',
+        fillOpacity: 0.00001,
+        zIndex: 1,
+      });
+      polygon.setMap(map);
     }
-    setClick_polygonArr([]);
-    setBlockCodeArr([]);
-    setEupmyeondongLength([]);
-  };
+  }, [seoulLine]);
 
   return (
     <MapCpWrapper>
@@ -392,7 +493,7 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
               style={{ cursor: 'pointer' }}
               data-blockcode={[v.blockcode]}
               data-eupmyeondong={v.eupmyeondong}
-              // onClick={removeeUpmyeondong}
+              onClick={removeeUpmyeondong}
             />
           </EupmyeondongWrap>
         ))}
@@ -402,6 +503,3 @@ const MapCp = ({ mapBlock, dongList, subwayList }) => {
 };
 
 export default React.memo(MapCp);
-
-// console.time('countEupmyeondongLength');
-// console.timeEnd('countEupmyeondongLength');

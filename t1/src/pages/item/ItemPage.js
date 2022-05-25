@@ -23,6 +23,8 @@ const ItemPage = () => {
   const [mapBlock, setMapBlock] = useState([]);
   const [dongList, setDongList] = useState([]);
   const [subwayList, setSubwayList] = useState([]);
+  const [guList, setGuList] = useState([]);
+  const [seoulLine, setSeoulLine] = useState([]);
 
   let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
@@ -52,8 +54,15 @@ const ItemPage = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/subway`);
-      setSubwayList(data);
+      const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/gu`);
+      setGuList(data);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/seoul`);
+      setSeoulLine(data);
     })();
   }, []);
 
@@ -62,7 +71,13 @@ const ItemPage = () => {
       <PageWrap>
         <Title>공실매물</Title>
         <ItemTypeCp />
-        <MapCp mapBlock={mapBlock} dongList={dongList} subwayList={subwayList} />
+        <MapCp
+          mapBlock={mapBlock}
+          dongList={dongList}
+          subwayList={subwayList}
+          guList={guList}
+          seoulLine={seoulLine}
+        />
         {typename === 'all' && <SearchAllCp />}
         {typename === 'normal' && <SearchNormalCp />}
         <AllTabCp />
