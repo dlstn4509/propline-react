@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { IoMdClose } from 'react-icons/io';
 import { GrPowerReset } from 'react-icons/gr';
+import { MdDirectionsSubway } from 'react-icons/md';
 
 const MapCpWrapper = styled.div`
   position: relative;
@@ -124,7 +125,6 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   // 동, 지하철, 구 라벨 만들기
   const makeLabel = (list) => {
     let arr = [];
-    console.log(list.length);
     for (let v of list) {
       if (list === subwayList) {
         console.log('라벨만들기 subwayList');
@@ -136,7 +136,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
       let content = '';
       if (list === subwayList) {
         content = document.createElement('div');
-        content.className = 'subwayName';
+        content.className = `subwayName`;
         content.innerHTML = `
             <div class="imgWrap">
               <img src="${process.env.REACT_APP_URL + 'img/train.png'}" alt="" />
@@ -329,7 +329,6 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
 
   // 구 라벨 만들기
   useEffect(() => {
-    console.log('gu 만들기');
     for (let v of guArr) {
       v.setMap(null);
       resetBtnClick();
@@ -457,7 +456,6 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
 
   useEffect(() => {
     if (seoulLine.length > 0) {
-      console.log('seoulLine 만듬');
       let path = [];
       for (let v of seoulLine) {
         path.push(new kakao.maps.LatLng(v[1], v[0]));

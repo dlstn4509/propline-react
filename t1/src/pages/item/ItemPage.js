@@ -31,11 +31,14 @@ const ItemPage = () => {
     setTypename(typename);
   }, [typename]);
 
+  // setTimeout -> label 먼저 만들고 block 만들어야 hover 가능
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/makemapblock`);
-      setMapBlock(data);
-    })();
+    setTimeout(() => {
+      (async () => {
+        const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/makemapblock`);
+        setMapBlock(data);
+      })();
+    }, 0);
   }, []);
 
   useEffect(() => {
