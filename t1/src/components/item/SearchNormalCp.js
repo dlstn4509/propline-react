@@ -3,7 +3,6 @@ import styled from '@/style';
 import { Link } from 'react-router-dom';
 
 import SearchDetailCp from './SearchDetailCp';
-import MapCp from './MapCp';
 import TotalCountCp from './TotalCountCp';
 
 import {
@@ -65,7 +64,6 @@ const SearchNormalCp = () => {
   }, []);
   return (
     <SearchCpWrapper>
-      <MapCp />
       <FilterWrapper>
         <FilterWrap>
           <Title>임대구분</Title>

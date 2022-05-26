@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import store from '@/store/store';
 
 import { FaThLarge, FaMapMarkedAlt, FaSearch } from 'react-icons/fa';
 
@@ -41,13 +42,14 @@ const SearchTypeBar = styled.div`
 `;
 
 const ItemTypeCp = () => {
-  const [type, setType] = useState('seoul');
+  const { isMapType, setMapType } = store();
+
   return (
     <ItemTypeCpWrap className="searchType">
       <Type
-        className={type === 'seoul' ? 'active' : ''}
+        className={isMapType === 'block' ? 'active' : ''}
         onClick={() => {
-          setType('seoul');
+          setMapType('block');
         }}
       >
         <TypeTxt>서울 블록지도</TypeTxt>
@@ -55,9 +57,9 @@ const ItemTypeCp = () => {
       </Type>
       <SearchTypeBar>|</SearchTypeBar>
       <Type
-        className={type === 'normal' ? 'active' : ''}
+        className={isMapType === 'cluster' ? 'active' : ''}
         onClick={() => {
-          setType('normal');
+          setMapType('cluster');
         }}
       >
         <TypeTxt>일반지도</TypeTxt>
@@ -65,9 +67,9 @@ const ItemTypeCp = () => {
       </Type>
       <SearchTypeBar>|</SearchTypeBar>
       <Type
-        className={type === 'search' ? 'active' : ''}
+        className={isMapType === 'search' ? 'active' : ''}
         onClick={() => {
-          setType('search');
+          setMapType('search');
         }}
       >
         <TypeTxt>주소검색</TypeTxt>

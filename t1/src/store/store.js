@@ -12,6 +12,7 @@ let store = (set) => ({
   isQuickMenuY: 3,
   isAgreePrivacy: false,
   isBanner: [],
+  isMapType: 'block',
   setIsUser: () => set((state) => ({ isUser: !state.isUser })),
   setLoginUser: (user) => set((state) => ({ loginUser: user })),
   setQuickMenuTop: (y) => set((state) => ({ quickMenuTop: state.quickMenuTop + y })),
@@ -25,7 +26,7 @@ let store = (set) => ({
     const { data } = await axios.get(`https://t1.propline.co.kr/api/banner`);
     set((state) => ({ isBanner: data }));
   },
-  // setBanner: () => set((state) => ({ isBanner: state.isBanner })),/
+  setMapType: (mapType) => set((state) => ({ isMapType: mapType })),
 });
 
 store = create(devtools(store));
