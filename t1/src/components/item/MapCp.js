@@ -6,6 +6,7 @@ import axios from 'axios';
 import { IoMdClose } from 'react-icons/io';
 import { GrPowerReset } from 'react-icons/gr';
 import { MdDirectionsSubway } from 'react-icons/md';
+import { useCookies } from 'react-cookie';
 
 const MapCpWrapper = styled.div`
   position: relative;
@@ -121,18 +122,22 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   const [click_polygonArr, setClick_polygonArr] = useState([]); // 색칠된 polygon
   const [eupmyeondongLength, setEupmyeondongLength] = useState([]); // 동, count
   const [mapZoomLevel, setMapZoomLevel] = useState(6);
+  const [mapCenterCookie, setMapCenterCookie, removeCookie] = useCookies('mapCenterCookie');
+
+  // 지도 div mouseUp, center cookie 만들기
+  const onMouseUp = () => {
+    const { Ma: lat, La: lon } = map.getCenter();
+    let now = new Date();
+    let cookieTime = new Date();
+    cookieTime.setHours(now.getHours() + 6);
+    setMapCenterCookie('mapCenterCookie', [lat, lon], { path: '/item', expires: cookieTime });
+    console.log(mapCenterCookie);
+  };
 
   // 동, 지하철, 구 라벨 만들기
   const makeLabel = (list) => {
     let arr = [];
     for (let v of list) {
-      if (list === subwayList) {
-        console.log('라벨만들기 subwayList');
-      } else if (list === dongList) {
-        console.log('라벨만들기 dongList');
-      } else {
-        console.log('라벨만들기 guList');
-      }
       let content = '';
       if (list === subwayList) {
         content = document.createElement('div');
@@ -209,9 +214,11 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   // 초기 맵 세팅
   useEffect(() => {
     let container = document.getElementById('map');
+    let center = mapCenterCookie.mapCenterCookie
+      ? new kakao.maps.LatLng(mapCenterCookie.mapCenterCookie[0], mapCenterCookie.mapCenterCookie[1])
+      : new kakao.maps.LatLng(37.50905604664822, 127.04053621548162);
     let options = {
-      center: new kakao.maps.LatLng(37.49911, 127.065463),
-      // center: new kakao.maps.LatLng(37.575019439683764, 127.16396595688873),
+      center: center,
       level: 6,
       disableDoubleClickZoom: true,
     };
@@ -230,7 +237,6 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   useEffect(() => {
     let polygonList = [];
     for (let i = 0; i < mapBlock.length; i++) {
-      console.log('모든 블럭 만들기');
       let path = [];
       for (let v of mapBlock[i].latlng_list) {
         path.push(new kakao.maps.LatLng(v[0], v[1]));
@@ -256,7 +262,6 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   // 모든 블럭 지도에 뿌리기
   useEffect(() => {
     for (let v of blockArr) {
-      console.log('모든 블럭 뿌리기');
       kakao.maps.event.addListener(v.polygon, 'mouseover', () => {
         v.polygon.setOptions({ fillColor: 'blue' });
         v.polygon.setOptions({ fillOpacity: 0.1 });
@@ -477,7 +482,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
 
   return (
     <MapCpWrapper>
-      <MapCpWrap id="map"></MapCpWrap>
+      <MapCpWrap id="map" onMouseUp={onMouseUp}></MapCpWrap>
       {blockCodeArr.length === 0 && (
         <MapCleanWrap>
           <div>선택된 블륵이 없습니다. 블록을 선택해주세요.</div>
