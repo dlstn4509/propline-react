@@ -114,7 +114,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   const [guArr, setGuArr] = useState([]);
 
   const [plusBlockCodeArr, setPlusBlockCodeArr] = useState([]);
-  const [minusBlockCodeArr, setMinusBlockCodeArr] = useState([]);
+  const [minusBlockCodeArr, setMinusBlockCodeArr] = useState([]); // 8
   const [clickLabelData, setClickLabelData] = useState([]); // label 클릭, axios data, 쓰고 바로 지움
   const [blockCodeArr, setBlockCodeArr] = useState([]); // 9
   const [click_polygonArr, setClick_polygonArr] = useState([]); // 색칠된 polygon
@@ -124,6 +124,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
   // 동, 지하철, 구 라벨 만들기
   const makeLabel = (list) => {
     let arr = [];
+    console.log(list.length);
     for (let v of list) {
       if (list === subwayList) {
         console.log('라벨만들기 subwayList');
@@ -142,10 +143,14 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
             </div>
             <div>${v.station}</div>
           `;
-      } else {
+      } else if (list === dongList) {
         content = document.createElement('div');
-        content.innerText = `${v.eupmyeondong ? v.eupmyeondong : v.sigungu}`;
+        content.innerText = `${v.eupmyeondong}`;
         content.className = 'blockName';
+      } else if (list === guList) {
+        content = document.createElement('div');
+        content.innerText = `${v.sigungu}`;
+        content.className = `blockName`;
       }
       let position = new kakao.maps.LatLng(v.latitude, v.longitude);
       let customOverlay = new kakao.maps.CustomOverlay({
@@ -208,6 +213,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
       center: new kakao.maps.LatLng(37.49911, 127.065463),
       // center: new kakao.maps.LatLng(37.575019439683764, 127.16396595688873),
       level: 6,
+      disableDoubleClickZoom: true,
     };
     let map = new kakao.maps.Map(container, options);
     let zoomControl = new kakao.maps.ZoomControl();
@@ -323,6 +329,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
 
   // 구 라벨 만들기
   useEffect(() => {
+    console.log('gu 만들기');
     for (let v of guArr) {
       v.setMap(null);
       resetBtnClick();
@@ -332,6 +339,8 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
       resetBtnClick();
     }
   }, [guList, mapZoomLevel]);
+
+  useEffect(() => {});
 
   // 라벨 클릭
   useEffect(() => {
@@ -380,6 +389,7 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
       }
       setPlusBlockCodeArr(clickLabelArr);
     } else {
+      // 꽉 차있어서 지우기
       let clickLabelArr = [];
       if (clickLabelData[1] && duplicationCnt) {
         for (let clickLabel of clickLabelData[0]) {
@@ -387,6 +397,9 @@ const MapCp = ({ mapBlock, dongList, subwayList, guList, seoulLine }) => {
             if (v.blockcode === clickLabel.blockcode) {
               v.click_polygon.setMap(null);
               clickLabelArr.push(clickLabel);
+              setClick_polygonArr((click_polygonArr) =>
+                click_polygonArr.filter((v) => v.blockcode !== clickLabel.blockcode)
+              );
             }
           }
         }
