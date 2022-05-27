@@ -8,6 +8,10 @@ const TotalWrapper = styled.div`
   justify-content: space-between;
   padding: 20px 0;
   background-color: #f0f3f7;
+  margin-bottom: 70px;
+  border-bottom: 1px solid #2a55cc;
+  border-left: 1px solid #2a55cc;
+  border-right: 1px solid #2a55cc;
 `;
 const TotalCount = styled.div`
   font-size: 20px;

@@ -8,6 +8,8 @@ const SearchDetailForm = styled.form`
   padding: 14px 40px 0 40px;
   font-size: 13px;
   color: #464d50;
+  border-left: 1px solid #2a55cc;
+  border-right: 1px solid #2a55cc;
 `;
 const SearchDetailWrap = styled(FlexDiv)`
   margin-bottom: 14px;

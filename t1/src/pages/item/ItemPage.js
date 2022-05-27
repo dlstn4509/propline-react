@@ -4,11 +4,18 @@ import store from '@/store/store';
 import axios from 'axios';
 
 import ItemTypeCp from '@/components/item/ItemTypeCp';
-import MapCp from '@/components/item/MapCp';
+
 import BlockMapCp from '@/components/item/BlockMapCp';
+import MapCp from '@/components/item/MapCp';
 import SearchCp from '@/components/item/SearchCp';
+
 import SearchAllCp from '@/components/item/SearchAllCp';
 import SearchNormalCp from '@/components/item/SearchNormalCp';
+import SearchFullOptCP from '@/components/item/SearchFullOptCP';
+
+import SearchDetailCp from '@/components/item/SearchDetailCp';
+import TotalCountCp from '@/components/item/TotalCountCp';
+
 import AllTabCp from '@/components/item/AllTabCp';
 import ListFilterCp from '@/components/item/ListFilterCp';
 import ListCp from '@/components/item/ListCp';
@@ -20,7 +27,7 @@ const ItemPageWrapper = styled(PageWrapper)`
 `;
 
 const ItemPage = () => {
-  const { isTypename, setTypename, isMapType, setMapType } = store();
+  const { isTypename, setTypename, isMapType } = store();
   const [mapBlock, setMapBlock] = useState([]);
   const [dongList, setDongList] = useState([]);
   const [subwayList, setSubwayList] = useState([]);
@@ -30,7 +37,6 @@ const ItemPage = () => {
   let typename = window.location.href.split('?')[1].split('=')[1];
   useEffect(() => {
     setTypename(typename);
-    setMapType('block');
   }, [typename]);
 
   // setTimeout -> label 먼저 만들고 block 만들어야 hover 가능
@@ -84,7 +90,7 @@ const ItemPage = () => {
   return (
     <ItemPageWrapper>
       <PageWrap>
-        <Title>공실매물</Title>
+        <Title>공실매물 {isTypename}</Title>
         <ItemTypeCp />
         {isMapType === 'block' && (
           <BlockMapCp
@@ -97,9 +103,11 @@ const ItemPage = () => {
         )}
         {isMapType === 'cluster' && <MapCp />}
         {isMapType === 'search' && <SearchCp />}
-
         {isTypename === 'all' && <SearchAllCp />}
         {isTypename === 'normal' && <SearchNormalCp />}
+        {isTypename === 'fullopt' && <SearchFullOptCP />}
+        <SearchDetailCp />
+        <TotalCountCp />
         <AllTabCp />
         <ListFilterCp />
         <ListCp />
