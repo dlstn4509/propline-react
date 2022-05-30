@@ -52,7 +52,7 @@ const CheckBox = styled.div`
   height: 20px;
 `;
 
-const SearchNormalCp = ({
+const SearchOfficeCp = ({
   makeFilterList,
   checkBoxClick,
   type,
@@ -65,12 +65,8 @@ const SearchNormalCp = ({
   setPlusFilter,
   roomCount,
   setRoomCount,
-  roomType,
-  setRoomType,
   floorType,
   setFloorType,
-  livingRoomSize,
-  setLivingRoomSize,
 }) => {
   return (
     <SearchCpWrapper>
@@ -84,10 +80,6 @@ const SearchNormalCp = ({
           <Filter>{makeFilterList(roomCountArr, roomCount, setRoomCount)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title className={roomType !== '전체' ? 'active' : ''}>룸형태</Title>
-          <Filter>{makeFilterList(roomTypeArr, roomType, setRoomType)}</Filter>
-        </FilterWrap>
-        <FilterWrap>
           <Title className={floorType !== '전체' ? 'active' : ''}>층구분</Title>
           <Filter>{makeFilterList(floorTypeArr, floorType, setFloorType)}</Filter>
         </FilterWrap>
@@ -96,15 +88,11 @@ const SearchNormalCp = ({
           <Filter>{makeFilterList(yearArr, year, setYear)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title className={livingRoomSize !== '전체' ? 'active' : ''}>거실크기</Title>
-          <Filter>{makeFilterList(livingRoomSizeArr, livingRoomSize, setLivingRoomSize)}</Filter>
-        </FilterWrap>
-        <FilterWrap>
           <Title className={parkingNum !== '전체' ? 'active' : ''}>주차대수</Title>
           <Filter>{makeFilterList(parkingNumArr, parkingNum, setParkingNum)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title style={{ width: '228px' }} className={plusFilter.length > 0 ? 'active' : ''}>
+          <Title style={{ width: '250px' }} className={plusFilter.length > 0 ? 'active' : ''}>
             추가필터
           </Title>
           <Filter style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -128,7 +116,7 @@ const SearchNormalCp = ({
   );
 };
 
-export default React.memo(SearchNormalCp);
+export default React.memo(SearchOfficeCp);
 
 const typeArr = ['전체', '월세', '전세', '전월세'];
 const roomCountArr = [
@@ -145,7 +133,6 @@ const roomCountArr = [
   '5개 이상',
 ];
 const floorTypeArr = ['전체', '지상', '지하', '반지하', '옥탑', '단독'];
-const roomTypeArr = ['전체', '오픈형', '분리형', '복층형', '원룸원거실', '세미분리형'];
 const yearArr = [
   '전체',
   '2022년 이후',
@@ -165,7 +152,6 @@ const yearArr = [
   '2008년 이후',
   '2008년 이전',
 ];
-const livingRoomSizeArr = ['전체', '거실(대)', '거실(중)', '거실(소)'];
 const parkingNumArr = [
   '전체',
   '1대',
@@ -182,15 +168,14 @@ const plusFilterNormalArr = [
   '건물사진 있음',
   '내부사진 있음',
   '동영상 있음',
+  '소호/비즈니스센터',
   '단기임대',
   '관리비포함',
+  '무보증',
+  '인테리어',
   '주차가능',
   '현재공실',
-  '베란다',
-  '풀옵션제외',
-  '풀옵션만보기',
   'E/V',
+  '단독/사옥',
   '금액네고',
-  '전세대출가능',
-  '애완동물가능',
 ];

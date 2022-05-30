@@ -137,23 +137,11 @@ const InputWrap = styled(FlexDiv)`
 `;
 
 const SearchCp = () => {
-  let typeArr = [
-    { text: '전체', type: 'all' },
-    { text: '일반룸', type: 'normal' },
-    { text: '풀옵션', type: 'fullopt' },
-    { text: '사무실', type: 'office' },
-    { text: '상가', type: 'store' },
-    { text: '오피스텔', type: 'officetel' },
-    { text: '아파트', type: 'apt' },
-  ];
   const { isTypename, setTypename } = store();
   const navigate = useNavigate();
-  const [sidoArr, setSidoArr] = useState([]);
-  const [clickSido, setClickSido] = useState('강원');
-
+  const [clickSido, setClickSido] = useState('서울');
   const [sigunguArr, setSigunguArr] = useState([]);
   const [clickSigungu, setClickSigungu] = useState('');
-
   const [eupmyeondongArr, setEupmyeondongArr] = useState([]);
   const [clickEupmyeondongArr, setClickEupmyeondongArr] = useState([]);
 
@@ -205,13 +193,6 @@ const SearchCp = () => {
 
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(process.env.REACT_APP_URL_API + 'item/sido');
-      setSidoArr(data);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
       const { data } = await axios.get(process.env.REACT_APP_URL_API + `item/sigungu?sido=${clickSido}`);
       setSigunguArr(data);
     })();
@@ -234,13 +215,13 @@ const SearchCp = () => {
         {sidoArr.map((v, i) => (
           <Si
             key={i}
-            className={clickSido === v.sido ? 'active' : ''}
+            className={clickSido === v ? 'active' : ''}
             onClick={(e) => {
               setClickSido(e.target.innerHTML);
               setEupmyeondongArr([]);
             }}
           >
-            {v.sido}
+            {v}
           </Si>
         ))}
       </SiWrap>
@@ -252,6 +233,9 @@ const SearchCp = () => {
               className={clickSigungu === v.sigungu ? 'active' : ''}
               onClick={(e) => {
                 setClickSigungu(e.target.innerHTML);
+                if (e.target.innerHTML.includes('전체')) {
+                  eupmyeondongArrCtr(e.target.innerHTML);
+                }
               }}
             >
               {v.sigungu}
@@ -318,3 +302,33 @@ const SearchCp = () => {
 };
 
 export default React.memo(SearchCp);
+
+const typeArr = [
+  { text: '전체', type: 'all' },
+  { text: '일반룸', type: 'normal' },
+  { text: '풀옵션', type: 'fullopt' },
+  { text: '사무실', type: 'office' },
+  { text: '상가', type: 'store' },
+  { text: '오피스텔', type: 'officetel' },
+  { text: '아파트', type: 'apt' },
+];
+const sidoArr = [
+  '서울',
+  '경기',
+  '인천',
+  '강원',
+  '대전',
+  '세종',
+  '충남',
+  '충북',
+  '부산',
+  '울산',
+  '경남',
+  '경북',
+  '대구',
+  '광주',
+  '전남',
+  '전북',
+  '제주',
+  '전국',
+];

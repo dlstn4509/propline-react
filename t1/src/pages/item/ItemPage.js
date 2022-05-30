@@ -11,7 +11,10 @@ import SearchCp from '@/components/item/SearchCp';
 
 import SearchAllCp from '@/components/item/SearchAllCp';
 import SearchNormalCp from '@/components/item/SearchNormalCp';
-import SearchFullOptCP from '@/components/item/SearchFullOptCP';
+import SearchOfficeCp from '@/components/item/SearchOfficeCp';
+import SearchStoreCp from '@/components/item/SearchStoreCp';
+import SearchOfficetelCp from '@/components/item/SearchOfficetelCp';
+import SearchAptCp from '@/components/item/SearchAptCp';
 
 import SearchDetailCp from '@/components/item/SearchDetailCp';
 import TotalCountCp from '@/components/item/TotalCountCp';
@@ -87,6 +90,62 @@ const ItemPage = () => {
     }
   }, [isMapType]);
 
+  const makeFilterList = (arr, state, setState) => {
+    return arr.map((v, i) => (
+      <div key={i} className={state === v ? 'active' : ''}>
+        <span
+          onClick={(e) => {
+            setState(e.target.innerHTML);
+          }}
+        >
+          {v}
+        </span>
+      </div>
+    ));
+  };
+
+  // filter
+  const [type, setType] = useState('전체');
+  const [year, setYear] = useState('전체');
+  const [parkingNum, setParkingNum] = useState('전체');
+  const [roomCount, setRoomCount] = useState('전체');
+  const [roomType, setRoomType] = useState('전체');
+  const [floorType, setFloorType] = useState('전체');
+  const [livingRoomSize, setLivingRoomSize] = useState('전체');
+  const [useType, setUseType] = useState('전체');
+  const [plusFilter, setPlusFilter] = useState([]);
+
+  useEffect(() => {
+    setPlusFilter([]);
+  }, [typename]);
+
+  const checkBoxClick = (e, plusFilter, setPlusFilter) => {
+    let filterName = e.target.innerText
+      ? e.target.innerText
+      : e.target.tagName === 'svg'
+      ? e.target.nextSibling.innerHTML
+      : e.target.parentNode.nextSibling.innerHTML;
+    if (plusFilter.includes(filterName)) {
+      setPlusFilter(plusFilter.filter((v) => v !== filterName));
+    } else {
+      setPlusFilter([...plusFilter, filterName]);
+    }
+  };
+
+  const resetFilter = () => {
+    if (window.confirm('필터를 초기화 하시겠습니까?')) {
+      setType('전체');
+      setYear('전체');
+      setParkingNum('전체');
+      setRoomCount('전체');
+      setRoomType('전체');
+      setFloorType('전체');
+      setLivingRoomSize('전체');
+      setUseType('전체');
+      setPlusFilter([]);
+    }
+  };
+
   return (
     <ItemPageWrapper>
       <PageWrap>
@@ -103,11 +162,135 @@ const ItemPage = () => {
         )}
         {isMapType === 'cluster' && <MapCp />}
         {isMapType === 'search' && <SearchCp />}
-        {isTypename === 'all' && <SearchAllCp />}
-        {isTypename === 'normal' && <SearchNormalCp />}
-        {isTypename === 'fullopt' && <SearchFullOptCP />}
+
+        {isTypename === 'all' && (
+          <SearchAllCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+          />
+        )}
+        {isTypename === 'normal' && (
+          <SearchNormalCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+            roomCount={roomCount}
+            setRoomCount={setRoomCount}
+            roomType={roomType}
+            setRoomType={setRoomType}
+            floorType={floorType}
+            setFloorType={setFloorType}
+            livingRoomSize={livingRoomSize}
+            setLivingRoomSize={setLivingRoomSize}
+          />
+        )}
+        {isTypename === 'fullopt' && (
+          <SearchNormalCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+            roomCount={roomCount}
+            setRoomCount={setRoomCount}
+            roomType={roomType}
+            setRoomType={setRoomType}
+            floorType={floorType}
+            setFloorType={setFloorType}
+            livingRoomSize={livingRoomSize}
+            setLivingRoomSize={setLivingRoomSize}
+          />
+        )}
+        {isTypename === 'office' && (
+          <SearchOfficeCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+            roomCount={roomCount}
+            setRoomCount={setRoomCount}
+            floorType={floorType}
+            setFloorType={setFloorType}
+          />
+        )}
+        {isTypename === 'store' && (
+          <SearchStoreCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            floorType={floorType}
+            setFloorType={setFloorType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+          />
+        )}
+        {isTypename === 'officetel' && (
+          <SearchOfficetelCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            roomCount={roomCount}
+            setRoomCount={setRoomCount}
+            useType={useType}
+            setUseType={setUseType}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+          />
+        )}
+        {isTypename === 'apt' && (
+          <SearchAptCp
+            makeFilterList={makeFilterList}
+            checkBoxClick={checkBoxClick}
+            type={type}
+            setType={setType}
+            roomCount={roomCount}
+            setRoomCount={setRoomCount}
+            year={year}
+            setYear={setYear}
+            parkingNum={parkingNum}
+            setParkingNum={setParkingNum}
+            plusFilter={plusFilter}
+            setPlusFilter={setPlusFilter}
+          />
+        )}
         <SearchDetailCp />
-        <TotalCountCp />
+        <TotalCountCp resetFilter={resetFilter} />
         <AllTabCp />
         <ListFilterCp />
         <ListCp />

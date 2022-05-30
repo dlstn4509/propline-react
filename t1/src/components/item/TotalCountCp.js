@@ -30,7 +30,7 @@ const ButtonWrap = styled(Button)`
   margin-right: 10px;
 `;
 
-const TotalCountCp = () => {
+const TotalCountCp = ({ resetFilter }) => {
   let pathname = window.location.pathname;
   return (
     <TotalWrapper>
@@ -45,7 +45,7 @@ const TotalCountCp = () => {
             <ButtonWrap>전체 초기화</ButtonWrap>
           </>
         )}
-        <ButtonWrap>검색필터 초기화</ButtonWrap>
+        <ButtonWrap onClick={resetFilter}>검색필터 초기화</ButtonWrap>
         <ButtonWrap color={color.blue} bdc={color.blue}>
           <FaSearch />
           검색하기

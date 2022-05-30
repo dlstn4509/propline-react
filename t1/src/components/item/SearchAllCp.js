@@ -25,6 +25,10 @@ const Title = styled.div`
   color: #464d50;
   background-color: #f9fafc;
   border-bottom: 1px solid #dae1e7;
+  &.active {
+    color: #f9fafc;
+    background-color: #464d50;
+  }
 `;
 const Filter = styled.div`
   font-size: 13px;
@@ -46,122 +50,43 @@ const CheckBox = styled(FlexDiv)`
   height: 20px;
 `;
 
-const SearchAllCp = () => {
-  const [type, setType] = useState('전체');
-  const [year, setYear] = useState('전체');
-  const [parkingNum, setParkingNum] = useState('전체');
-  const [plusFilter, setPlusFilter] = useState([]);
-  const typeArr = ['전체', '월세', '전세', '전월세'];
-  const yearArr = [
-    '전체',
-    '2022년 이후',
-    '2021년 이후',
-    '2020년 이후',
-    '2019년 이후',
-    '2018년 이후',
-    '2017년 이후',
-    '2016년 이후',
-    '2015년 이후',
-    '2014년 이후',
-    '2013년 이후',
-    '2012년 이후',
-    '2011년 이후',
-    '2010년 이후',
-    '2009년 이후',
-    '2008년 이후',
-    '2008년 이전',
-  ];
-  const parkingNumArr = [
-    '전체',
-    '1대',
-    '1대 ~ 2대',
-    '2대',
-    '2대 ~ 3대',
-    '3대',
-    '3대 ~ 4대',
-    '4대',
-    '4대 ~ 5대',
-    '5대 이상',
-  ];
-  const plusFilterArr = [
-    '건물사진 있음',
-    '내부사진 있음',
-    '동영상 있음',
-    '관리비포함',
-    '현재공실',
-    '금액네고',
-  ];
-
-  const checkBoxClick = (e) => {
-    let filterName = e.target.innerText
-      ? e.target.innerText
-      : e.target.tagName === 'svg'
-      ? e.target.nextSibling.innerHTML
-      : e.target.parentNode.nextSibling.innerHTML;
-    if (plusFilter.includes(filterName)) {
-      setPlusFilter(plusFilter.filter((v) => v !== filterName));
-    } else {
-      setPlusFilter([...plusFilter, filterName]);
-    }
-  };
-
+const SearchAllCp = ({
+  makeFilterList,
+  checkBoxClick,
+  type,
+  setType,
+  year,
+  setYear,
+  parkingNum,
+  setParkingNum,
+  plusFilter,
+  setPlusFilter,
+}) => {
   return (
     <SearchCpWrapper>
       <FilterWrapper>
         <FilterWrap>
-          <Title>임대구분</Title>
-          <Filter>
-            {typeArr.map((v, i) => (
-              <div key={i} className={type === v ? 'active' : ''}>
-                <span
-                  onClick={(e) => {
-                    setType(e.target.innerHTML);
-                  }}
-                >
-                  {v}
-                </span>
-              </div>
-            ))}
-          </Filter>
+          <Title className={type !== '전체' ? 'active' : ''}>임대구분</Title>
+          <Filter>{makeFilterList(typeArr, type, setType)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title>준공년도</Title>
-          <Filter>
-            {yearArr.map((v, i) => (
-              <div key={i} className={year === v ? 'active' : ''}>
-                <span
-                  onClick={(e) => {
-                    setYear(e.target.innerHTML);
-                  }}
-                >
-                  {v}
-                </span>
-              </div>
-            ))}
-          </Filter>
+          <Title className={year !== '전체' ? 'active' : ''}>준공년도</Title>
+          <Filter>{makeFilterList(yearArr, year, setYear)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title>주차대수</Title>
-          <Filter>
-            {parkingNumArr.map((v, i) => (
-              <div key={i} className={parkingNum === v ? 'active' : ''}>
-                <span
-                  onClick={(e) => {
-                    setParkingNum(e.target.innerHTML);
-                  }}
-                >
-                  {v}
-                </span>
-              </div>
-            ))}
-          </Filter>
+          <Title className={parkingNum !== '전체' ? 'active' : ''}>주차대수</Title>
+          <Filter>{makeFilterList(parkingNumArr, parkingNum, setParkingNum)}</Filter>
         </FilterWrap>
         <FilterWrap>
-          <Title>추가필터</Title>
+          <Title className={plusFilter.length > 0 ? 'active' : ''}>추가필터</Title>
           <Filter style={{ display: 'flex', flexWrap: 'wrap' }}>
             {plusFilterArr.map((v, i) => (
               <CheckBox key={i}>
-                <span onClick={checkBoxClick}>
+                <span
+                  onClick={(e) => {
+                    checkBoxClick(e, plusFilter, setPlusFilter);
+                  }}
+                >
                   {!plusFilter.includes(v) && <FaRegSquare />}
                   {plusFilter.includes(v) && <FaCheckSquare style={{ color: `${color.blue}` }} />}
                   <div>{v}</div>
@@ -176,3 +101,37 @@ const SearchAllCp = () => {
 };
 
 export default React.memo(SearchAllCp);
+
+const typeArr = ['전체', '월세', '전세', '전월세'];
+const yearArr = [
+  '전체',
+  '2022년 이후',
+  '2021년 이후',
+  '2020년 이후',
+  '2019년 이후',
+  '2018년 이후',
+  '2017년 이후',
+  '2016년 이후',
+  '2015년 이후',
+  '2014년 이후',
+  '2013년 이후',
+  '2012년 이후',
+  '2011년 이후',
+  '2010년 이후',
+  '2009년 이후',
+  '2008년 이후',
+  '2008년 이전',
+];
+const parkingNumArr = [
+  '전체',
+  '1대',
+  '1대 ~ 2대',
+  '2대',
+  '2대 ~ 3대',
+  '3대',
+  '3대 ~ 4대',
+  '4대',
+  '4대 ~ 5대',
+  '5대 이상',
+];
+const plusFilterArr = ['건물사진 있음', '내부사진 있음', '동영상 있음', '관리비포함', '현재공실', '금액네고'];
