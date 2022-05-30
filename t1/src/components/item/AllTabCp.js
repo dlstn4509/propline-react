@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import styled from '@/style';
+import styled, { color } from '@/style';
 import { Link } from 'react-router-dom';
 
 const AllTabCpWrapper = styled.div`
   display: flex;
-  border-top: 2px solid #26489b;
   margin-bottom: 40px;
 `;
 const AllTabWrap = styled.div`
+  border-bottom: 2px solid ${color.blue};
   width: 25%;
   padding: 10px 0;
   text-align: center;
@@ -19,8 +19,12 @@ const AllTabWrap = styled.div`
   }
   &.active {
     background-color: #fff;
+    border-bottom: none;
+    border-top: 2px solid ${color.blue};
+    border-left: 2px solid ${color.blue};
+    border-right: 2px solid ${color.blue};
     div {
-      color: #26489b;
+      color: ${color.blue};
     }
   }
 `;
@@ -51,7 +55,7 @@ const TtBox = styled.div`
 `;
 
 const AllTabCp = () => {
-  const [choiceTab, setChoiceTab] = useState('tab01');
+  const [choiceTab, setChoiceTab] = useState('전체');
   const [isTtBox, setIsTtbox] = useState(true);
   const onMouseEvent = useCallback(() => {
     setIsTtbox(!isTtBox);
@@ -62,36 +66,36 @@ const AllTabCp = () => {
   return (
     <AllTabCpWrapper>
       <AllTabWrap
-        className={choiceTab === 'tab01' ? 'active' : ''}
+        className={choiceTab === '전체' ? 'active' : ''}
         onClick={() => {
-          setChoiceTab('tab01');
+          setChoiceTab('전체');
         }}
       >
         <Title>전체</Title>
         <Count>15593</Count>
       </AllTabWrap>
       <AllTabWrap
-        className={choiceTab === 'tab02' ? 'active' : ''}
+        className={choiceTab === '공실매물관' ? 'active' : ''}
         onClick={() => {
-          setChoiceTab('tab02');
+          setChoiceTab('공실매물관');
         }}
       >
         <Title>공실매물관</Title>
         <Count>15593</Count>
       </AllTabWrap>
       <AllTabWrap
-        className={choiceTab === 'tab03' ? 'active' : ''}
+        className={choiceTab === '공동중개관' ? 'active' : ''}
         onClick={() => {
-          setChoiceTab('tab03');
+          setChoiceTab('공동중개관');
         }}
       >
         <Title>공동중개관</Title>
         <Count>15593</Count>
       </AllTabWrap>
       <AllTabWrap
-        className={choiceTab === 'tab04' ? 'active' : ''}
+        className={choiceTab === '무료공실매물관' ? 'active' : ''}
         onClick={() => {
-          setChoiceTab('tab04');
+          setChoiceTab('무료공실매물관');
         }}
       >
         <Title>

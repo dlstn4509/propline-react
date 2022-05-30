@@ -146,10 +146,18 @@ const ItemPage = () => {
     }
   };
 
+  const findTypeName = (isTypename) => {
+    for (let v of typeNameList) {
+      return `(${v[isTypename]})`;
+    }
+  };
+
   return (
     <ItemPageWrapper>
       <PageWrap>
-        <Title>공실매물 {isTypename}</Title>
+        <Title>
+          공실매물 <span style={{ fontSize: '16px' }}>{findTypeName(isTypename)}</span>
+        </Title>
         <ItemTypeCp />
         {isMapType === 'block' && (
           <BlockMapCp
@@ -302,3 +310,15 @@ const ItemPage = () => {
 };
 
 export default React.memo(ItemPage);
+
+const typeNameList = [
+  {
+    all: '전체',
+    normal: '일반룸',
+    fullopt: '풀옵션',
+    office: '사무실',
+    store: '상가',
+    officetel: '오피스텔',
+    apt: '아파트',
+  },
+];

@@ -72,15 +72,24 @@ const ChoiceAreaWrap = styled(FlexDiv)`
   padding: 10px 45px;
 `;
 const ChoiceAreaBox = styled(FlexDiv)`
+  justify-content: space-between;
   flex-wrap: wrap;
   border: 1px solid #ced6e3;
   margin-left: 10px;
   width: 800px;
-  height: 22px;
+  height: 26px;
   font-size: 13px;
   padding-left: 10px;
   .info {
     color: ${color.blue};
+  }
+  .clearArea {
+    color: #fff;
+    background-color: #ee1133;
+    margin-right: 10px;
+    border-radius: 4px;
+    padding: 0 4px;
+    cursor: pointer;
   }
 `;
 const ChoiceArea = styled(FlexDiv)`
@@ -267,12 +276,24 @@ const SearchCp = () => {
           {clickEupmyeondongArr.length === 0 && (
             <div className="info">지역을 선택하세요. (최대 5개 지역 선택가능)</div>
           )}
-          {clickEupmyeondongArr.map((v, i) => (
-            <ChoiceArea key={i}>
-              <div>{v}</div>
-              <FaWindowClose onClick={choiceAreaClick} />
-            </ChoiceArea>
-          ))}
+          <FlexDiv>
+            {clickEupmyeondongArr.map((v, i) => (
+              <ChoiceArea key={i}>
+                <div>{v}</div>
+                <FaWindowClose onClick={choiceAreaClick} />
+              </ChoiceArea>
+            ))}
+          </FlexDiv>
+          {clickEupmyeondongArr.length !== 0 && (
+            <div
+              className="clearArea"
+              onClick={() => {
+                setClickEupmyeondongArr([]);
+              }}
+            >
+              초기화
+            </div>
+          )}
         </ChoiceAreaBox>
       </ChoiceAreaWrap>
 
