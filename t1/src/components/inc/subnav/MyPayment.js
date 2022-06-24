@@ -43,6 +43,9 @@ const MyPayment = ({ mouseLeave }) => {
         <SubNav className={isPathname === '/paymenthistory' ? 'active' : ''}>
           <Link to="/paymenthistory">결제 내역</Link>
         </SubNav>
+        {/* <SubNav className={isPathname === '/schedule' ? 'active' : ''}>
+          <Link to="/schedule">일정관리</Link>
+        </SubNav> */}
       </SubNavWrap>
     </SubNavWrapper>
   );

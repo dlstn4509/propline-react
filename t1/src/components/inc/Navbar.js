@@ -180,7 +180,8 @@ const Navbar = () => {
                 isPathname === '/extrapayment' ||
                 isPathname === '/gpoint' ||
                 isPathname === '/paymenthistory'
-                  ? 'active'
+                  ? // || isPathname === '/schedule'
+                    'active'
                   : ''
               }
               fs={'15px'}

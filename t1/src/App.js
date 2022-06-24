@@ -49,6 +49,7 @@ import MobileappPage from '@/pages/serviceGuide/MobileappPage';
 import CardPage from '@/pages/myPayment/CardPage';
 import ExtraPaymentPage from '@/pages/myPayment/ExtraPaymentPage';
 import GPointPage from '@/pages/myPayment/GPointPage';
+import SchedulePage from '@/pages/myPayment/SchedulePage';
 
 /***************** other *****************/
 import MainPage from '@/pages/MainPage';
@@ -58,6 +59,7 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 import RequestSalePage from '@/pages/RequestSalePage';
 import BannerPage from '@/pages/BannerPage';
+import ContractPage from '@/pages/ContractPage';
 
 import ManualPage from '@/pages/manual/ManualPage';
 
@@ -135,6 +137,8 @@ const App = () => {
         <Route path="/requestsale" element={<RequestSalePage />} />
         <Route path="/manual" element={<ManualPage />} />
         <Route path="/banner" element={<BannerPage />} />
+        <Route path="/schedule" element={<SchedulePage />} />
+        <Route path="/contract" element={<ContractPage />} />
       </Routes>
       {isPathname !== '/manual' && (
         <>
