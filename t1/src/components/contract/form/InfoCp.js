@@ -45,7 +45,7 @@ const Input = styled.input`
   }
 `;
 
-const InfoCp = () => {
+const InfoCp = ({ formType }) => {
   return (
     <InfoCpWrapper>
       <Title>1. 부동산의 표시</Title>
@@ -66,32 +66,44 @@ const InfoCp = () => {
               <Input width={'560px'} type="text" />
             </td>
           </tr>
-          <tr>
-            <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>토지</TdTitle>
-            <TdTitle>지목</TdTitle>
-            <td colSpan={3}>
-              <Input type="text" />
-            </td>
-            <TdTitle>면적 (m²)</TdTitle>
-            <td>
-              <Input type="text" />
-            </td>
-          </tr>
-          <tr>
-            <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>건물</TdTitle>
-            <TdTitle>구조</TdTitle>
-            <td>
-              <Input type="text" />
-            </td>
-            <TdTitle>용도</TdTitle>
-            <td>
-              <Input type="text" />
-            </td>
-            <TdTitle>면적 (m²)</TdTitle>
-            <td>
-              <Input type="text" />
-            </td>
-          </tr>
+          {formType !== 'short' && (
+            <>
+              <tr>
+                <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>토지</TdTitle>
+                <TdTitle>지목</TdTitle>
+                <td colSpan={3}>
+                  <Input type="text" />
+                </td>
+                <TdTitle>면적 (m²)</TdTitle>
+                <td>
+                  <Input type="text" />
+                </td>
+              </tr>
+              <tr>
+                <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>건물</TdTitle>
+                <TdTitle>구조</TdTitle>
+                <td>
+                  <Input type="text" />
+                </td>
+                <TdTitle>용도</TdTitle>
+                <td>
+                  <Input type="text" />
+                </td>
+                <TdTitle>면적 (m²)</TdTitle>
+                <td>
+                  <Input type="text" />
+                </td>
+              </tr>
+            </>
+          )}
+          {(formType === 'lease' || formType === 'rental') && (
+            <tr>
+              <TdTitle colSpan={2}>임대할 부분</TdTitle>
+              <td colSpan={5}>
+                <Input width={'560px'} type="text" />
+              </td>
+            </tr>
+          )}
         </tbody>
       </TableWrap>
     </InfoCpWrapper>

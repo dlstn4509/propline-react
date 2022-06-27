@@ -1,6 +1,8 @@
-import React from 'react';
-import styled from '@/style';
+import React, { useState } from 'react';
+import styled, { color, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+
+import { FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 
 const ContractorCpWrapper = styled.div``;
 const TableWrap = styled.table`
@@ -43,8 +45,17 @@ const Select = styled.select`
   font-size: 13px;
   color: #464d50;
 `;
+const LabelWrap = styled(FlexDiv)`
+  font-size: 10pt;
+  margin-top: 6px;
+  cursor: pointer;
+  svg {
+    margin-right: 6px;
+  }
+`;
 
 const ContractorCp = () => {
+  const [labelCheck, setLabelCheck] = useState(false);
   return (
     <ContractorCpWrapper>
       <TableWrap>
@@ -233,6 +244,15 @@ const ContractorCp = () => {
           </Tr>
         </tbody>
       </TableWrap>
+      <LabelWrap
+        onClick={() => {
+          setLabelCheck(!labelCheck);
+        }}
+      >
+        {!labelCheck && <FaRegSquare />}
+        {labelCheck && <FaCheckSquare style={{ color: color.blue }} />}
+        <span>개업공인중개사란 1개만 출력 (여백 조정이 가능하신 분만 사용하십시요.)</span>
+      </LabelWrap>
     </ContractorCpWrapper>
   );
 };

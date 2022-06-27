@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { FlexDiv, color } from '@/style';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const TabWrapper = styled(FlexDiv)`
   margin-bottom: 50px;
@@ -22,53 +22,46 @@ const TabWrap = styled(FlexDiv)`
   }
 `;
 
-const TabCp = () => {
-  const navigate = useNavigate();
-  const [active, setActive] = useState('sale');
+const TabCp = ({ formType, setFormType }) => {
   return (
     <TabWrapper>
       <TabWrap
         onClick={() => {
-          navigate('/contract?type=sale');
-          setActive('sale');
+          setFormType('sale');
         }}
-        className={active === 'sale' ? 'active' : ''}
+        className={formType === 'sale' ? 'active' : ''}
       >
         매매계약서
       </TabWrap>
       <TabWrap
         onClick={() => {
-          navigate('/contract?type=lease');
-          setActive('lease');
+          setFormType('lease');
         }}
-        className={active === 'lease' ? 'active' : ''}
+        className={formType === 'lease' ? 'active' : ''}
       >
         전세계약서
       </TabWrap>
       <TabWrap
         onClick={() => {
-          navigate('/contract?type=rental');
-          setActive('rental');
+          setFormType('rental');
         }}
-        className={active === 'rental' ? 'active' : ''}
+        className={formType === 'rental' ? 'active' : ''}
       >
         월세계약서
       </TabWrap>
       <TabWrap
         onClick={() => {
-          navigate('/contract?type=short');
-          setActive('short');
+          setFormType('short');
         }}
-        className={active === 'short' ? 'active' : ''}
+        className={formType === 'short' ? 'active' : ''}
       >
         단기임대차계약서
       </TabWrap>
       <TabWrap
         onClick={() => {
-          navigate('/contract?type=form');
-          setActive('form');
+          setFormType('form');
         }}
-        className={active === 'form' ? 'active' : ''}
+        className={formType === 'form' ? 'active' : ''}
       >
         서식함
       </TabWrap>

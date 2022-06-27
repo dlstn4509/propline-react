@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+import store from '@/store/store';
 
 const PriceCpWrapper = styled.div`
   margin-bottom: 30px;
@@ -55,11 +56,17 @@ const Input = styled.input`
 `;
 
 const PriceCp = () => {
+  const { isTypename } = store();
   return (
     <PriceCpWrapper>
-      <Title>2.계약내용</Title>
+      {isTypename !== 'short' && <Title>2.계약내용</Title>}
+      {isTypename === 'short' && <Title>3. 예치금 및 차임등의 지불 약정</Title>}
       <TextWrpa>
-        제 1조 위 부동산의 매매에 있어 매매대금 및 매수인의 대금 지불시기는 다음과 같다.
+        {isTypename === 'sale'
+          ? '제 1조 위 부동산의 매매에 있어 매매대금 및 매수인의 대금 지불시기는 다음과 같다.'
+          : isTypename === 'short'
+          ? '위 부동산의 임대차에 대하여 임차인은 예치금 및 차임등을 아래와 같이 지불 한다.'
+          : '제1조 위 부동산의 임대차에 있어 임차인은 임대차보증금을 아래와 같이 지불하기로 한다.'}
         <div>※ 금액은 숫자로 입력하십시오.</div>
       </TextWrpa>
       <TableWrap>
@@ -70,7 +77,9 @@ const PriceCp = () => {
         </colgroup>
         <tbody>
           <tr>
-            <TdTitle>매매대금</TdTitle>
+            <TdTitle>
+              {isTypename === 'sale' ? '매매대금' : isTypename === 'short' ? '예치금' : '보증금'}
+            </TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
                 一金 <Input type="text" />
@@ -88,7 +97,7 @@ const PriceCp = () => {
             <Td>정은 계약시에 지불하고 영수함.</Td>
           </tr>
           <tr>
-            <TdTitle>1차중도금</TdTitle>
+            <TdTitle>{isTypename === 'sale' && '1차'}중도금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
                 一金 <Input type="text" />
@@ -102,21 +111,23 @@ const PriceCp = () => {
               </FlexDiv>
             </Td>
           </tr>
-          <tr>
-            <TdTitle>2차중도금</TdTitle>
-            <Td style={{ borderRight: '1px solid #c6cfdc' }}>
-              <FlexDiv>
-                一金 <Input type="text" />
-              </FlexDiv>
-            </Td>
-            <Td>
-              <FlexDiv>
-                정은 <Input width={'50px'} type="text" />년 <Input width={'30px'} type="text" />월
-                <Input width={'30px'} type="text" />
-                일에
-              </FlexDiv>
-            </Td>
-          </tr>
+          {isTypename === 'sale' && (
+            <tr>
+              <TdTitle>2차중도금</TdTitle>
+              <Td style={{ borderRight: '1px solid #c6cfdc' }}>
+                <FlexDiv>
+                  一金 <Input type="text" />
+                </FlexDiv>
+              </Td>
+              <Td>
+                <FlexDiv>
+                  정은 <Input width={'50px'} type="text" />년 <Input width={'30px'} type="text" />월
+                  <Input width={'30px'} type="text" />
+                  일에
+                </FlexDiv>
+              </Td>
+            </tr>
+          )}
           <tr>
             <TdTitle>잔 금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
@@ -132,19 +143,41 @@ const PriceCp = () => {
               </FlexDiv>
             </Td>
           </tr>
-          <tr>
-            <TdTitle>융 자 금</TdTitle>
-            <Td style={{ borderRight: '1px solid #c6cfdc' }}>
-              <FlexDiv>
-                一金 <Input type="text" />
-              </FlexDiv>
-            </Td>
-            <Td>
-              <FlexDiv>
-                정은 <Input type="text" /> 한다
-              </FlexDiv>
-            </Td>
-          </tr>
+          {isTypename === 'sale' && (
+            <tr>
+              <TdTitle>융 자 금</TdTitle>
+              <Td style={{ borderRight: '1px solid #c6cfdc' }}>
+                <FlexDiv>
+                  一金 <Input type="text" />
+                </FlexDiv>
+              </Td>
+              <Td>
+                <FlexDiv>
+                  정은 <Input type="text" /> 한다
+                </FlexDiv>
+              </Td>
+            </tr>
+          )}
+          {(isTypename === 'rental' || isTypename === 'short') && (
+            <tr>
+              <TdTitle>차 임</TdTitle>
+              <Td style={{ borderRight: '1px solid #c6cfdc' }}>
+                <FlexDiv>
+                  一金 <Input type="text" />
+                </FlexDiv>
+              </Td>
+              <Td>
+                <FlexDiv>
+                  정은 매월 <Input type="text" width={'20px'} />
+                  일에 (<input type="radio" id="선불" name="monthly_rent_payment_type" />
+                  <label htmlFor="선불">선불</label>
+                  ,
+                  <input type="radio" id="후불" name="monthly_rent_payment_type" />
+                  <label htmlFor="후불">후불</label>) 지불한다
+                </FlexDiv>
+              </Td>
+            </tr>
+          )}
         </tbody>
       </TableWrap>
     </PriceCpWrapper>

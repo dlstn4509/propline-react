@@ -51,6 +51,9 @@ import ExtraPaymentPage from '@/pages/myPayment/ExtraPaymentPage';
 import GPointPage from '@/pages/myPayment/GPointPage';
 import SchedulePage from '@/pages/myPayment/SchedulePage';
 
+/***************** Contract *****************/
+import ContractPage from '@/pages/contract/ContractPage';
+
 /***************** other *****************/
 import MainPage from '@/pages/MainPage';
 import LoginPage from '@/pages/LoginPage';
@@ -59,7 +62,6 @@ import BusinessSignUpPage from '@/pages/BusinessSignUpPage';
 import NormalSignUpPage from '@/pages/NormalSignUpPage';
 import RequestSalePage from '@/pages/RequestSalePage';
 import BannerPage from '@/pages/BannerPage';
-import ContractPage from '@/pages/ContractPage';
 
 import ManualPage from '@/pages/manual/ManualPage';
 
