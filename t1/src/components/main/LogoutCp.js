@@ -105,7 +105,7 @@ const LogoutCp = () => {
           <div>회원정보</div>
           <div>수정</div>
         </IconsWrap>
-        <IconsWrap to="/contract?type=sale">
+        <IconsWrap to="/contract">
           <FaFolderOpen />
           <div>계약서</div>
           <div>관리</div>

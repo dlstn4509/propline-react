@@ -1,3 +1,4 @@
+/* global daum */
 import React, { useState } from 'react';
 import styled, { color, FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
@@ -55,7 +56,17 @@ const LabelWrap = styled(FlexDiv)`
 `;
 
 const ContractorCp = () => {
-  const [labelCheck, setLabelCheck] = useState(false);
+  const [labelCheck, setLabelCheck] = useState(0);
+
+  const findAddress = (type) => {
+    // grantor : 매도인, grantee : 매수인, agent1_office : 중개사1, agent2_office : 중개사2
+    new daum.Postcode({
+      oncomplete: async function (data) {
+        document.querySelector(`input[name=${type}_address]`).value = data.jibunAddress;
+      },
+    }).open();
+  };
+
   return (
     <ContractorCpWrapper>
       <TableWrap>
@@ -76,7 +87,15 @@ const ContractorCp = () => {
             </TdTitle>
             <TdTitle>주소</TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input
+                type="text"
+                width={'570px'}
+                readOnly
+                name="grantor_address"
+                onClick={() => {
+                  findAddress('grantor');
+                }}
+              />
             </Td>
             <Td rowSpan={3} style={{ textAlign: 'center' }}>
               (인)
@@ -84,19 +103,19 @@ const ContractorCp = () => {
           </Tr>
           <Tr>
             <TdTitle>
-              <Select name="" id="">
-                <option value="">주민등록번호</option>
-                <option value="">생년월일</option>
-                <option value="">사업자번호</option>
-                <option value="">법인등록번호</option>
+              <Select name="grantor_identity_no_type">
+                <option value="1">주민등록번호</option>
+                <option value="2">생년월일</option>
+                <option value="3">사업자번호</option>
+                <option value="4">법인등록번호</option>
               </Select>
             </TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="text" name="grantor_identity_no" />
             </td>
             <TdTitle>전화</TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="number" name="grantor_phone" />
             </td>
             <TdTitle>
               성명
@@ -106,18 +125,18 @@ const ContractorCp = () => {
               상호
             </TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="text" name="grantor_name" />
             </td>
           </Tr>
           <Tr>
             <TdTitle>
-              <Select name="" id="">
-                <option value="">대리인</option>
-                <option value="">공동명의자</option>
+              <Select name="grantor_proxy_type">
+                <option value="1">대리인</option>
+                <option value="2">공동명의자</option>
               </Select>
             </TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input type="text" width={'570px'} name="grantor_proxy_name" />
             </Td>
           </Tr>
           <Tr>
@@ -126,7 +145,15 @@ const ContractorCp = () => {
             </TdTitle>
             <TdTitle>주소</TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input
+                type="text"
+                width={'570px'}
+                readOnly
+                name="grantee_address"
+                onClick={() => {
+                  findAddress('grantee');
+                }}
+              />
             </Td>
             <Td rowSpan={3} style={{ textAlign: 'center' }}>
               (인)
@@ -134,19 +161,19 @@ const ContractorCp = () => {
           </Tr>
           <Tr>
             <TdTitle>
-              <Select name="" id="">
-                <option value="">주민등록번호</option>
-                <option value="">생년월일</option>
-                <option value="">사업자번호</option>
-                <option value="">법인등록번호</option>
+              <Select name="grantee_identity_no_type">
+                <option value="1">주민등록번호</option>
+                <option value="2">생년월일</option>
+                <option value="3">사업자번호</option>
+                <option value="4">법인등록번호</option>
               </Select>
             </TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="text" name="grantee_identity_no" />
             </td>
             <TdTitle>전화</TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="text" name="grantee_phone" />
             </td>
             <TdTitle>
               성명
@@ -156,18 +183,18 @@ const ContractorCp = () => {
               상호
             </TdTitle>
             <td>
-              <Input type="text" />
+              <Input type="text" name="grantee_name" />
             </td>
           </Tr>
           <Tr>
             <TdTitle>
-              <Select name="" id="">
-                <option value="">대리인</option>
-                <option value="">공동명의자</option>
+              <Select name="grantee_proxy_type">
+                <option value="1">대리인</option>
+                <option value="2">공동명의자</option>
               </Select>
             </TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input type="text" width={'570px'} name="grantee_proxy_name" />
             </Td>
           </Tr>
           <Tr>
@@ -180,7 +207,15 @@ const ContractorCp = () => {
             </TdTitle>
             <TdTitle>사무소재지</TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input
+                type="text"
+                width={'570px'}
+                readOnly
+                name="agent1_office_address"
+                onClick={() => {
+                  findAddress('agent1_office');
+                }}
+              />
             </Td>
             <Td rowSpan={3} style={{ textAlign: 'center' }}>
               (인)
@@ -189,21 +224,21 @@ const ContractorCp = () => {
           <Tr>
             <TdTitle>사무소명</TdTitle>
             <Td colSpan={3}>
-              <Input type="text" />
+              <Input type="text" name="agent1_office_name" />
             </Td>
             <TdTitle>전화</TdTitle>
             <Td>
-              <Input type="text" />
+              <Input type="text" name="agent1_office_phone" />
             </Td>
           </Tr>
           <Tr>
             <TdTitle>등록번호</TdTitle>
             <Td colSpan={3}>
-              <Input type="text" />
+              <Input type="text" name="agent1_office_registration_no" />
             </Td>
             <TdTitle>대표</TdTitle>
             <Td>
-              <Input type="text" />
+              <Input type="text" name="agent1_office_ceo_name" />
             </Td>
           </Tr>
           <Tr>
@@ -216,7 +251,15 @@ const ContractorCp = () => {
             </TdTitle>
             <TdTitle>사무소재지</TdTitle>
             <Td colSpan={5}>
-              <Input type="text" width={'570px'} />
+              <Input
+                type="text"
+                width={'570px'}
+                readOnly
+                name="agent2_office_address"
+                onClick={() => {
+                  findAddress('agent2_office');
+                }}
+              />
             </Td>
             <Td rowSpan={3} style={{ textAlign: 'center' }}>
               (인)
@@ -225,33 +268,34 @@ const ContractorCp = () => {
           <Tr>
             <TdTitle>사무소명</TdTitle>
             <Td colSpan={3}>
-              <Input type="text" />
+              <Input type="text" name="agent2_office_name" />
             </Td>
             <TdTitle>전화</TdTitle>
             <Td>
-              <Input type="text" />
+              <Input type="text" name="agent2_office_phone" />
             </Td>
           </Tr>
           <Tr>
             <TdTitle>등록번호</TdTitle>
             <Td colSpan={3}>
-              <Input type="text" />
+              <Input type="text" name="agent2_office_registration_no" />
             </Td>
             <TdTitle>대표</TdTitle>
             <Td>
-              <Input type="text" />
+              <Input type="text" name="agent2_office_ceo_name" />
             </Td>
           </Tr>
         </tbody>
       </TableWrap>
       <LabelWrap
         onClick={() => {
-          setLabelCheck(!labelCheck);
+          setLabelCheck(labelCheck === 0 ? 1 : 0);
         }}
       >
-        {!labelCheck && <FaRegSquare />}
-        {labelCheck && <FaCheckSquare style={{ color: color.blue }} />}
+        {labelCheck === 0 && <FaRegSquare />}
+        {labelCheck === 1 && <FaCheckSquare style={{ color: color.blue }} />}
         <span>개업공인중개사란 1개만 출력 (여백 조정이 가능하신 분만 사용하십시요.)</span>
+        <input type="hidden" name="agent_one_chk" value={labelCheck} />
       </LabelWrap>
     </ContractorCpWrapper>
   );

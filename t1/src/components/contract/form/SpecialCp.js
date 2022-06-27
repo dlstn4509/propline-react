@@ -42,15 +42,15 @@ const SpecialCp = () => {
   return (
     <SpecialCpWrapper>
       <Title>[특약사항]</Title>
-      <textarea name="" id="" cols="30" rows="10"></textarea>
+      <textarea name="special_contract" id="" cols="30" rows="10"></textarea>
       <Text>
         본 계약을 증명하기 위하여 계약당사자가 이의 없음을 확인하고 각각 서명·날인 후 매도인,매수인 및
         개업공인중개사는 매장마다 간인하여야 하며, 각각1통씩 보관한다.
       </Text>
       <ContractDateWrap>
-        <Input type="text" defaultValue={yaer} /> 년
-        <Input type="text" defaultValue={month} /> 월
-        <Input type="text" defaultValue={day} /> 일
+        <Input type="text" defaultValue={yaer} name="contract_date_year" /> 년
+        <Input type="text" defaultValue={month} name="contract_date_month" /> 월
+        <Input type="text" defaultValue={day} name="contract_date_day" /> 일
       </ContractDateWrap>
     </SpecialCpWrapper>
   );

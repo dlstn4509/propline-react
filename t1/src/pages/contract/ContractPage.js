@@ -24,8 +24,10 @@ const ContractPage = () => {
       <PageWrap>
         <Title>계약서 관리</Title>
         <TabCp formType={formType} setFormType={setFormType} />
-        {!pageType && <ListCp formType={formType} setPageType={setPageType} />}
-        {pageType === 'form' && <FormCp formType={formType} setPageType={setPageType} />}
+        <form action={process.env.REACT_APP_URL_API + 'contract'} method="POST">
+          {!pageType && <ListCp formType={formType} setPageType={setPageType} />}
+          {pageType === 'form' && <FormCp formType={formType} setPageType={setPageType} />}
+        </form>
       </PageWrap>
     </PageWrapper>
   );

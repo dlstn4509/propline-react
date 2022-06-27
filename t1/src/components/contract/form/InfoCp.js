@@ -1,6 +1,8 @@
+/* global daum */
 import React from 'react';
-import styled from '@/style';
+import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const InfoCpWrapper = styled.div`
   margin-bottom: 40px;
@@ -46,9 +48,26 @@ const Input = styled.input`
 `;
 
 const InfoCp = ({ formType }) => {
+  const findAddress = () => {
+    new daum.Postcode({
+      oncomplete: async function (data) {
+        let addressArr = data.jibunAddress.split(' ');
+        console.log(data);
+        document.querySelector('#address').value = data.jibunAddress;
+        document.querySelector('input[name=sido]').value = data.sido;
+        document.querySelector('input[name=sigungu]').value = data.sigungu;
+        document.querySelector('input[name=eupmyeondong]').value = data.bname;
+        document.querySelector('input[name=bungi]').value = addressArr[addressArr.length - 1];
+      },
+    }).open();
+  };
   return (
     <InfoCpWrapper>
       <Title>1. 부동산의 표시</Title>
+      <input type="hidden" name="sido" />
+      <input type="hidden" name="sigungu" />
+      <input type="hidden" name="eupmyeondong" />
+      <input type="hidden" name="bungi" />
       <TableWrap>
         <colgroup>
           <col style={{ width: '62px' }} />
@@ -63,7 +82,7 @@ const InfoCp = ({ formType }) => {
           <tr>
             <TdTitle colSpan={2}>소재지</TdTitle>
             <td colSpan={5}>
-              <Input width={'560px'} type="text" />
+              <Input width={'560px'} type="text" id="address" onClick={findAddress} readOnly />
             </td>
           </tr>
           {formType !== 'short' && (
@@ -72,26 +91,26 @@ const InfoCp = ({ formType }) => {
                 <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>토지</TdTitle>
                 <TdTitle>지목</TdTitle>
                 <td colSpan={3}>
-                  <Input type="text" />
+                  <Input type="text" name="land_purpose" />
                 </td>
                 <TdTitle>면적 (m²)</TdTitle>
                 <td>
-                  <Input type="text" />
+                  <Input type="text" name="land_area" />
                 </td>
               </tr>
               <tr>
                 <TdTitle style={{ borderRight: '1px solid  #c6cfdc' }}>건물</TdTitle>
                 <TdTitle>구조</TdTitle>
                 <td>
-                  <Input type="text" />
+                  <Input type="text" name="building_structure" />
                 </td>
                 <TdTitle>용도</TdTitle>
                 <td>
-                  <Input type="text" />
+                  <Input type="text" name="building_use" />
                 </td>
                 <TdTitle>면적 (m²)</TdTitle>
                 <td>
-                  <Input type="text" />
+                  <Input type="text" name="building_area" />
                 </td>
               </tr>
             </>

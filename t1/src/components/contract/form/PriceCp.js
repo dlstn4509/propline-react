@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
-import store from '@/store/store';
 
 const PriceCpWrapper = styled.div`
   margin-bottom: 30px;
@@ -55,16 +54,15 @@ const Input = styled.input`
   }
 `;
 
-const PriceCp = () => {
-  const { isTypename } = store();
+const PriceCp = ({ formType }) => {
   return (
     <PriceCpWrapper>
-      {isTypename !== 'short' && <Title>2.계약내용</Title>}
-      {isTypename === 'short' && <Title>3. 예치금 및 차임등의 지불 약정</Title>}
+      {formType !== 'short' && <Title>2.계약내용</Title>}
+      {formType === 'short' && <Title>3. 예치금 및 차임등의 지불 약정</Title>}
       <TextWrpa>
-        {isTypename === 'sale'
+        {formType === 'sale'
           ? '제 1조 위 부동산의 매매에 있어 매매대금 및 매수인의 대금 지불시기는 다음과 같다.'
-          : isTypename === 'short'
+          : formType === 'short'
           ? '위 부동산의 임대차에 대하여 임차인은 예치금 및 차임등을 아래와 같이 지불 한다.'
           : '제1조 위 부동산의 임대차에 있어 임차인은 임대차보증금을 아래와 같이 지불하기로 한다.'}
         <div>※ 금액은 숫자로 입력하십시오.</div>
@@ -77,12 +75,11 @@ const PriceCp = () => {
         </colgroup>
         <tbody>
           <tr>
-            <TdTitle>
-              {isTypename === 'sale' ? '매매대금' : isTypename === 'short' ? '예치금' : '보증금'}
-            </TdTitle>
+            <TdTitle>{formType === 'sale' ? '매매대금' : formType === 'short' ? '예치금' : '보증금'}</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" />
+                一金
+                <Input type="text" name={formType === 'sale' ? 'selling_amount' : 'security'} />
               </FlexDiv>
             </Td>
             <Td>정(￦ )</Td>
@@ -91,38 +88,40 @@ const PriceCp = () => {
             <TdTitle>계약금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" />
+                一金 <Input type="text" name="earnest" />
               </FlexDiv>
             </Td>
             <Td>정은 계약시에 지불하고 영수함.</Td>
           </tr>
           <tr>
-            <TdTitle>{isTypename === 'sale' && '1차'}중도금</TdTitle>
+            <TdTitle>{formType === 'sale' && '1차'}중도금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" />
+                一金 <Input type="text" name="interim1_amount" />
               </FlexDiv>
             </Td>
             <Td>
               <FlexDiv>
-                정은 <Input width={'50px'} type="text" />년 <Input width={'30px'} type="text" />월
-                <Input width={'30px'} type="text" />
+                정은 <Input width={'50px'} type="text" name="interim1_date_year" />년
+                <Input width={'30px'} type="text" name="interim1_date_month" />월
+                <Input width={'30px'} type="text" name="interim1_date_day" />
                 일에
               </FlexDiv>
             </Td>
           </tr>
-          {isTypename === 'sale' && (
+          {formType === 'sale' && (
             <tr>
               <TdTitle>2차중도금</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" />
+                  一金 <Input type="text" name="interim2_amount" />
                 </FlexDiv>
               </Td>
               <Td>
                 <FlexDiv>
-                  정은 <Input width={'50px'} type="text" />년 <Input width={'30px'} type="text" />월
-                  <Input width={'30px'} type="text" />
+                  정은 <Input width={'50px'} type="text" name="interim2_date_yaer" />년
+                  <Input width={'30px'} type="text" name="interim2_date_month" />월
+                  <Input width={'30px'} type="text" name="interim2_date_day" />
                   일에
                 </FlexDiv>
               </Td>
@@ -132,33 +131,34 @@ const PriceCp = () => {
             <TdTitle>잔 금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" />
+                一金 <Input type="text" name="balance" />
               </FlexDiv>
             </Td>
             <Td>
               <FlexDiv>
-                정은 <Input width={'50px'} type="text" />년 <Input width={'30px'} type="text" />월
-                <Input width={'30px'} type="text" />
+                정은 <Input width={'50px'} type="text" name="balance_date_year" />년
+                <Input width={'30px'} type="text" name="balance_date_month" />월
+                <Input width={'30px'} type="text" name="balance_date_day" />
                 일에 지불한다.
               </FlexDiv>
             </Td>
           </tr>
-          {isTypename === 'sale' && (
+          {formType === 'sale' && (
             <tr>
               <TdTitle>융 자 금</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" />
+                  一金 <Input type="text" name="loan_amount" />
                 </FlexDiv>
               </Td>
               <Td>
                 <FlexDiv>
-                  정은 <Input type="text" /> 한다
+                  정은 <Input type="text" name="loan_promise" /> 한다
                 </FlexDiv>
               </Td>
             </tr>
           )}
-          {(isTypename === 'rental' || isTypename === 'short') && (
+          {(formType === 'rental' || formType === 'short') && (
             <tr>
               <TdTitle>차 임</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>

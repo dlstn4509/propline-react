@@ -20,7 +20,7 @@ const ButtonWrap = styled(FlexDiv)`
   justify-content: right;
   margin-bottom: 30px;
 `;
-const Button = styled.div`
+const Button = styled.button`
   display: ${(props) => props.display};
   margin-left: ${(props) => props.ml};
   width: 150px;
@@ -66,7 +66,7 @@ const FormCp = ({ formType, setPageType }) => {
         <SubTitleCp formType={formType} />
         <InfoCp formType={formType} />
         {formType === 'short' && <ShortPeriodCp />}
-        <PriceCp />
+        <PriceCp formType={formType} />
         {formType === 'short' && <MainTenanceFeeCp />}
         <TextCp formType={formType} />
         {formType === 'short' && (

@@ -47,8 +47,9 @@ const TextCp = ({ formType }) => {
               등기절차에 협력하며,
               <br />
               <FlexDiv>
-                위 부동산에 대하여 <Input type="text" />년 <Input type="text" width={'30px'} />월{' '}
-                <Input type="text" width={'30px'} />일 인도하기로 한다.
+                위 부동산에 대하여 <Input type="text" name="contract_start_date_year" />년
+                <Input type="text" width={'30px'} name="contract_start_date_month" />월
+                <Input type="text" width={'30px'} name="contract_start_date_day" />일 인도하기로 한다.
               </FlexDiv>
             </Text>
           </TextCpWrap>
@@ -95,7 +96,7 @@ const TextCp = ({ formType }) => {
               중개인 경우에 매도인과 매수인은 자신이 중개 의뢰한 개업공인중개사에게 각각 중개보수를 지급한다.
               <br />
               <FlexDiv>
-                (중개보수는 거래가액의 <Input type="text" />
+                (중개보수는 거래가액의 <Input type="text" name="commission_rate" />
                 %로 한다)
               </FlexDiv>
             </Text>
@@ -124,7 +125,7 @@ const TextCp = ({ formType }) => {
               임대인은 위 부동산을 임대차 목적대로 사용 수익할 수 있는 상태로
               <br />
               <FlexDiv>
-                위 부동산에 대하여 <Input type="text" />년 <Input type="text" width={'30px'} />월{' '}
+                위 부동산에 대하여 <Input type="text" />년 <Input type="text" width={'30px'} />월
                 <Input type="text" width={'30px'} />일 까지 임차인에게 인도하며, 임대차 기간은 인도일로부터
                 <Input type="text" />년 <Input type="text" width={'30px'} />월
                 <Input type="text" width={'30px'} />일 까지로 한다.
