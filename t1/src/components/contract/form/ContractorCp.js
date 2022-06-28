@@ -115,7 +115,7 @@ const ContractorCp = () => {
             </td>
             <TdTitle>전화</TdTitle>
             <td>
-              <Input type="number" name="grantor_phone" />
+              <Input type="text" name="grantor_phone" />
             </td>
             <TdTitle>
               성명

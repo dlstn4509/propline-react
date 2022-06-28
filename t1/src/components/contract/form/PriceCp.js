@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -54,7 +54,42 @@ const Input = styled.input`
   }
 `;
 
-const PriceCp = ({ formType }) => {
+const PriceCp = ({ formType, onBlurMakeZero, makeCommaNum }) => {
+  const [securityNum, setSecurityNum] = useState('');
+  const changeSecurity = (e) => {
+    if (e.target.name === 'selling_amount' || e.target.name === 'security') {
+      setSecurityNum(e.target.value);
+    }
+
+    let text = e.target.value.split(',').join('');
+    let numKor = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구', '십'];
+    let danKor = ['', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천', '', '십', '백', '천'];
+
+    let result = '';
+    if (text && !isNaN(text)) {
+      for (let i = 0; i < text.length; i++) {
+        let str = '';
+        let num = numKor[text.charAt(text.length - (i + 1))];
+        if (num != '') str += num + danKor[i];
+        switch (i) {
+          case 4:
+            str += '만';
+            break;
+          case 8:
+            str += '억';
+            break;
+          case 12:
+            str += '조';
+            break;
+          default:
+        }
+        result = str + result;
+      }
+      result = result + '원';
+    }
+    e.target.nextSibling.innerHTML = result;
+  };
+
   return (
     <PriceCpWrapper>
       {formType !== 'short' && <Title>2.계약내용</Title>}
@@ -79,16 +114,24 @@ const PriceCp = ({ formType }) => {
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
                 一金
-                <Input type="text" name={formType === 'sale' ? 'selling_amount' : 'security'} />
+                <Input
+                  type="text"
+                  name={formType === 'sale' ? 'selling_amount' : 'security'}
+                  id="security"
+                  onKeyUp={makeCommaNum}
+                  onChange={changeSecurity}
+                />
+                <div style={{ marginLeft: '10px' }}></div>
               </FlexDiv>
             </Td>
-            <Td>정(￦ )</Td>
+            <Td>정(￦ {securityNum})</Td>
           </tr>
           <tr>
             <TdTitle>계약금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" name="earnest" />
+                一金 <Input type="text" name="earnest" onKeyUp={makeCommaNum} onChange={changeSecurity} />
+                <div style={{ marginLeft: '10px' }}></div>
               </FlexDiv>
             </Td>
             <Td>정은 계약시에 지불하고 영수함.</Td>
@@ -97,14 +140,16 @@ const PriceCp = ({ formType }) => {
             <TdTitle>{formType === 'sale' && '1차'}중도금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" name="interim1_amount" />
+                一金
+                <Input type="text" name="interim1_amount" onKeyUp={makeCommaNum} onChange={changeSecurity} />
+                <div style={{ marginLeft: '10px' }}></div>
               </FlexDiv>
             </Td>
             <Td>
               <FlexDiv>
                 정은 <Input width={'50px'} type="text" name="interim1_date_year" />년
-                <Input width={'30px'} type="text" name="interim1_date_month" />월
-                <Input width={'30px'} type="text" name="interim1_date_day" />
+                <Input width={'30px'} type="text" name="interim1_date_month" onBlur={onBlurMakeZero} />월
+                <Input width={'30px'} type="text" name="interim1_date_day" onBlur={onBlurMakeZero} />
                 일에
               </FlexDiv>
             </Td>
@@ -114,14 +159,21 @@ const PriceCp = ({ formType }) => {
               <TdTitle>2차중도금</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" name="interim2_amount" />
+                  一金
+                  <Input
+                    type="text"
+                    name="interim2_amount"
+                    onKeyUp={makeCommaNum}
+                    onChange={changeSecurity}
+                  />
+                  <div style={{ marginLeft: '10px' }}></div>
                 </FlexDiv>
               </Td>
               <Td>
                 <FlexDiv>
                   정은 <Input width={'50px'} type="text" name="interim2_date_yaer" />년
-                  <Input width={'30px'} type="text" name="interim2_date_month" />월
-                  <Input width={'30px'} type="text" name="interim2_date_day" />
+                  <Input width={'30px'} type="text" name="interim2_date_month" onBlur={onBlurMakeZero} />월
+                  <Input width={'30px'} type="text" name="interim2_date_day" onBlur={onBlurMakeZero} />
                   일에
                 </FlexDiv>
               </Td>
@@ -131,14 +183,15 @@ const PriceCp = ({ formType }) => {
             <TdTitle>잔 금</TdTitle>
             <Td style={{ borderRight: '1px solid #c6cfdc' }}>
               <FlexDiv>
-                一金 <Input type="text" name="balance" />
+                一金 <Input type="text" name="balance" onKeyUp={makeCommaNum} onChange={changeSecurity} />
+                <div style={{ marginLeft: '10px' }}></div>
               </FlexDiv>
             </Td>
             <Td>
               <FlexDiv>
                 정은 <Input width={'50px'} type="text" name="balance_date_year" />년
-                <Input width={'30px'} type="text" name="balance_date_month" />월
-                <Input width={'30px'} type="text" name="balance_date_day" />
+                <Input width={'30px'} type="text" name="balance_date_month" onBlur={onBlurMakeZero} />월
+                <Input width={'30px'} type="text" name="balance_date_day" onBlur={onBlurMakeZero} />
                 일에 지불한다.
               </FlexDiv>
             </Td>
@@ -148,7 +201,9 @@ const PriceCp = ({ formType }) => {
               <TdTitle>융 자 금</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" name="loan_amount" />
+                  一金
+                  <Input type="text" name="loan_amount" onKeyUp={makeCommaNum} onChange={changeSecurity} />
+                  <div style={{ marginLeft: '10px' }}></div>
                 </FlexDiv>
               </Td>
               <Td>
@@ -163,16 +218,17 @@ const PriceCp = ({ formType }) => {
               <TdTitle>차 임</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" />
+                  一金 <Input type="text" name="monthly_rent" />
                 </FlexDiv>
               </Td>
               <Td>
                 <FlexDiv>
-                  정은 매월 <Input type="text" width={'20px'} />
-                  일에 (<input type="radio" id="선불" name="monthly_rent_payment_type" />
+                  정은 매월 <Input type="text" width={'20px'} name="monthly_rent_payment_day" />
+                  일에 (
+                  <input type="radio" id="선불" name="monthly_rent_payment_type" value={1} defaultChecked />
                   <label htmlFor="선불">선불</label>
                   ,
-                  <input type="radio" id="후불" name="monthly_rent_payment_type" />
+                  <input type="radio" id="후불" name="monthly_rent_payment_type" value={2} />
                   <label htmlFor="후불">후불</label>) 지불한다
                 </FlexDiv>
               </Td>

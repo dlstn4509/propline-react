@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
@@ -34,11 +34,25 @@ const Input = styled.input`
   }
 `;
 
-const SpecialCp = () => {
+const SpecialCp = ({ onBlurMakeZero }) => {
   const [now] = useState(new Date());
-  const [yaer] = useState(now.getFullYear());
-  const [month] = useState(now.getMonth() + 1);
-  const [day] = useState(now.getDate());
+  const [year] = useState(now.getFullYear());
+  const [month, setMonth] = useState('');
+  // const [month, setMonth] = useState(now.getMonth() + 1);
+  const [day, setDay] = useState('');
+
+  useEffect(() => {
+    if (now.getMonth() + 1 < 10) {
+      setMonth('0' + (now.getMonth() + 1).toString());
+    } else {
+      setMonth(now.getMonth() + 1);
+    }
+    if (now.getDate() < 10) {
+      setDay('0' + now.getDate().toString());
+    } else {
+      setDay(now.getDate());
+    }
+  }, []);
   return (
     <SpecialCpWrapper>
       <Title>[특약사항]</Title>
@@ -48,9 +62,9 @@ const SpecialCp = () => {
         개업공인중개사는 매장마다 간인하여야 하며, 각각1통씩 보관한다.
       </Text>
       <ContractDateWrap>
-        <Input type="text" defaultValue={yaer} name="contract_date_year" /> 년
-        <Input type="text" defaultValue={month} name="contract_date_month" /> 월
-        <Input type="text" defaultValue={day} name="contract_date_day" /> 일
+        <Input type="text" defaultValue={year} name="contract_date_year" /> 년
+        <Input type="text" defaultValue={month} name="contract_date_month" onBlur={onBlurMakeZero} /> 월
+        <Input type="text" defaultValue={day} name="contract_date_day" onBlur={onBlurMakeZero} /> 일
       </ContractDateWrap>
     </SpecialCpWrapper>
   );

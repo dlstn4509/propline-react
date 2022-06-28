@@ -59,7 +59,7 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임차인은 매월 차임일에 일반관리비 (&nbsp;
-                <Input type="text" /> 원정&nbsp;) 를 지불하여야 한다.
+                <Input type="text" name="maintenance_fee" /> 원정&nbsp;) 를 지불하여야 한다.
               </FlexDiv>
             </Td>
           </tr>
@@ -68,7 +68,7 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임대차 기간중 발생하는&nbsp;
-                <Input type="text" />
+                <Input type="text" name="public_charges_item" />
                 &nbsp; 요금은 임차인이 부담 한다.
               </FlexDiv>
             </Td>
@@ -78,7 +78,7 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임차인은 퇴실시 침구세탁 및 청소비 (&nbsp;
-                <Input type="text" />
+                <Input type="text" name="cleaning_fee" />
                 원정&nbsp;) 를 지불하여야 한다.
               </FlexDiv>
             </Td>

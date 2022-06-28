@@ -1,8 +1,7 @@
 /* global daum */
 import React from 'react';
 import styled, { FlexDiv } from '@/style';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import store from '@/store/store';
 
 const InfoCpWrapper = styled.div`
   margin-bottom: 40px;
@@ -48,11 +47,11 @@ const Input = styled.input`
 `;
 
 const InfoCp = ({ formType }) => {
+  const { loginUser } = store();
   const findAddress = () => {
     new daum.Postcode({
       oncomplete: async function (data) {
         let addressArr = data.jibunAddress.split(' ');
-        console.log(data);
         document.querySelector('#address').value = data.jibunAddress;
         document.querySelector('input[name=sido]').value = data.sido;
         document.querySelector('input[name=sigungu]').value = data.sigungu;
@@ -64,10 +63,18 @@ const InfoCp = ({ formType }) => {
   return (
     <InfoCpWrapper>
       <Title>1. 부동산의 표시</Title>
+      <input type="hidden" name="reg_midx" value={loginUser.midx || 1011} />
+      <input type="hidden" name="mod_midx" value={loginUser.midx || 1011} />
       <input type="hidden" name="sido" />
       <input type="hidden" name="sigungu" />
       <input type="hidden" name="eupmyeondong" />
       <input type="hidden" name="bungi" />
+      <input
+        type="hidden"
+        name="trade_type"
+        value={formType === 'sale' ? 1 : formType === 'lease' ? 2 : formType === 'rental' ? 3 : 4}
+      />
+      <div>{formType}</div>
       <TableWrap>
         <colgroup>
           <col style={{ width: '62px' }} />
@@ -79,10 +86,23 @@ const InfoCp = ({ formType }) => {
           <col style={{ width: '120px' }} />
         </colgroup>
         <tbody>
-          <tr>
+          <tr style={{ height: '80px' }}>
             <TdTitle colSpan={2}>소재지</TdTitle>
             <td colSpan={5}>
-              <Input width={'560px'} type="text" id="address" onClick={findAddress} readOnly />
+              <div>
+                <Input
+                  width={'560px'}
+                  type="text"
+                  id="address"
+                  onClick={findAddress}
+                  placeholder="주소입력"
+                  readOnly
+                  style={{ marginBottom: '8px' }}
+                />
+              </div>
+              <div>
+                <Input width={'300px'} type="text" name="detail_address" placeholder="상세주소" />
+              </div>
             </td>
           </tr>
           {formType !== 'short' && (
@@ -119,7 +139,7 @@ const InfoCp = ({ formType }) => {
             <tr>
               <TdTitle colSpan={2}>임대할 부분</TdTitle>
               <td colSpan={5}>
-                <Input width={'560px'} type="text" />
+                <Input width={'560px'} type="text" name="lease_part" />
               </td>
             </tr>
           )}

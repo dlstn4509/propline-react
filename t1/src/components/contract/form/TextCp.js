@@ -35,7 +35,7 @@ const ShortTitle = styled.div`
   margin-bottom: 4px;
 `;
 
-const TextCp = ({ formType }) => {
+const TextCp = ({ formType, onBlurMakeZero }) => {
   return (
     <TextCpWrapper>
       {formType === 'sale' && (
@@ -48,8 +48,10 @@ const TextCp = ({ formType }) => {
               <br />
               <FlexDiv>
                 위 부동산에 대하여 <Input type="text" name="contract_start_date_year" />년
-                <Input type="text" width={'30px'} name="contract_start_date_month" />월
-                <Input type="text" width={'30px'} name="contract_start_date_day" />일 인도하기로 한다.
+                <Input type="text" width={'30px'} name="contract_start_date_month" onBlur={onBlurMakeZero} />
+                월
+                <Input type="text" width={'30px'} name="contract_start_date_day" onBlur={onBlurMakeZero} />일
+                인도하기로 한다.
               </FlexDiv>
             </Text>
           </TextCpWrap>
@@ -125,10 +127,16 @@ const TextCp = ({ formType }) => {
               임대인은 위 부동산을 임대차 목적대로 사용 수익할 수 있는 상태로
               <br />
               <FlexDiv>
-                위 부동산에 대하여 <Input type="text" />년 <Input type="text" width={'30px'} />월
-                <Input type="text" width={'30px'} />일 까지 임차인에게 인도하며, 임대차 기간은 인도일로부터
-                <Input type="text" />년 <Input type="text" width={'30px'} />월
-                <Input type="text" width={'30px'} />일 까지로 한다.
+                위 부동산에 대하여 <Input type="text" name="contract_start_date_year" />년
+                <Input type="text" name="contract_start_date_month" width={'30px'} onBlur={onBlurMakeZero} />
+                월
+                <Input type="text" name="contract_start_date_day" width={'30px'} onBlur={onBlurMakeZero} />일
+                까지 임차인에게 인도하며, 임대차 기간은 인도일로부터
+                <Input type="text" name="contract_finish_date_year" />년
+                <Input type="text" name="contract_finish_date_month" onBlur={onBlurMakeZero} width={'30px'} />
+                월
+                <Input type="text" name="contract_finish_date_day" onBlur={onBlurMakeZero} width={'30px'} />일
+                까지로 한다.
               </FlexDiv>
             </Text>
           </TextCpWrap>
@@ -179,7 +187,7 @@ const TextCp = ({ formType }) => {
               임차인은 자신이 중개 의뢰한 개업공인중개사에게 각각 중개보수를 지급한다.
               <br />
               <FlexDiv>
-                (중개보수는 거래가액의 <Input type="text" />
+                (중개보수는 거래가액의 <Input type="text" name="commission_rate" />
                 %로 한다)
               </FlexDiv>
             </Text>
@@ -218,7 +226,7 @@ const TextCp = ({ formType }) => {
             <Text>
               <FlexDiv>
                 [기간만료전퇴실] ㄱ.장기계약등의 사유로 월세를 할인받은 임차인이 기간만료전에 퇴실할 경우에는
-                할인받은 월세액 <Input type="text" width={'150px'} /> (원정)에
+                할인받은 월세액 <Input type="text" name="discount_monthly_rent" width={'150px'} /> (원정)에
               </FlexDiv>
               실입주개월수를 곱한 금액을 위약금으로 지불하여야 한다.
               <div style={{ color: '#464d50' }}>

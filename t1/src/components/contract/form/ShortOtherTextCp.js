@@ -90,10 +90,10 @@ const ShortOtherTextCp = () => {
       </TextWrap>
       <ContractorInfoWrap>
         {'<< 위임자(임차인) 주민등록번호 :'}
-        <Input type="text" width={'150px'} />
+        <Input type="text" name="sign_jumin" width={'150px'} />
         &nbsp;
         {', 성 명 :'}
-        <Input type="text" width={'150px'} />
+        <Input type="text" name="sign_name" width={'150px'} />
         &nbsp;&nbsp;&nbsp;&nbsp;
         {'(인) >>'}
       </ContractorInfoWrap>

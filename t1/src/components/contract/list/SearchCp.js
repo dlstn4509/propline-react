@@ -31,12 +31,12 @@ const Input = styled.input`
   color: #464d50;
 `;
 
-const SearchCp = () => {
+const SearchCp = ({ listsLength }) => {
   const [checkPlace, setCheckPlace] = useState('');
   const [checkName, setCheckName] = useState('');
   return (
     <SearchWrapper>
-      <div>등록된 계약서 총 0건</div>
+      <div>등록된 계약서 총 {listsLength}건</div>
       <SearchWrap>
         <CheckBoxWrap
           onClick={() => {

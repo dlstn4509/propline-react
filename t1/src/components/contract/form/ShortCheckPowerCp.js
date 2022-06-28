@@ -65,9 +65,9 @@ const ShortCheckPowerCp = () => {
             <TdTitle>입주시검침값</TdTitle>
             <Td>
               <FlexDiv>
-                전기 : <Input type="text" />
-                &nbsp; kwh, 가스: <Input type="text" />
-                &nbsp; m², 수도 : <Input type="text" />
+                전기 : <Input type="text" name="index_of_power" />
+                &nbsp; kwh, 가스: <Input type="text" name="index_of_gas" />
+                &nbsp; m², 수도 : <Input type="text" name="index_of_water" />
                 &nbsp; m²
               </FlexDiv>
             </Td>
@@ -75,7 +75,7 @@ const ShortCheckPowerCp = () => {
           <tr>
             <TdTitle>시설물(옵선)내역</TdTitle>
             <td>
-              <Input type="text" width={'570px'} />
+              <Input type="text" name="item_transfer_range" width={'570px'} />
             </td>
           </tr>
         </tbody>

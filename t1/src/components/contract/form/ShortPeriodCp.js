@@ -49,7 +49,7 @@ const Td = styled.td`
   vertical-align: middle;
 `;
 
-const ShortPeriodCp = () => {
+const ShortPeriodCp = ({ onBlurMakeZero }) => {
   return (
     <ShortPeriodCpWrap>
       <Title>2. 임대차 기간</Title>
@@ -59,10 +59,13 @@ const ShortPeriodCp = () => {
             <TdTitle>임대차기간</TdTitle>
             <td>
               <FlexDiv>
-                <Input type="text" width={'50px'} />년 <Input type="text" />월 <Input type="text" />
+                <Input type="text" name="contract_start_date_year" width={'50px'} />년
+                <Input type="text" name="contract_start_date_month" onBlur={onBlurMakeZero} />월
+                <Input type="text" name="contract_start_date_day" onBlur={onBlurMakeZero} />
                 일부터
-                <Input type="text" width={'50px'} />년 <Input type="text" />월 <Input type="text" />일 까지로
-                한다.
+                <Input type="text" name="contract_finish_date_year" width={'50px'} />년
+                <Input type="text" name="contract_finish_date_month" onBlur={onBlurMakeZero} />월
+                <Input type="text" name="contract_finish_date_day" onBlur={onBlurMakeZero} />일 까지로 한다.
               </FlexDiv>
             </td>
           </tr>

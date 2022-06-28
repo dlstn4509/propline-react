@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { FlexDiv } from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SubTitleCp from '@/components/contract/form/SubTitleCp';
 import InfoCp from '@/components/contract/form/InfoCp';
@@ -48,6 +48,15 @@ const BtnListsWrap = styled.div`
 `;
 
 const FormCp = ({ formType, setPageType }) => {
+  const navigate = useNavigate();
+  const onBlurMakeZero = (e) => {
+    if (Number(e.target.value) < 10) {
+      e.target.value = '0' + e.target.value;
+    }
+  };
+  const makeCommaNum = (e) => {
+    e.target.value = Number(e.target.value.split(',').join('')).toLocaleString('ko-KR');
+  };
   return (
     <FormCpWrap>
       <ButtonWrap>
@@ -56,6 +65,7 @@ const FormCp = ({ formType, setPageType }) => {
           onClick={() => {
             setPageType('');
             window.scrollTo(0, 0);
+            navigate('/contract');
           }}
         >
           목록으로 돌아가기
@@ -65,17 +75,17 @@ const FormCp = ({ formType, setPageType }) => {
       <ContractWrapper>
         <SubTitleCp formType={formType} />
         <InfoCp formType={formType} />
-        {formType === 'short' && <ShortPeriodCp />}
-        <PriceCp formType={formType} />
+        {formType === 'short' && <ShortPeriodCp onBlurMakeZero={onBlurMakeZero} />}
+        <PriceCp formType={formType} onBlurMakeZero={onBlurMakeZero} makeCommaNum={makeCommaNum} />
         {formType === 'short' && <MainTenanceFeeCp />}
-        <TextCp formType={formType} />
+        <TextCp formType={formType} onBlurMakeZero={onBlurMakeZero} />
         {formType === 'short' && (
           <>
             <ShortCheckPowerCp />
             <ShortOtherTextCp />
           </>
         )}
-        <SpecialCp />
+        <SpecialCp onBlurMakeZero={onBlurMakeZero} />
         <ContractorCp />
       </ContractWrapper>
       <div style={{ textAlign: 'center' }}>
@@ -87,6 +97,7 @@ const FormCp = ({ formType, setPageType }) => {
         onClick={() => {
           setPageType('');
           window.scrollTo(0, 0);
+          navigate('/contract');
         }}
       >
         목록으로 돌아가기

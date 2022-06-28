@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import SearchCp from '@/components/contract/list/SearchCp';
 import ListsCp from '@/components/contract/list/ListsCp';
@@ -28,8 +29,9 @@ const Button = styled.div`
 `;
 
 const ListCp = ({ formType, setPageType }) => {
-  const [btnName, setBtnName] = useState('');
   const navigate = useNavigate();
+  const [btnName, setBtnName] = useState('');
+  const [lists, setLists] = useState([]);
 
   useEffect(() => {
     switch (formType) {
@@ -50,10 +52,17 @@ const ListCp = ({ formType, setPageType }) => {
     }
   }, [formType]);
 
+  useEffect(() => {
+    (async () => {
+      let { data } = await axios.get(process.env.REACT_APP_URL_API + `contract?tradetype=${formType}`);
+      setLists(data);
+    })();
+  }, [formType]);
+
   return (
     <ListCpWrapper>
-      <SearchCp />
-      <ListsCp />
+      <SearchCp listsLength={lists.length} />
+      <ListsCp lists={lists} />
       {formType !== 'form' && (
         <Button
           onClick={() => {

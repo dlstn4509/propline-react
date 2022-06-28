@@ -18,24 +18,24 @@ const TableWrap = styled.table`
   }
   tbody {
     text-align: center;
-    height: 45px;
     tr {
+      height: 45px;
       border-bottom: 1px solid #dde2e6;
     }
   }
 `;
 
-const ListsCp = () => {
+const ListsCp = ({ lists }) => {
   return (
     <ListsCpWrap>
       <TableWrap>
         <colgroup>
-          <col style={{ width: '105px' }} />
-          <col style={{ width: '160px' }} />
-          <col style={{ width: '160px' }} />
-          <col style={{ width: '160px' }} />
-          <col style={{ width: '160px' }} />
-          <col />
+          <col style={{ width: '100px' }} />
+          <col style={{ width: '500px' }} />
+          <col style={{ width: '100px' }} />
+          <col style={{ width: '100px' }} />
+          <col style={{ width: '100px' }} />
+          <col style={{ width: '100px' }} />
         </colgroup>
         <thead>
           <tr>
@@ -48,14 +48,24 @@ const ListsCp = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>서울</td>
-            <td>매도인</td>
-            <td>매수인</td>
-            <td>2022-06-27</td>
-            <td>확인설명서</td>
-          </tr>
+          {lists.length > 0 &&
+            lists.map((v, i) => (
+              <tr key={i} style={{ cursor: 'pointer' }}>
+                <td>{v.contract_date}</td>
+                <td style={{ paddingLeft: '20px', textAlign: 'left' }}>
+                  {v.sido} {v.sigungu} {v.eupmyeondong} {v.bungi}, {v.detail_address}
+                </td>
+                <td>매도인</td>
+                <td>매수인</td>
+                <td>2022-06-27</td>
+                <td>확인설명서</td>
+              </tr>
+            ))}
+          {lists.length === 0 && (
+            <tr>
+              <td colSpan={6}>등록된 계약서가 없습니다.</td>
+            </tr>
+          )}
         </tbody>
       </TableWrap>
     </ListsCpWrap>
