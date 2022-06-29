@@ -34,50 +34,38 @@ const Input = styled.input`
   }
 `;
 
-const SpecialCp = ({ onBlurMakeZero }) => {
-  const [now] = useState(new Date());
-  const [year] = useState(now.getFullYear());
-  const [month, setMonth] = useState('');
-  // const [month, setMonth] = useState(now.getMonth() + 1);
-  const [day, setDay] = useState('');
-
+const SpecialCp = ({ specialContract, contractDate, onBlurMakeZero }) => {
+  const [contractDateArr, setContractDateArr] = useState([]);
   useEffect(() => {
-    if (now.getMonth() + 1 < 10) {
-      setMonth('0' + (now.getMonth() + 1).toString());
-    } else {
-      setMonth(now.getMonth() + 1);
+    if (contractDate) {
+      setContractDateArr(contractDate.split('-'));
     }
-    if (now.getDate() < 10) {
-      setDay('0' + now.getDate().toString());
-    } else {
-      setDay(now.getDate());
-    }
-  }, []);
+  }, [contractDate]);
   return (
     <SpecialCpWrapper>
       <Title>[특약사항]</Title>
-      <textarea name="special_contract" id="" cols="30" rows="10"></textarea>
+      <textarea name="special_contract" cols="30" rows="10" defaultValue={specialContract}></textarea>
       <Text>
         본 계약을 증명하기 위하여 계약당사자가 이의 없음을 확인하고 각각 서명·날인 후 매도인,매수인 및
         개업공인중개사는 매장마다 간인하여야 하며, 각각1통씩 보관한다.
       </Text>
       <ContractDateWrap>
-        <Input type="text" defaultValue={year} name="contract_date_year" maxLength="4" /> 년
+        <Input type="text" defaultValue={contractDateArr[0]} name="contract_date_year" maxLength="4" /> 년
         <Input
           type="text"
-          defaultValue={month}
+          defaultValue={contractDateArr[1]}
           name="contract_date_month"
           onBlur={onBlurMakeZero}
           maxLength="2"
-        />{' '}
+        />
         월
         <Input
           type="text"
-          defaultValue={day}
+          defaultValue={contractDateArr[2]}
           name="contract_date_day"
           onBlur={onBlurMakeZero}
           maxLength="2"
-        />{' '}
+        />
         일
       </ContractDateWrap>
     </SpecialCpWrapper>

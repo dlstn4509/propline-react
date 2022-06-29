@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SubTitleCp from '@/components/contract/form/SubTitleCp';
 import InfoCp from '@/components/contract/form/InfoCp';
 import ShortPeriodCp from '@/components/contract/form/ShortPeriodCp';
-import MainTenanceFeeCp from '@/components/contract/form/MainTenanceFeeCp';
+import ShortMainTenanceFeeCp from '@/components/contract/form/ShortMainTenanceFeeCp';
 import PriceCp from '@/components/contract/form/PriceCp';
 import TextCp from '@/components/contract/form/TextCp';
 import ShortCheckPowerCp from '@/components/contract/form/ShortCheckPowerCp';
@@ -55,7 +55,9 @@ const FormCp = ({ formType, setPageType }) => {
     }
   };
   const makeCommaNum = (e) => {
-    e.target.value = Number(e.target.value.split(',').join('')).toLocaleString('ko-KR');
+    if (e.target.value) {
+      e.target.value = Number(e.target.value.split(',').join('')).toLocaleString('ko-KR');
+    }
   };
   return (
     <FormCpWrap>
@@ -72,12 +74,13 @@ const FormCp = ({ formType, setPageType }) => {
         </Button>
         <Button>계약서 작성하기</Button>
       </ButtonWrap>
+
       <ContractWrapper>
         <SubTitleCp formType={formType} />
         <InfoCp formType={formType} />
         {formType === 'short' && <ShortPeriodCp onBlurMakeZero={onBlurMakeZero} />}
         <PriceCp formType={formType} onBlurMakeZero={onBlurMakeZero} makeCommaNum={makeCommaNum} />
-        {formType === 'short' && <MainTenanceFeeCp />}
+        {formType === 'short' && <ShortMainTenanceFeeCp />}
         <TextCp formType={formType} onBlurMakeZero={onBlurMakeZero} />
         {formType === 'short' && (
           <>
@@ -88,6 +91,7 @@ const FormCp = ({ formType, setPageType }) => {
         <SpecialCp onBlurMakeZero={onBlurMakeZero} />
         <ContractorCp />
       </ContractWrapper>
+
       <div style={{ textAlign: 'center' }}>
         <Button mt={'20px'} display={'inline-block'}>
           계약서 작성하기

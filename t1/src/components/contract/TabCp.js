@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { FlexDiv, color } from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TabWrapper = styled(FlexDiv)`
   margin-bottom: 50px;
@@ -23,11 +23,13 @@ const TabWrap = styled(FlexDiv)`
 `;
 
 const TabCp = ({ formType, setFormType }) => {
+  const navigate = useNavigate();
   return (
     <TabWrapper>
       <TabWrap
         onClick={() => {
           setFormType('sale');
+          navigate('/contract');
         }}
         className={formType === 'sale' ? 'active' : ''}
       >
@@ -36,6 +38,7 @@ const TabCp = ({ formType, setFormType }) => {
       <TabWrap
         onClick={() => {
           setFormType('lease');
+          navigate('/contract');
         }}
         className={formType === 'lease' ? 'active' : ''}
       >
@@ -44,6 +47,7 @@ const TabCp = ({ formType, setFormType }) => {
       <TabWrap
         onClick={() => {
           setFormType('rental');
+          navigate('/contract');
         }}
         className={formType === 'rental' ? 'active' : ''}
       >
@@ -52,6 +56,7 @@ const TabCp = ({ formType, setFormType }) => {
       <TabWrap
         onClick={() => {
           setFormType('short');
+          navigate('/contract');
         }}
         className={formType === 'short' ? 'active' : ''}
       >

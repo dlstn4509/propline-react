@@ -59,13 +59,15 @@ const ShortPeriodCp = ({ onBlurMakeZero }) => {
             <TdTitle>임대차기간</TdTitle>
             <td>
               <FlexDiv>
-                <Input type="text" name="contract_start_date_year" width={'50px'} />년
-                <Input type="text" name="contract_start_date_month" onBlur={onBlurMakeZero} />월
-                <Input type="text" name="contract_start_date_day" onBlur={onBlurMakeZero} />
+                <Input type="text" name="contract_start_date_year" width={'50px'} maxLength="4" />년
+                <Input type="text" name="contract_start_date_month" onBlur={onBlurMakeZero} maxLength="2" />월
+                <Input type="text" name="contract_start_date_day" onBlur={onBlurMakeZero} maxLength="2" />
                 일부터
-                <Input type="text" name="contract_finish_date_year" width={'50px'} />년
-                <Input type="text" name="contract_finish_date_month" onBlur={onBlurMakeZero} />월
-                <Input type="text" name="contract_finish_date_day" onBlur={onBlurMakeZero} />일 까지로 한다.
+                <Input type="text" name="contract_finish_date_year" width={'50px'} maxLength="4" />년
+                <Input type="text" name="contract_finish_date_month" onBlur={onBlurMakeZero} maxLength="2" />
+                월
+                <Input type="text" name="contract_finish_date_day" onBlur={onBlurMakeZero} maxLength="2" />일
+                까지로 한다.
               </FlexDiv>
             </td>
           </tr>

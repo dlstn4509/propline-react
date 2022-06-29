@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@/style';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ListsCpWrap = styled.div`
   margin-bottom: 30px;
@@ -25,7 +25,13 @@ const TableWrap = styled.table`
   }
 `;
 
-const ListsCp = ({ lists }) => {
+const ListsCp = ({ lists, setViewIdx }) => {
+  const navigate = useNavigate();
+  const clickList = (e) => {
+    let idx = e.target.parentNode.dataset.idx;
+    setViewIdx(idx);
+    navigate(`/contract?idx=${idx}`);
+  };
   return (
     <ListsCpWrap>
       <TableWrap>
@@ -50,7 +56,7 @@ const ListsCp = ({ lists }) => {
         <tbody>
           {lists.length > 0 &&
             lists.map((v, i) => (
-              <tr key={i} style={{ cursor: 'pointer' }}>
+              <tr key={i} style={{ cursor: 'pointer' }} data-idx={v.idx} onClick={clickList}>
                 <td>{v.contract_date}</td>
                 <td style={{ paddingLeft: '20px', textAlign: 'left' }}>
                   {v.sido} {v.sigungu} {v.eupmyeondong} {v.bungi}, {v.detail_address}

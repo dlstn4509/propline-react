@@ -28,7 +28,7 @@ const Button = styled.div`
   cursor: pointer;
 `;
 
-const ListCp = ({ formType, setPageType }) => {
+const ListCp = ({ formType, setPageType, setViewIdx }) => {
   const navigate = useNavigate();
   const [btnName, setBtnName] = useState('');
   const [lists, setLists] = useState([]);
@@ -62,7 +62,7 @@ const ListCp = ({ formType, setPageType }) => {
   return (
     <ListCpWrapper>
       <SearchCp listsLength={lists.length} />
-      <ListsCp lists={lists} />
+      <ListsCp lists={lists} setViewIdx={setViewIdx} />
       {formType !== 'form' && (
         <Button
           onClick={() => {

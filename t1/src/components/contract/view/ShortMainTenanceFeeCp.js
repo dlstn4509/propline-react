@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { FlexDiv } from '@/style';
 import { Link } from 'react-router-dom';
 
-const MainTenanceFeeCpWrap = styled.div`
+const ShortMainTenanceFeeCpWrap = styled.div`
   margin-bottom: 30px;
 `;
 const Title = styled.div`
@@ -48,9 +48,9 @@ const Td = styled.td`
   vertical-align: middle;
 `;
 
-const MainTenanceFeeCp = () => {
+const ShortMainTenanceFeeCp = ({ maintenanceFee, publicChargesFee, cleaningFee }) => {
   return (
-    <MainTenanceFeeCpWrap>
+    <ShortMainTenanceFeeCpWrap>
       <Title>4. 관리비등의 지불약정</Title>
       <TableWrap>
         <tbody>
@@ -59,7 +59,8 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임차인은 매월 차임일에 일반관리비 (&nbsp;
-                <Input type="text" name="maintenance_fee" /> 원정&nbsp;) 를 지불하여야 한다.
+                <Input type="text" name="maintenance_fee" defaultValue={maintenanceFee} /> 원정&nbsp;) 를
+                지불하여야 한다.
               </FlexDiv>
             </Td>
           </tr>
@@ -68,7 +69,7 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임대차 기간중 발생하는&nbsp;
-                <Input type="text" name="public_charges_item" />
+                <Input type="text" name="public_charges_fee" defaultValue={publicChargesFee} />
                 &nbsp; 요금은 임차인이 부담 한다.
               </FlexDiv>
             </Td>
@@ -78,15 +79,15 @@ const MainTenanceFeeCp = () => {
             <Td>
               <FlexDiv>
                 임차인은 퇴실시 침구세탁 및 청소비 (&nbsp;
-                <Input type="text" name="cleaning_fee" />
+                <Input type="text" name="cleaning_fee" defaultValue={cleaningFee} />
                 원정&nbsp;) 를 지불하여야 한다.
               </FlexDiv>
             </Td>
           </tr>
         </tbody>
       </TableWrap>
-    </MainTenanceFeeCpWrap>
+    </ShortMainTenanceFeeCpWrap>
   );
 };
 
-export default React.memo(MainTenanceFeeCp);
+export default React.memo(ShortMainTenanceFeeCp);
