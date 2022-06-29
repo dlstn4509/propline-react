@@ -87,7 +87,7 @@ const ViewCp = ({ viewIdx, setPageType }) => {
         {contract.trade_type === 4 && (
           <ShortMainTenanceFeeCp
             maintenanceFee={contract.maintenance_fee}
-            publicChargesFee={contract.public_charges_item}
+            publicChargesFee={contract.public_charges_fee}
             cleaningFee={contract.cleaning_fee}
           />
         )}

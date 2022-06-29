@@ -339,7 +339,14 @@ const PriceCp = ({ contract, onBlurMakeZero, makeCommaNum }) => {
               <TdTitle>차 임</TdTitle>
               <Td style={{ borderRight: '1px solid #c6cfdc' }}>
                 <FlexDiv>
-                  一金 <Input type="text" name="monthly_rent" defaultValue={contract.monthly_rent} />
+                  一金
+                  <Input
+                    type="text"
+                    name="monthly_rent"
+                    onKeyUp={makeCommaNum}
+                    onChange={changeSecurity}
+                    defaultValue={contract.monthly_rent}
+                  />
                   <div style={{ marginLeft: '10px' }}>{contract.monthly_rent_txt}</div>
                 </FlexDiv>
               </Td>

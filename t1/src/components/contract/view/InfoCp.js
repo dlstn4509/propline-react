@@ -65,10 +65,10 @@ const InfoCp = ({ contract }) => {
     <InfoCpWrapper>
       <Title>1. 부동산의 표시</Title>
       <input type="hidden" name="mod_midx" value={loginUser.midx || 1011} />
-      <input type="hidden" name="sido" />
-      <input type="hidden" name="sigungu" />
-      <input type="hidden" name="eupmyeondong" />
-      <input type="hidden" name="bungi" />
+      <input type="hidden" name="sido" defaultValue={contract.sido} />
+      <input type="hidden" name="sigungu" defaultValue={contract.sigungu} />
+      <input type="hidden" name="eupmyeondong" defaultValue={contract.eupmyeondong} />
+      <input type="hidden" name="bungi" defaultValue={contract.bungi} />
       <TableWrap>
         <colgroup>
           <col style={{ width: '62px' }} />

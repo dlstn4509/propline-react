@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { PageWrapper, PageWrap, Title } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
-import store from '@/store/store';
 
 import TabCp from '@/components/contract/TabCp';
 import FormCp from '@/components/contract/FormCp';
@@ -10,7 +9,6 @@ import ViewCp from '@/components/contract/ViewCp';
 
 const ContractPage = () => {
   const navigate = useNavigate();
-  const { loginUser } = store();
   const [pageType, setPageType] = useState('');
   const [formType, setFormType] = useState('sale');
   const [viewIdx, setViewIdx] = useState('');
@@ -34,7 +32,6 @@ const ContractPage = () => {
       <PageWrap>
         <Title>계약서 관리</Title>
         <TabCp formType={formType} setFormType={setFormType} />
-
         {!pageType && !viewIdx && (
           <ListCp formType={formType} setPageType={setPageType} setViewIdx={setViewIdx} />
         )}
@@ -47,6 +44,7 @@ const ContractPage = () => {
           <form action={process.env.REACT_APP_URL_API + 'contract'} method="POST">
             <input type="hidden" name="idx" value={viewIdx} />
             <input type="hidden" name="_method" value="PUT" />
+            <input type="hidden" name="trade_type" value={formType} />
             <ViewCp viewIdx={viewIdx} setPageType={setPageType} />
           </form>
         )}

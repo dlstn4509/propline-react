@@ -65,6 +65,7 @@ const TabCp = ({ formType, setFormType }) => {
       <TabWrap
         onClick={() => {
           setFormType('form');
+          navigate('/contract');
         }}
         className={formType === 'form' ? 'active' : ''}
       >

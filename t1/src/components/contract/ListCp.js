@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import SearchCp from '@/components/contract/list/SearchCp';
 import ListsCp from '@/components/contract/list/ListsCp';
+import FormBoxCp from '@/components/contract/list/FormBoxCp';
 
 const ListCpWrapper = styled.div`
   font-size: 14px;
@@ -61,18 +62,21 @@ const ListCp = ({ formType, setPageType, setViewIdx }) => {
 
   return (
     <ListCpWrapper>
-      <SearchCp listsLength={lists.length} />
-      <ListsCp lists={lists} setViewIdx={setViewIdx} />
       {formType !== 'form' && (
-        <Button
-          onClick={() => {
-            setPageType('form');
-            navigate('/contract?type=form');
-          }}
-        >
-          {btnName}계약서 작성하기
-        </Button>
+        <>
+          <SearchCp listsLength={lists.length} />
+          <ListsCp lists={lists} setViewIdx={setViewIdx} />
+          <Button
+            onClick={() => {
+              setPageType('form');
+              navigate('/contract?type=form');
+            }}
+          >
+            {btnName}계약서 작성하기
+          </Button>
+        </>
       )}
+      {formType === 'form' && <FormBoxCp />}
     </ListCpWrapper>
   );
 };

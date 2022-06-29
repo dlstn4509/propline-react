@@ -58,8 +58,8 @@ const LabelWrap = styled(FlexDiv)`
 const ContractorCp = ({ contract }) => {
   const [labelCheck, setLabelCheck] = useState('');
   useEffect(() => {
+    setLabelCheck(contract.agent_one_chk);
     if (contract.agent_one_chk) {
-      setLabelCheck(contract.agent_one_chk);
     }
   }, [contract]);
   const findAddress = (type) => {
@@ -323,13 +323,13 @@ const ContractorCp = ({ contract }) => {
       </TableWrap>
       <LabelWrap
         onClick={() => {
-          setLabelCheck(labelCheck == 0 ? 1 : 0);
+          setLabelCheck(labelCheck === 0 ? 1 : 0);
         }}
       >
-        {labelCheck == 0 && <FaRegSquare />}
-        {labelCheck == 1 && <FaCheckSquare style={{ color: color.blue }} />}
+        {labelCheck === 0 && <FaRegSquare />}
+        {labelCheck === 1 && <FaCheckSquare style={{ color: color.blue }} />}
         <span>개업공인중개사란 1개만 출력 (여백 조정이 가능하신 분만 사용하십시요.)</span>
-        <input type="hidden" name="agent_one_chk" value={labelCheck} />
+        <input type="hidden" name="agent_one_chk" defaultValue={labelCheck} />
       </LabelWrap>
     </ContractorCpWrapper>
   );
