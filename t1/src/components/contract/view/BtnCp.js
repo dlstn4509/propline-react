@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { FlexDiv, Button } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsPrinter } from 'react-icons/bs';
+import axios from 'axios';
 
 const ButtonWrap = styled(FlexDiv)`
   justify-content: space-between;
@@ -24,13 +25,23 @@ const BigButton = styled.button`
   cursor: pointer;
 `;
 
-const BtnCp = ({ setPageType }) => {
+const BtnCp = ({ setPageType, idx }) => {
   const navigate = useNavigate();
+
+  const clickDelete = async () => {
+    const { data } = await axios.delete(process.env.REACT_APP_URL_API + `contract?idx=${idx}`);
+    if (data.affectedRows === 1) {
+      navigate('/contract');
+    }
+  };
+
   return (
     <ButtonWrap>
       <FlexDiv>
         <Button mr={'10px'}>복사</Button>
-        <Button mr={'10px'}>삭제</Button>
+        <Button mr={'10px'} onClick={clickDelete}>
+          삭제
+        </Button>
         <Button mr={'10px'}>
           <FlexDiv>
             <BsPrinter style={{ marginRight: '4px' }} />

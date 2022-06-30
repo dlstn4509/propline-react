@@ -67,7 +67,7 @@ const ViewCp = ({ viewIdx, setPageType }) => {
 
   return (
     <ViewCpWrap>
-      <BtnCp setPageType={setPageType} />
+      <BtnCp setPageType={setPageType} idx={contract.idx} />
       <ContractViewWrapper>
         <SubTitleCp tradeType={contract.trade_type} />
         <InfoCp contract={contract} />
