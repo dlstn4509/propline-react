@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { FlexDiv, Button } from '@/style';
 import { Link, useNavigate } from 'react-router-dom';
 import { BsPrinter } from 'react-icons/bs';
@@ -27,14 +27,12 @@ const BigButton = styled.button`
 
 const BtnCp = ({ setPageType, idx }) => {
   const navigate = useNavigate();
-
   const clickDelete = async () => {
     const { data } = await axios.delete(process.env.REACT_APP_URL_API + `contract?idx=${idx}`);
     if (data.affectedRows === 1) {
       navigate('/contract');
     }
   };
-
   return (
     <ButtonWrap>
       <FlexDiv>
@@ -43,7 +41,11 @@ const BtnCp = ({ setPageType, idx }) => {
           삭제
         </Button>
         <Button mr={'10px'}>
-          <FlexDiv>
+          <FlexDiv
+            onClick={() => {
+              window.open(`/contractprint?idx=${idx}`, '_black', 'width=820, height=720, top=100px');
+            }}
+          >
             <BsPrinter style={{ marginRight: '4px' }} />
             인쇄
           </FlexDiv>

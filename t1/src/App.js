@@ -53,6 +53,7 @@ import SchedulePage from '@/pages/myPayment/SchedulePage';
 
 /***************** Contract *****************/
 import ContractPage from '@/pages/contract/ContractPage';
+import ContractPrintPage from '@/pages/contract/ContractPrintPage';
 
 /***************** other *****************/
 import MainPage from '@/pages/MainPage';
@@ -94,9 +95,10 @@ const App = () => {
   useEffect(() => {
     setBanner();
   }, []);
+
   return (
     <BrowserRouter>
-      {isPathname !== '/manual' && (
+      {isPathname !== '/manual' && isPathname !== '/contractprint' && (
         <>
           <Header />
           <SearchArea />
@@ -141,8 +143,9 @@ const App = () => {
         <Route path="/banner" element={<BannerPage />} />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/contract" element={<ContractPage />} />
+        <Route path="/contractprint" element={<ContractPrintPage />} />
       </Routes>
-      {isPathname !== '/manual' && (
+      {isPathname !== '/manual' && isPathname !== '/contractprint' && (
         <>
           <FooterText />
           <Footer />
