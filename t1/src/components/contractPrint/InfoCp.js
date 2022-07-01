@@ -74,6 +74,12 @@ const InfoCp = ({ contract }) => {
             <TdTitle>면적</TdTitle>
             <Td>{contract.building_area}</Td>
           </tr>
+          {contract.trade_type === 2 && (
+            <tr>
+              <TdTitle>임대할 부분</TdTitle>
+              <Td colSpan={6}>{contract.lease_part}</Td>
+            </tr>
+          )}
         </tbody>
       </Table>
     </InfoCpWrap>

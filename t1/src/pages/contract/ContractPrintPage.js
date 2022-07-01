@@ -50,13 +50,13 @@ const ContractPrintPage = () => {
     if (contract.contract_date) {
       setContractDateArr(contract.contract_date.split('-'));
     }
-    console.log(contract.contract_date);
   }, [contract]);
 
   return (
     <ContractPrintPageWrap>
       <BtnCp />
-      <Title>부동산매매계약서</Title>
+      {contract.trade_type === 1 && <Title>부동산매매계약서</Title>}
+      {contract.trade_type === 2 && <Title style={{ letterSpacing: '0' }}>부동산 임대차(전세) 계약서</Title>}
       <Text>아래 표시 부동산에 대하여 매도인과 매수인은 합의에 의하여 다음과 같이 매매계약을 체결한다.</Text>
       <InfoCp contract={contract} />
       <PriceCp contract={contract} Text={Text} />
