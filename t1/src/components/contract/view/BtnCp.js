@@ -27,6 +27,16 @@ const BigButton = styled.button`
 
 const BtnCp = ({ setPageType, idx }) => {
   const navigate = useNavigate();
+
+  const copyClick = async (e) => {
+    e.preventDefault();
+    const { data } = await axios.post(process.env.REACT_APP_URL_API + `contract/copy?idx=${idx}`);
+    if (data.affectedRows === 1) {
+      alert('계약서를 복사하였습니다.');
+      navigate('/contract');
+    }
+  };
+
   const clickDelete = async () => {
     const { data } = await axios.delete(process.env.REACT_APP_URL_API + `contract?idx=${idx}`);
     if (data.affectedRows === 1) {
@@ -36,7 +46,9 @@ const BtnCp = ({ setPageType, idx }) => {
   return (
     <ButtonWrap>
       <FlexDiv>
-        <Button mr={'10px'}>복사</Button>
+        <Button mr={'10px'} onClick={copyClick}>
+          복사
+        </Button>
         <Button mr={'10px'} onClick={clickDelete}>
           삭제
         </Button>

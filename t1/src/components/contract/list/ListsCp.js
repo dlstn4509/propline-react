@@ -61,9 +61,9 @@ const ListsCp = ({ lists, setViewIdx }) => {
                 <td style={{ paddingLeft: '20px', textAlign: 'left' }}>
                   {v.sido} {v.sigungu} {v.eupmyeondong} {v.bungi}, {v.detail_address}
                 </td>
-                <td>매도인</td>
-                <td>매수인</td>
-                <td>2022-06-27</td>
+                <td>{v.grantor_name}</td>
+                <td>{v.grantee_name}</td>
+                <td>{v.mod_date}</td>
                 <td>확인설명서</td>
               </tr>
             ))}
