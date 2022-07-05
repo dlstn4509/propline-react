@@ -67,21 +67,11 @@ import BannerPage from '@/pages/BannerPage';
 import ManualPage from '@/pages/manual/ManualPage';
 
 const App = () => {
-  const { isPathname, setPathName, setQuickMenuY, setLoginUser, setBanner, loginUser } = store();
+  const { isPathname, setPathName, setLoginUser, setBanner, loginUser } = store();
   let pathname = window.location.pathname;
   useEffect(() => {
     setPathName(pathname);
   }, [pathname]);
-  useEffect(() => {
-    let body = document.querySelector('body');
-    body.addEventListener('wheel', (e) => {
-      if (e.deltaY > 0) {
-        setQuickMenuY(5);
-      } else {
-        setQuickMenuY(-5);
-      }
-    });
-  }, []);
   useEffect(() => {
     (async () => {
       await axios

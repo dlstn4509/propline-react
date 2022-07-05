@@ -7,8 +7,8 @@ import { RiComputerFill } from 'react-icons/ri';
 import store from '@/store/store';
 
 const ContainerWrap = styled.div`
-  position: absolute;
-  margin: 0px 0px 0px 1025px;
+  position: fixed;
+  margin-left: 1025px;
 `;
 const QuickMenuWrapper = styled.div`
   width: 100%;
@@ -49,14 +49,14 @@ const Img = styled.img`
 `;
 
 const QuickMenu = () => {
-  const { isQuickMenuY, isBanner } = store();
+  const { isBanner } = store();
   const banner = isBanner.filter((v) => {
     return v.area_code === '9';
   });
   return (
     <PageWrapper>
       <PageWrap>
-        <ContainerWrap style={{ paddingTop: `${isQuickMenuY}%` }}>
+        <ContainerWrap>
           <QuickMenuWrapper>
             <TitleWrap>
               <div>빠른메뉴</div>

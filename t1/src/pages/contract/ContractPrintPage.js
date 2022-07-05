@@ -81,7 +81,13 @@ const ContractPrintPage = () => {
             인쇄
           </FlexDiv>
         </Button>
-        <Button>닫기</Button>
+        <Button
+          onClick={() => {
+            window.close();
+          }}
+        >
+          닫기
+        </Button>
       </BtnWrap>
     </ContractPrintPageWrap>
   );
