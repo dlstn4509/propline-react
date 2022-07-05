@@ -43,7 +43,7 @@ const MainPage = () => {
     })();
   }, []);
   return (
-    <PageWrapper style={{ paddingTop: '30px' }}>
+    <PageWrapper style={{ paddingTop: '10px' }}>
       <MainPageWrap>
         <MainLeftWrap>
           <SlideCp />

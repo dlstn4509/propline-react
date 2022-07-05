@@ -9,6 +9,7 @@ import store from '@/store/store';
 const ContainerWrap = styled.div`
   position: fixed;
   margin-left: 1025px;
+  margin-top: 10px;
 `;
 const QuickMenuWrapper = styled.div`
   width: 100%;
