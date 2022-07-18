@@ -134,6 +134,7 @@ const App = () => {
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/contract" element={<ContractPage />} />
         <Route path="/contractprint" element={<ContractPrintPage />} />
+        {/* <Route path="*" element={<RequestBoardPage />} /> 404 만들기 */}
       </Routes>
       {isPathname !== '/manual' && isPathname !== '/contractprint' && (
         <>
